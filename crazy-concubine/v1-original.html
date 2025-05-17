@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>妃子起笑 Hazy Pale Ale - Verdant 改造版</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans CJK TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    font-size: 13px;
+    color: #2c2c2c;
+    background: #f5f5f5;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: 25px 30px;
+  }
+  
+  .header {
+    text-align: center;
+    border-bottom: 2.5px solid #2980B9;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 26px;
+    font-weight: bold;
+    color: #1F618D;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: #555;
+  }
+  
+  h2 {
+    font-size: 17px;
+    font-weight: bold;
+    color: #fff;
+    background: #2980B9;
+    padding: 7px 14px;
+    margin: 18px 0 10px 0;
+    border-radius: 4px;
+  }
+  
+  h3 {
+    color: #1F618D;
+    margin: 10px 0 6px 0;
+    font-size: 14px;
+    border-left: 3px solid #2980B9;
+    padding-left: 8px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 12px 0;
+    font-size: 12.5px;
+  }
+  th, td {
+    padding: 7px 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+    vertical-align: top;
+  }
+  th {
+    background: #EBF5FB;
+    font-weight: bold;
+    color: #1F618D;
+  }
+  tr:nth-child(even) td { background: #FAFAFA; }
+  
+  .info-box {
+    background: #EBF5FB;
+    border-left: 3px solid #2980B9;
+    padding: 9px 13px;
+    margin: 9px 0;
+    border-radius: 3px;
+    font-size: 12.5px;
+  }
+  .warning-box {
+    background: #FEF5E7;
+    border-left: 3px solid #F39C12;
+    padding: 9px 13px;
+    margin: 9px 0;
+    border-radius: 3px;
+    font-size: 12.5px;
+  }
+  .change-box {
+    background: #FFF3CD;
+    border-left: 3px solid #E67E22;
+    padding: 9px 13px;
+    margin: 9px 0;
+    border-radius: 3px;
+    font-size: 12.5px;
+  }
+  
+  .highlight {
+    background: #FFF3CD;
+    padding: 1px 4px;
+    border-radius: 2px;
+    font-weight: bold;
+  }
+  .modified { color: #E74C3C; font-weight: bold; }
+  
+  .stat-line {
+    background: #EBF5FB;
+    padding: 8px 14px;
+    border-radius: 4px;
+    margin: 10px 0;
+    font-size: 13px;
+    text-align: center;
+    border: 1px solid #AED6F1;
+  }
+  .stat-line span { margin: 0 8px; color: #888; }
+  .stat-line b { color: #1F618D; }
+  
+  .step-row {
+    display: flex;
+    margin: 7px 0;
+    font-size: 12.5px;
+  }
+  .step-num {
+    background: #2980B9;
+    color: white;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 26px;
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-right: 10px;
+    font-size: 12px;
+  }
+  .step-content { flex: 1; padding-top: 2px; }
+  .step-title { font-weight: bold; color: #1F618D; }
+  
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  
+  .chart-container {
+    background: #FAFAFA;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 12px 0;
+  }
+  .chart-title {
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    color: #1F618D;
+    margin-bottom: 10px;
+  }
+  .chart-wrapper {
+    position: relative;
+    height: 280px;
+  }
+  
+  .timeline-svg {
+    background: #FAFAFA;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 12px;
+    margin: 12px 0;
+  }
+  .timeline-svg svg {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+  }
+  
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 11px;
+    color: #666;
+    justify-content: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+  
+  .footer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1.5px solid #2980B9;
+    color: #888;
+    font-size: 12px;
+  }
+  
+  @media (max-width: 600px) {
+    body { font-size: 12px; }
+    .container { padding: 15px 18px; }
+    h1 { font-size: 20px; }
+    h2 { font-size: 15px; }
+    .two-col { grid-template-columns: 1fr; }
+    .chart-wrapper { height: 220px; }
+  }
+  
+  @media print {
+    body { background: white; }
+    .container { padding: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+  <h1>🍺 妃子起笑 Hazy Pale Ale</h1>
+  <div class="subtitle">Verdant 改造版 × 8-10L 批次 × 基於 PB Craft 原配方</div>
+</div>
+
+<div class="stat-line">
+  <span>OG <b>1.052</b></span>|
+  <span>FG <b>1.014-1.016</b></span>|
+  <span>ABV <b>4.5-5%</b></span>|
+  <span>IBU <b>33</b></span>|
+  <span>EBC <b>9</b></span>|
+  <span>容量 <b>8-10 L</b></span>
+</div>
+
+<h2>📅 14 天釀造時程</h2>
+
+<div class="timeline-svg">
+<svg viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg">
+  <text x="340" y="30" text-anchor="middle" font-size="15" font-weight="bold" fill="#1F618D">釀造 14 天時程</text>
+  <line x1="60" y1="80" x2="620" y2="80" stroke="#888" stroke-width="1.5"/>
+  
+  <circle cx="80" cy="80" r="14" fill="#FAEEDA" stroke="#BA7517" stroke-width="0.5"/>
+  <text x="80" y="110" text-anchor="middle" font-size="11" fill="#666">Day 0</text>
+  <text x="80" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#854F0B">釀造日</text>
+  <text x="80" y="148" text-anchor="middle" font-size="10" fill="#666">糖化→煮沸</text>
+  <text x="80" y="162" text-anchor="middle" font-size="10" fill="#666">→冷卻投酵母</text>
+  
+  <circle cx="180" cy="80" r="12" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="180" y="110" text-anchor="middle" font-size="11" fill="#666">Day 1-3</text>
+  <text x="180" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#0F6E56">主發酵</text>
+  <text x="180" y="148" text-anchor="middle" font-size="10" fill="#666">19°C</text>
+  
+  <circle cx="280" cy="80" r="12" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="280" y="110" text-anchor="middle" font-size="11" fill="#666">Day 4</text>
+  <text x="280" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#0F6E56">升溫</text>
+  <text x="280" y="148" text-anchor="middle" font-size="10" fill="#666">22°C</text>
+  
+  <circle cx="380" cy="80" r="14" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+  <text x="380" y="110" text-anchor="middle" font-size="11" fill="#666">Day 4-5</text>
+  <text x="380" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#3C3489">乾投 1</text>
+  <text x="380" y="148" text-anchor="middle" font-size="10" fill="#666">Citra+Amarillo</text>
+  
+  <circle cx="480" cy="80" r="14" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+  <text x="480" y="110" text-anchor="middle" font-size="11" fill="#666">Day 8-9</text>
+  <text x="480" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#3C3489">乾投 2</text>
+  <text x="480" y="148" text-anchor="middle" font-size="10" fill="#666">Idaho 7</text>
+  
+  <circle cx="560" cy="80" r="12" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+  <text x="560" y="110" text-anchor="middle" font-size="11" fill="#666">Day 11-12</text>
+  <text x="560" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#0C447C">Cold Crash</text>
+  <text x="560" y="148" text-anchor="middle" font-size="10" fill="#666">2°C / 1-2 天</text>
+  
+  <circle cx="615" cy="80" r="12" fill="#FAEEDA" stroke="#BA7517" stroke-width="0.5"/>
+  <text x="615" y="110" text-anchor="middle" font-size="11" fill="#666">Day 13-14</text>
+  <text x="615" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#854F0B">裝瓶</text>
+  
+  <rect x="60" y="210" width="270" height="140" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="195" y="232" text-anchor="middle" font-size="13" font-weight="bold" fill="#444441">關鍵控制點</text>
+  <text x="75" y="255" font-size="11" fill="#444">糖化 pH: 5.2-5.4</text>
+  <text x="75" y="275" font-size="11" fill="#444">OG: 1.052 / FG: 1.014-1.016</text>
+  <text x="75" y="295" font-size="11" fill="#444">發酵 19→22°C 升溫</text>
+  <text x="75" y="315" font-size="11" fill="#444">乾投時 FG 約 1.025</text>
+  <text x="75" y="335" font-size="11" fill="#444">Cold Crash 不超過 3 天</text>
+  
+  <rect x="350" y="210" width="270" height="140" rx="8" fill="#FAEEDA" stroke="#BA7517" stroke-width="0.5"/>
+  <text x="485" y="232" text-anchor="middle" font-size="13" font-weight="bold" fill="#854F0B">v8 教訓改進</text>
+  <text x="365" y="255" font-size="11" fill="#633806">中火煮沸不蓋鍋蓋</text>
+  <text x="365" y="275" font-size="11" fill="#633806">洗槽水量控制</text>
+  <text x="365" y="295" font-size="11" fill="#633806">乾投前 CO₂ 沖桶</text>
+  <text x="365" y="315" font-size="11" fill="#633806">Cold Crash 用 CO₂ 氣球</text>
+  <text x="365" y="335" font-size="11" fill="#633806">裝瓶批次 CO₂ 沖瓶</text>
+</svg>
+</div>
+
+<h2>🔄 改造重點(5 處)</h2>
+
+<table>
+  <tr><th width="20%">項目</th><th width="35%">原版</th><th>改造版</th></tr>
+  <tr><td>酵母</td><td>Weiss(香蕉味衝突)</td><td><span class="modified">Verdant IPA(杏桃配酒花)</span></td></tr>
+  <tr><td>煮沸火力</td><td>大火</td><td><span class="modified">中火鼓泡狀</span></td></tr>
+  <tr><td>煮沸鍋蓋</td><td>未說明</td><td><span class="modified">不蓋(讓 DMS 揮發)</span></td></tr>
+  <tr><td>乾投 1 時機</td><td>第 2 天</td><td><span class="modified">第 4-5 天(FG ~1.025)</span></td></tr>
+  <tr><td>二發時間</td><td>45 天</td><td><span class="modified">7-10 天</span></td></tr>
+</table>
+
+<h2>📋 完整配方</h2>
+
+<div class="two-col">
+  <div>
+    <table>
+      <tr><th colspan="2">穀物 + 其他</th></tr>
+      <tr><td>比利時 Pilsner Malt</td><td>2 kg</td></tr>
+      <tr><td>燕麥(Flaked Oats)</td><td>1 kg</td></tr>
+      <tr><td>(其他特殊麥芽)</td><td>~50g</td></tr>
+      <tr><td>乳糖(煮沸 55min)</td><td>50g</td></tr>
+      <tr><td>Priming Sugar(裝瓶)</td><td>90g</td></tr>
+      <tr><td><b class="modified">Verdant IPA 酵母</b></td><td>1 包</td></tr>
+    </table>
+  </div>
+  <div>
+    <table>
+      <tr><th colspan="2">酒花(總 136g)</th></tr>
+      <tr><td>Simcoe(煮沸 45min)</td><td>14g</td></tr>
+      <tr><td>Comet(煮沸 50min)</td><td>14g</td></tr>
+      <tr><td>Citra(乾投 1)</td><td>28g</td></tr>
+      <tr><td>Amarillo(乾投 1)</td><td>28g</td></tr>
+      <tr><td>Idaho 7(乾投 2)</td><td>56g</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="chart-container">
+<div class="chart-title">📊 麥芽配方比例(總 3.05kg)</div>
+<div class="chart-wrapper">
+  <canvas id="maltChart"></canvas>
+</div>
+</div>
+
+<div class="chart-container">
+<div class="chart-title">🌿 酒花投放配置(總 136g)</div>
+<div class="chart-wrapper">
+  <canvas id="hopChart"></canvas>
+</div>
+<div class="legend">
+  <span class="legend-item"><span class="legend-color" style="background: #7F77DD;"></span>苦花(煮沸)</span>
+  <span class="legend-item"><span class="legend-color" style="background: #1D9E75;"></span>香花(乾投 1)</span>
+  <span class="legend-item"><span class="legend-color" style="background: #D85A30;"></span>主香(乾投 2)</span>
+</div>
+</div>
+
+<h2>📈 發酵曲線</h2>
+
+<div class="chart-container">
+<div class="chart-title">🌡️ 14 天溫度變化</div>
+<div class="chart-wrapper">
+  <canvas id="tempChart"></canvas>
+</div>
+</div>
+
+<div class="chart-container">
+<div class="chart-title">⚖️ 比重變化(OG 1.052 → FG 1.014)</div>
+<div class="chart-wrapper">
+  <canvas id="gravityChart"></canvas>
+</div>
+</div>
+
+<h2>🌾 釀造步驟</h2>
+
+<div class="step-row"><div class="step-num">1</div><div class="step-content"><span class="step-title">糖化水準備:</span> 9L 水加熱至 75°C,加氯化鈣 0.5g,慢滴磷酸調 pH 至 <span class="highlight">5.2-5.4</span>。</div></div>
+
+<div class="step-row"><div class="step-num">2</div><div class="step-content"><span class="step-title">糖化:</span> 投麥芽混合,糖化溫度 67°C 靜置 60 分鐘,期間準備 8L 熱水備用。</div></div>
+
+<div class="step-row"><div class="step-num">3</div><div class="step-content"><span class="step-title">升溫滅酵:</span> 加 3L 熱水升溫到 76°C 維持 10 分鐘,過濾麥汁到煮沸鍋。</div></div>
+
+<div class="step-row"><div class="step-num">4</div><div class="step-content"><span class="step-title">洗槽:</span> 加 5L 76°C 熱水到糖化桶,取 1L 麥汁回倒(過濾底部混濁),濾出全部麥汁。重複 1-2 次,目標總麥汁 <b>15-16L</b>。</div></div>
+
+<div class="step-row"><div class="step-num">5</div><div class="step-content"><span class="step-title">煮沸 60 分鐘 <span class="modified">(中火,不蓋鍋蓋!)</span>:</span> 維持鼓泡狀讓 DMS 揮發。麥汁量目標 15-16L(不夠加熱水)。</div></div>
+
+<div class="warning-box">
+<b>⚠️ 為什麼煮沸不蓋鍋蓋:</b> 麥芽會釋放 DMS(二甲硫醚),有「煮玉米」異味。蓋鍋蓋 → DMS 凝結回鍋 → 啤酒有怪味。
+</div>
+
+<div class="step-row"><div class="step-num">6</div><div class="step-content"><span class="step-title">煮沸時程:</span> 第 45 分鐘加 Simcoe 14g → 第 50 分鐘加 Comet 14g → 第 55 分鐘加 Lactose 50g → 第 60 分鐘關火。</div></div>
+
+<div class="step-row"><div class="step-num">7</div><div class="step-content"><span class="step-title">冷卻:</span> 快速冷卻到 20°C(用銅管+冰水循環效率最高)。</div></div>
+
+<div class="step-row"><div class="step-num">8</div><div class="step-content"><span class="step-title">充氧 + 投酵母:</span> 倒入發酵桶,搖桶 60 秒充氧,溫度 18-20°C 投 <b class="modified">Verdant IPA 1 包(11g)</b>。</div></div>
+
+<div class="step-row"><div class="step-num">9</div><div class="step-content"><span class="step-title">主發酵(Day 1-3):</span> 19°C 靜置,前 2 天白色泡沫正常。</div></div>
+
+<div class="step-row"><div class="step-num">10</div><div class="step-content"><span class="step-title">升溫(Day 4):</span> 升至 22°C,提升生物轉化、清理雙乙醯。</div></div>
+
+<div class="step-row"><div class="step-num">11</div><div class="step-content"><span class="step-title"><span class="modified">乾投 1(Day 4-5,FG ~1.025)</span>:</span> CO₂ 沖桶 30 秒 → 10 秒內倒入 Citra 28g + Amarillo 28g → 補 CO₂ 10 秒,維持 22°C。</div></div>
+
+<div class="change-box">
+<b>★ 為什麼第 4-5 天而非第 2 天?</b> 第 2 天酵母還在狂發酵期,大量 CO₂ 會把酒花香氣衝走 30-40%。改第 4-5 天投,酵母活動減緩,香氣保留更好。
+</div>
+
+<div class="step-row"><div class="step-num">12</div><div class="step-content"><span class="step-title">確認 FG(Day 7-8):</span> 目標 1.014-1.016,連續 2 天不變即完成發酵。</div></div>
+
+<div class="step-row"><div class="step-num">13</div><div class="step-content"><span class="step-title">乾投 2(Day 8-9):</span> CO₂ 沖桶 → 倒入 Idaho 7 56g → 補 CO₂,維持 22°C 約 4 天。</div></div>
+
+<div class="step-row"><div class="step-num">14</div><div class="step-content"><span class="step-title">Cold Crash:</span> 降至 2°C 冷崩 24-48 小時(<u>不要超過 3 天</u>!)。吹氣管接 CO₂ 氣球防氧化。</div></div>
+
+<div class="step-row"><div class="step-num">15</div><div class="step-content"><span class="step-title">裝瓶:</span> 虹吸管離桶底 1-2cm。批次 CO₂ 沖瓶 + 蓋輕蓋 + 由下往上填 + 立刻壓蓋。</div></div>
+
+<h2>🍶 二次發酵 / 碳酸化時程</h2>
+
+<h3>🍾 玻璃瓶裝瓶(加糖二發)</h3>
+
+<table>
+  <tr><th>瓶容量</th><th>糖水量(Priming Sugar 90g + 200ml 冷開水)</th></tr>
+  <tr><td>330 ml</td><td>~7 ml</td></tr>
+  <tr><td>600 ml</td><td>~13 ml</td></tr>
+  <tr><td>1000 ml</td><td>~22 ml</td></tr>
+</table>
+
+<table>
+  <tr><th>階段</th><th>溫度 / 壓力</th><th>時間</th></tr>
+  <tr><td>二次發酵</td><td>25-27°C</td><td><b class="modified">7-10 天</b></td></tr>
+  <tr><td>冷藏熟成</td><td>2-4°C</td><td>3-7 天</td></tr>
+  <tr><td>最佳賞味</td><td>2-4°C</td><td>裝瓶後 3-6 週</td></tr>
+</table>
+
+<h3>🛢️ Keg 強制碳酸化(不加糖)</h3>
+
+<table>
+  <tr><th>階段</th><th>壓力</th><th>時間</th></tr>
+  <tr><td>初次飽和</td><td>10-12 PSI(2-4°C)</td><td><b>5-7 天</b></td></tr>
+  <tr><td>快速碳酸<small>(可選)</small></td><td>30 PSI 搖桶 5-8 分鐘</td><td>30 分鐘可喝</td></tr>
+  <tr><td><b>維持出酒</b></td><td><b>8-10 PSI</b></td><td>持續</td></tr>
+</table>
+
+<div class="info-box">
+<b>★ 重點:</b> 玻璃瓶 7-10 天有氣就冷藏(別放 45 天會氧化)。Keg <b>不加糖</b>,直接接 CO₂,飽和後降到 8-10 PSI 維持。
+</div>
+
+<h2>🛡️ 全程氧化控制</h2>
+
+<table>
+  <tr><th width="22%">階段</th><th>操作重點</th></tr>
+  <tr><td>投酵母前</td><td>充氧 60 秒搖桶</td></tr>
+  <tr><td>發酵中</td><td>密封發酵桶,絕不開蓋</td></tr>
+  <tr><td><b>乾投</b></td><td>CO₂ 沖桶 30 秒 → 10 秒內倒酒花 → 補 CO₂ 10 秒</td></tr>
+  <tr><td><b>Cold Crash</b></td><td>吹氣管接 CO₂ 氣球,防負壓吸入空氣</td></tr>
+  <tr><td><b>裝瓶</b></td><td>批次 CO₂ 沖瓶 + 蓋輕蓋 + 由下往上 + 立刻壓蓋(5 秒內)</td></tr>
+</table>
+
+<h2>🎯 風味預期</h2>
+
+<table>
+  <tr><th>視覺</th><th>嗅覺</th><th>味覺</th><th>口感</th></tr>
+  <tr>
+    <td>金黃朦朧 haze</td>
+    <td>桃子、杏桃、葡萄柚、淡淡荔枝</td>
+    <td>柑橘水果汁感、淡甜、苦感柔和</td>
+    <td>飽滿綿密、輕鬆易飲</td>
+  </tr>
+</table>
+
+<div class="info-box">
+<b>★ 跟原譜的差異:</b> 原版(Weiss)香蕉味跟酒花柑橘衝突;改版(Verdant)杏桃 + 桃子 + 柑橘 = 完美和諧。FG 從 1.020 降到 1.014-1.016,酒體更乾爽。
+</div>
+
+<div class="footer">
+  妃子起笑 Hazy Pale Ale × Verdant 改造版 — 基於 PB Craft 原配方修改 🍺
+</div>
+
+</div>
+
+<script>
+// 麥芽配方圓餅圖
+new Chart(document.getElementById('maltChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['比利時 Pilsner Malt', '燕麥(Flaked Oats)', '其他特殊麥芽'],
+    datasets: [{
+      data: [2000, 1000, 50],
+      backgroundColor: ['#F2A623', '#1D9E75', '#888780'],
+      borderWidth: 2,
+      borderColor: '#fff'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 } } }
+    }
+  }
+});
+
+// 酒花投放橫條圖
+new Chart(document.getElementById('hopChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Simcoe (45min)', 'Comet (50min)', 'Citra (乾投 1)', 'Amarillo (乾投 1)', 'Idaho 7 (乾投 2)'],
+    datasets: [{
+      label: '用量 (g)',
+      data: [14, 14, 28, 28, 56],
+      backgroundColor: ['#7F77DD', '#7F77DD', '#1D9E75', '#1D9E75', '#D85A30'],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { 
+        title: { display: true, text: '用量 (g)', font: { size: 11 } },
+        beginAtZero: true,
+        max: 60
+      }
+    }
+  }
+});
+
+// 溫度曲線
+new Chart(document.getElementById('tempChart'), {
+  type: 'line',
+  data: {
+    labels: ['Day 0', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 8', 'Day 9', 'Day 10', 'Day 11', 'Day 12', 'Day 13'],
+    datasets: [{
+      label: '溫度 (°C)',
+      data: [20, 19, 19, 19, 22, 22, 22, 22, 22, 22, 22, 22, 2, 2],
+      borderColor: '#D85A30',
+      backgroundColor: 'rgba(216, 90, 48, 0.1)',
+      tension: 0.3,
+      fill: true,
+      pointRadius: 4,
+      pointBackgroundColor: '#D85A30'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { 
+        title: { display: true, text: '溫度 (°C)', font: { size: 11 } },
+        min: 0, max: 25
+      },
+      x: { title: { display: true, text: '天數', font: { size: 11 } } }
+    }
+  }
+});
+
+// 比重曲線
+new Chart(document.getElementById('gravityChart'), {
+  type: 'line',
+  data: {
+    labels: ['Day 0', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 8', 'Day 9', 'Day 10'],
+    datasets: [{
+      label: '比重 SG',
+      data: [1.052, 1.048, 1.040, 1.032, 1.025, 1.020, 1.018, 1.016, 1.015, 1.014, 1.014],
+      borderColor: '#7F77DD',
+      backgroundColor: 'rgba(127, 119, 221, 0.1)',
+      tension: 0.3,
+      fill: true,
+      pointRadius: 4,
+      pointBackgroundColor: '#7F77DD'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { 
+        title: { display: true, text: '比重 (SG)', font: { size: 11 } },
+        min: 1.010, max: 1.055,
+        ticks: { callback: function(v) { return v.toFixed(3); } }
+      },
+      x: { title: { display: true, text: '發酵天數', font: { size: 11 } } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

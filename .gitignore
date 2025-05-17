@@ -1,0 +1,36 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# 編輯器暫存檔
+*.swp
+*.swo
+.vscode/
+.idea/
+*.sublime-*
+
+# 釀造臨時筆記(個人筆記不入 repo,寫進 README 的實戰追蹤表)
+notes/
+*.draft.md
+*.tmp
+
+# 備份檔
+*.bak
+*.backup
+*.old
+
+# 系統與壓縮檔
+*.zip
+*.tar.gz
+*.rar

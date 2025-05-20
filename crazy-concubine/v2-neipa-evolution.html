@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>妃子起笑 v2 — NEIPA 進化版</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans CJK TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    font-size: 13.5px;
+    color: #1a2620;
+    background: #f0ebe0;
+    line-height: 1.65;
+  }
+  .container {
+    max-width: 940px;
+    margin: 0 auto;
+    background: #fefcf7;
+    padding: 32px 36px;
+    border-left: 6px solid #d97a3c;
+    border-right: 6px solid #d97a3c;
+  }
+
+  .header {
+    text-align: center;
+    border-bottom: 3px solid #1a2620;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 800;
+    color: #1a2620;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+  .version-tag {
+    display: inline-block;
+    background: #d97a3c;
+    color: #fefcf7;
+    padding: 3px 12px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    border-radius: 2px;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: #5a6961;
+    font-style: italic;
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fefcf7;
+    background: #1a2620;
+    padding: 9px 16px;
+    margin: 22px 0 12px 0;
+    letter-spacing: 0.5px;
+  }
+
+  h3 {
+    color: #1a2620;
+    margin: 14px 0 8px 0;
+    font-size: 15px;
+    font-weight: bold;
+    border-left: 4px solid #d97a3c;
+    padding-left: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 14px 0;
+    font-size: 13px;
+  }
+  th, td {
+    padding: 9px 12px;
+    text-align: left;
+    border: 1px solid #d4c9b0;
+    vertical-align: top;
+  }
+  th {
+    background: #1a2620;
+    color: #fefcf7;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+  }
+  tr:nth-child(even) td { background: #f7f1e3; }
+
+  .info-box {
+    background: #f0ebe0;
+    border-left: 4px solid #1a2620;
+    padding: 11px 15px;
+    margin: 11px 0;
+    font-size: 13px;
+  }
+  .key-change {
+    background: #fff4e8;
+    border-left: 4px solid #d97a3c;
+    padding: 11px 15px;
+    margin: 11px 0;
+    font-size: 13px;
+  }
+  .key-change b { color: #b85a1e; }
+  .warning-box {
+    background: #fdf1ed;
+    border-left: 4px solid #c44d2a;
+    padding: 11px 15px;
+    margin: 11px 0;
+    font-size: 13px;
+  }
+  .compare-box {
+    background: #eef2ec;
+    border-left: 4px solid #4a6b54;
+    padding: 11px 15px;
+    margin: 11px 0;
+    font-size: 13px;
+  }
+
+  .stat-line {
+    background: #1a2620;
+    color: #fefcf7;
+    padding: 12px 18px;
+    margin: 12px 0;
+    font-size: 14px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+  .stat-line span { margin: 0 6px; opacity: 0.6; }
+  .stat-line b { color: #f4a460; font-weight: 800; }
+
+  .modified { color: #b85a1e; font-weight: bold; }
+  .old-value {
+    color: #999;
+    text-decoration: line-through;
+    font-size: 11.5px;
+    margin-right: 6px;
+  }
+
+  .step-row {
+    display: flex;
+    margin: 9px 0;
+    font-size: 13px;
+  }
+  .step-num {
+    background: #d97a3c;
+    color: #fefcf7;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-right: 12px;
+    font-size: 12.5px;
+  }
+  .step-content { flex: 1; padding-top: 3px; }
+  .step-title { font-weight: bold; color: #1a2620; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .timeline-block {
+    background: #f7f1e3;
+    border: 1px solid #d4c9b0;
+    padding: 14px;
+    margin: 12px 0;
+  }
+  .timeline-day {
+    display: flex;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px dashed #d4c9b0;
+  }
+  .timeline-day:last-child { border-bottom: none; }
+  .day-label {
+    background: #1a2620;
+    color: #fefcf7;
+    padding: 4px 10px;
+    font-size: 11.5px;
+    font-weight: bold;
+    margin-right: 12px;
+    flex-shrink: 0;
+    width: 90px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+  .day-label.hop { background: #d97a3c; }
+  .day-label.crit { background: #c44d2a; }
+  .day-content { flex: 1; font-size: 12.5px; padding-top: 3px; }
+  .day-content b { color: #1a2620; }
+
+  .reason-tag {
+    display: inline-block;
+    background: #1a2620;
+    color: #fefcf7;
+    font-size: 10.5px;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 6px;
+    letter-spacing: 0.3px;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 26px;
+    padding-top: 16px;
+    border-top: 3px solid #1a2620;
+    color: #5a6961;
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  ul.tight {
+    margin: 6px 0 8px 22px;
+    font-size: 12.5px;
+  }
+  ul.tight li { margin-bottom: 3px; }
+
+  @media (max-width: 600px) {
+    body { font-size: 12.5px; }
+    .container { padding: 18px 20px; border-left-width: 4px; border-right-width: 4px; }
+    h1 { font-size: 22px; }
+    h2 { font-size: 16px; }
+    .two-col { grid-template-columns: 1fr; }
+    .day-label { width: 75px; font-size: 10.5px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+  <div class="version-tag">VERSION 2 · NEIPA EVOLUTION</div>
+  <h1>妃子起笑 v2</h1>
+  <div class="subtitle">East Coast NEIPA · 散投優化版 · 基於 v1 實戰修正</div>
+</div>
+
+<div class="stat-line">
+  <span>OG <b>1.060</b></span>|
+  <span>FG <b>1.012-1.014</b></span>|
+  <span>ABV <b>6.0-6.3%</b></span>|
+  <span>IBU <b>40</b></span>|
+  <span>EBC <b>8</b></span>|
+  <span>容量 <b>8-10 L</b></span>
+</div>
+
+<div class="key-change">
+<b>★ 改版核心邏輯</b><br>
+v1 失控的根因:Idaho 7 在 FG 已到位(發酵收尾)時投下,啟動失控 hop creep,FG 從目標 1.014-1.016 掉到 1.008。v2 三大改造:<b>(1) 改成單段 dry hop,投在主發酵活躍期</b>,讓酵母在還旺時順便吃掉 hop creep 產糖、清雙乙醯;<b>(2) 提高 OG 到 1.060、增加燕麥比例</b>,補足散投與單段帶來的香氣強度需求,並用更多 β-葡聚醣撐酒體;<b>(3) 拉長主發酵期、設計專門的 D-rest</b>,確保 hop creep 與雙乙醯雙重收尾。風格從 Hazy Pale Ale 上推至 NEIPA 強度,更貼近商業 DDH 印象。
+</div>
+
+<h2>📋 v1 vs v2 對照</h2>
+
+<table>
+  <tr>
+    <th width="22%">項目</th>
+    <th width="34%">v1(原版)</th>
+    <th width="44%">v2(改版)</th>
+  </tr>
+  <tr>
+    <td>風格定位</td>
+    <td>Hazy Pale Ale</td>
+    <td class="modified">East Coast NEIPA(更接近商業)</td>
+  </tr>
+  <tr>
+    <td>OG / FG / ABV</td>
+    <td>1.052 / 1.014-1.016 / 4.5-5%</td>
+    <td class="modified">1.060 / 1.012-1.014 / 6.0-6.3%</td>
+  </tr>
+  <tr>
+    <td>麥芽結構</td>
+    <td>Pilsner 65% + 燕麥 33% + 乳糖</td>
+    <td class="modified">Pale Ale 50% + 燕麥 25% + 小麥 15% + 乳糖 + Carafoam</td>
+  </tr>
+  <tr>
+    <td>糖化溫度</td>
+    <td>67°C 60min</td>
+    <td class="modified">65°C 60min(降低糊精)</td>
+  </tr>
+  <tr>
+    <td>Dry Hop 結構</td>
+    <td>兩段:Day 4 + Day 9(各 56g)</td>
+    <td class="modified">單段:Day 3-4 主發酵期(140g 一次)</td>
+  </tr>
+  <tr>
+    <td>Dry Hop 時機關鍵</td>
+    <td>第二段在 FG 已到位才投 ❌</td>
+    <td class="modified">在比重 1.030-1.025 之間投 ✓</td>
+  </tr>
+  <tr>
+    <td>酒花總量</td>
+    <td>112g dry hop + 28g 煮沸</td>
+    <td class="modified">140g dry hop + 28g 煮沸(補散投損失)</td>
+  </tr>
+  <tr>
+    <td>酵母</td>
+    <td>Verdant IPA</td>
+    <td>Verdant IPA(維持,風味貼合 NEIPA)</td>
+  </tr>
+  <tr>
+    <td>Cold Crash</td>
+    <td>2°C 24-48h</td>
+    <td class="modified">省略(直接進 keg)</td>
+  </tr>
+  <tr>
+    <td>後段流程</td>
+    <td>瓶內二發 + Keg 二選一</td>
+    <td class="modified">Keg 強制碳酸(低壓慢飽和)</td>
+  </tr>
+  <tr>
+    <td>總週期</td>
+    <td>14 天</td>
+    <td>14-16 天(視 D-rest 時間)</td>
+  </tr>
+</table>
+
+<h2>🌾 麥芽配方(總 3.6kg)</h2>
+
+<div class="two-col">
+  <div>
+    <table>
+      <tr><th>原料</th><th>用量</th></tr>
+      <tr><td><b class="modified">英式 Pale Ale Malt</b></td><td>1800g(50%)</td></tr>
+      <tr><td>Flaked Oats(燕麥)</td><td>900g(25%)</td></tr>
+      <tr><td><b class="modified">Flaked Wheat(片狀小麥)</b></td><td>540g(15%)</td></tr>
+      <tr><td><b class="modified">Carafoam</b></td><td>180g(5%)</td></tr>
+      <tr><td>Lactose 乳糖(煮沸 55min)</td><td>120g</td></tr>
+      <tr><td>白麥芽糖漿(可選,煮沸 30min)</td><td>180g</td></tr>
+      <tr><td>Verdant IPA 酵母</td><td>2 包(22g)</td></tr>
+    </table>
+  </div>
+  <div>
+    <table>
+      <tr><th colspan="2">酒花(煮沸 28g + Dry Hop 140g)</th></tr>
+      <tr><td>Magnum 或 Warrior(煮沸 60min)</td><td>14g</td></tr>
+      <tr><td>Citra(煮沸 10min)</td><td>14g</td></tr>
+      <tr><td>Citra(Whirlpool 80°C 20min)</td><td>28g</td></tr>
+      <tr><td><b class="modified">Citra(Dry Hop, Day 3-4)</b></td><td>50g</td></tr>
+      <tr><td><b class="modified">Amarillo(Dry Hop, Day 3-4)</b></td><td>40g</td></tr>
+      <tr><td><b class="modified">Idaho 7(Dry Hop, Day 3-4)</b></td><td>50g</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="key-change">
+<b>★ 麥芽改造重點</b>
+<ul class="tight">
+  <li><b>Pale Ale 取代 Pilsner</b>:更多麥芽香、酒體更厚,符合 NEIPA 性格</li>
+  <li><b>Flaked Wheat 15%</b>:小麥蛋白質強化泡持與綿密口感,商業 NEIPA 標配</li>
+  <li><b>Carafoam 5%</b>:專門增加泡持與酒體,小量但有感</li>
+  <li><b>乳糖加到 120g</b>:糖化降到 65°C 會讓酒體偏乾,乳糖補回飽滿感,鎖死 FG 地板</li>
+  <li><b>麥芽糖漿(可選)</b>:推高 OG 到 1.060 同時不增加糊精,可被酵母完全發酵,讓酒體乾淨不黏膩</li>
+</ul>
+</div>
+
+<h2>🌿 酒花改造重點</h2>
+
+<div class="key-change">
+<b>★ 從「兩段散投」改成「單段主發酵期投放」</b><br>
+這是 v2 最關鍵的改動。原理:dry hop 投在主發酵活躍期(比重已降 50% 但還沒打平),酵母仍在大量代謝,hop creep 的酵素切出可發酵糖會被酵母即時吃掉、產生的雙乙醯也一併清掉,等於把 hop creep 的副作用「吸收」在主發酵裡,而不是事後才爆發。代價是發酵 CO₂ 會沖走部分香氣(預估 20-30%),所以 dry hop 總量從 112g 加到 <b>140g</b> 補償。
+</div>
+
+<div class="compare-box">
+<b>★ 為什麼加 Whirlpool 酒花?</b><br>
+v1 沒有 whirlpool 酒花。煮沸結束關火後,降溫到 80°C 再加酒花靜置 20 分鐘(whirlpool / hop stand),萃取大量香氣與風味但幾乎不增加苦度,是商業 NEIPA 的香氣骨幹之一。28g Citra 在這階段比同量 dry hop 還有效率,且完全沒有 hop creep 風險。
+</div>
+
+<h2>📅 14-16 天時程</h2>
+
+<div class="timeline-block">
+
+  <div class="timeline-day">
+    <span class="day-label">Day 0</span>
+    <div class="day-content"><b>釀造日</b>:糖化 65°C 60min → 升溫滅酵 76°C → 煮沸 60min → Whirlpool 80°C 20min → 冷卻 18°C → 充氧 → 投 <b class="modified">2 包 Verdant IPA</b>(高密度投酵母確保旺盛發酵)</div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label">Day 1-2</span>
+    <div class="day-content"><b>主發酵啟動期</b>:18-19°C 維持。預期 Day 2 比重從 1.060 降到約 1.040,水封大量冒泡</div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label hop">Day 3</span>
+    <div class="day-content"><b>測比重</b>:目標 1.030-1.025 區間(發酵約 50-60%)。比重落在這區間就進入下一步 → <span class="reason-tag">關鍵節點</span></div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label hop">Day 3-4</span>
+    <div class="day-content"><b>單段 Dry Hop</b>:CO₂ 沖桶 30 秒 → 10 秒內倒入 <b class="modified">Citra 50g + Amarillo 40g + Idaho 7 50g(共 140g)</b> → 補 CO₂ 10 秒。<b>溫度升到 20°C</b>(別更高,避免酒花氧化加速)→ <span class="reason-tag">酵母還旺,hop creep 被吸收</span></div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label">Day 5-7</span>
+    <div class="day-content"><b>發酵 + dry hop 萃取同步進行</b>:20°C 維持。酵母繼續吃糖、同步消化 hop creep 酵素切出的新糖。預期 Day 7 比重接近 1.014-1.012</div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label crit">Day 8</span>
+    <div class="day-content"><b>升溫到 22°C(D-rest 開始)</b>:這是專門設計的雙乙醯清除期。dry hop 萃取也已飽和 → <span class="reason-tag">雙重收尾</span></div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label">Day 8-11</span>
+    <div class="day-content"><b>D-rest + hop creep 收尾期</b>:22°C 維持 3-4 天。每天測比重,觀察打平。期間抿樣檢測雙乙醯(奶油爆米花味)</div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label crit">Day 11-12</span>
+    <div class="day-content"><b>綠燈確認</b>:比重連兩天完全不動 + 無明顯雙乙醯 → 可進入轉桶。若雙乙醯仍在,繼續 22°C 等到清掉(可能延到 Day 13-14)</div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label">Day 12-14</span>
+    <div class="day-content"><b>Closed Transfer 進 Keg</b>:CO₂ 頂壓液對液轉移到已驅氧 keg,管子離桶底 2-3cm,留底不吸渣 → <span class="reason-tag">省略 cold crash</span></div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label">Day 14+</span>
+    <div class="day-content"><b>Keg 強制碳酸</b>:降至 2-4°C,接 CO₂ <b>10-12 PSI 靜置慢飽和 5-7 天</b>。<b>禁止 30 PSI 猛搖</b>(氣泡會粗)。飽和後降到 8-10 PSI 維持出酒。再熟成 1-2 週氣泡更綿密</div>
+  </div>
+
+</div>
+
+<h2>🌾 釀造步驟詳解</h2>
+
+<div class="step-row"><div class="step-num">1</div><div class="step-content"><span class="step-title">糖化水準備:</span> 11L 水加熱至 73°C,加氯化鈣 0.7g,調 pH 5.2-5.4。</div></div>
+
+<div class="step-row"><div class="step-num">2</div><div class="step-content"><span class="step-title">糖化:</span> 投麥芽,目標糖化溫度 <b class="modified">65°C 靜置 60 分鐘</b>(降低糊精,減少 hop creep 可啃對象)。準備 9L 76°C 熱水備用。</div></div>
+
+<div class="step-row"><div class="step-num">3</div><div class="step-content"><span class="step-title">升溫滅酵:</span> 加 3L 熱水升溫到 76°C 維持 10 分鐘,過濾麥汁到煮沸鍋。</div></div>
+
+<div class="step-row"><div class="step-num">4</div><div class="step-content"><span class="step-title">洗槽:</span> 加 6L 76°C 熱水,過濾出全部麥汁。目標總麥汁 <b>16-17L</b>(因為 OG 提高、煮沸蒸發量加大)。</div></div>
+
+<div class="step-row"><div class="step-num">5</div><div class="step-content"><span class="step-title">煮沸 60 分鐘(不蓋鍋蓋):</span> 第 0 分鐘加 Magnum/Warrior 14g(主苦);第 30 分鐘加麥芽糖漿(若用);第 50 分鐘加 Citra 14g(後苦+部分風味);第 55 分鐘加 Lactose 120g;第 60 分鐘關火。</div></div>
+
+<div class="step-row"><div class="step-num">6</div><div class="step-content"><span class="step-title"><b class="modified">Whirlpool / Hop Stand(新增關鍵步驟):</b></span> 關火後讓麥汁自然降溫到 80°C(約 10-15 分鐘),加 Citra 28g,用消毒長勺繞鍋攪 1 分鐘製造漩渦,蓋鍋蓋靜置 <b>20 分鐘</b>。這是 NEIPA 香氣骨幹,完全沒有 hop creep 風險。</div></div>
+
+<div class="step-row"><div class="step-num">7</div><div class="step-content"><span class="step-title">冷卻:</span> 快速冷卻到 18°C(銅管+冰水循環)。冷卻越快 cold break 越好。</div></div>
+
+<div class="step-row"><div class="step-num">8</div><div class="step-content"><span class="step-title">充氧 + 投酵母:</span> 倒入發酵桶,搖桶 90 秒充氧(這支 OG 較高,需要更多溶氧),18-19°C 投 <b class="modified">Verdant IPA 2 包(22g)</b>。雙包高密度投放是這版的關鍵 — 大量健康酵母才能在 hop creep 期間維持優勢、即時消化新生糖分。</div></div>
+
+<div class="step-row"><div class="step-num">9</div><div class="step-content"><span class="step-title">主發酵啟動期(Day 1-2):</span> 18-19°C 靜置,前 48 小時白色泡沫旺盛屬正常。</div></div>
+
+<div class="step-row"><div class="step-num">10</div><div class="step-content"><span class="step-title"><b class="modified">Day 3 比重檢查:</b></span> 測比重,目標 1.030-1.025 區間。<b>必須在此區間 dry hop</b>,過早(>1.035)香氣會被衝走更多;過晚(<1.020)就回到 v1 的 hop creep 失控風險。如果 Day 3 還在 1.035 以上,延到 Day 4 再測再投。</div></div>
+
+<div class="step-row"><div class="step-num">11</div><div class="step-content"><span class="step-title"><b class="modified">單段 Dry Hop(關鍵改造):</b></span> CO₂ 沖桶 30 秒 → 10 秒內倒入 Citra 50g + Amarillo 40g + Idaho 7 50g → 補 CO₂ 10 秒密封。投完升溫到 <b>20°C</b>(幫助萃取與酵母繼續工作)。</div></div>
+
+<div class="step-row"><div class="step-num">12</div><div class="step-content"><span class="step-title">發酵+萃取同步期(Day 5-7):</span> 20°C 維持,酵母繼續發酵的同時 dry hop 萃取香氣,hop creep 產糖被即時吃掉,雙乙醯也順便清。這 3-4 天是 v2 設計的精華期,別開桶、別動它。</div></div>
+
+<div class="step-row"><div class="step-num">13</div><div class="step-content"><span class="step-title"><b class="modified">D-rest 升溫(Day 8):</b></span> 升到 22°C,啟動雙乙醯清除模式。這時 dry hop 已泡 4-5 天,萃取也飽和。</div></div>
+
+<div class="step-row"><div class="step-num">14</div><div class="step-content"><span class="step-title">綠燈確認(Day 8-12):</span> 22°C 維持,每天測比重。連續兩天讀數不動 + 抿樣無雙乙醯(可做 60°C 加熱測試)= 真正完成。寧可多等 2 天,不要急。</div></div>
+
+<div class="step-row"><div class="step-num">15</div><div class="step-content"><span class="step-title">Closed Transfer 進 Keg:</span> Keg 先用 CO₂ 充滿驅氧。從發酵桶用 CO₂ 頂壓(不要虹吸開放),液對液封閉轉移。發酵桶側管口離底 2-3cm,留底不吸渣。轉完 keg 充壓密封。</div></div>
+
+<div class="step-row"><div class="step-num">16</div><div class="step-content"><span class="step-title"><b class="modified">低壓慢飽和強制碳酸:</b></span> Keg 降溫到 2-4°C,接 CO₂ 設 <b>10-12 PSI</b>,靜置 5-7 天。<b>絕對不要用 30 PSI 猛搖速成法</b>(氣泡會粗、不持久)。飽和後降到 8-10 PSI 維持出酒。再 keg 內熟成 1-2 週,氣泡與風味更穩定融合。</div></div>
+
+<h2>🛡️ 氧化控制(NEIPA 致命關)</h2>
+
+<table>
+  <tr><th width="22%">階段</th><th>操作重點</th></tr>
+  <tr><td>投酵母前</td><td>充氧 90 秒(這是唯一該進氧的時刻)</td></tr>
+  <tr><td>發酵中</td><td>密封,絕不開蓋</td></tr>
+  <tr><td>Dry Hop</td><td>CO₂ 沖桶 30 秒 → 10 秒內倒酒花 → 補 CO₂ 10 秒密封</td></tr>
+  <tr><td>取樣</td><td>從取樣閥取,動作快;若必須開蓋,先 CO₂ 沖頂空</td></tr>
+  <tr><td><b class="modified">Closed Transfer</b></td><td>CO₂ 頂壓液對液,Keg 預先驅氧,全程不接觸空氣</td></tr>
+  <tr><td>Keg 出酒</td><td>維持 CO₂ 正壓,避免吸入空氣</td></tr>
+</table>
+
+<h2>🎯 預期風味</h2>
+
+<table>
+  <tr><th>視覺</th><th>嗅覺</th><th>味覺</th><th>口感</th></tr>
+  <tr>
+    <td>金黃濃郁 haze,接近果汁狀</td>
+    <td>桃子、芒果、百香果、葡萄柚、淡淡哈密瓜</td>
+    <td>飽滿熱帶水果汁感,苦感柔和不刺,尾韻乾淨</td>
+    <td>綿密厚實、ABV 6% 但喝起來輕鬆,氣泡細緻</td>
+  </tr>
+</table>
+
+<div class="info-box">
+<b>★ 跟 v1 比的關鍵差異</b>:v1 設計是「飽滿綿密 Hazy Pale Ale」但 hop creep 失控變成偏瘦偏乾的酒;v2 直接定位 NEIPA、提高 OG 與燕麥/小麥比例、單段 dry hop 卡在主發酵期內,結果應該是「更接近商業 DDH 的多汁濃郁感」,且 FG 可控、瓶間/桶間一致性更好。
+</div>
+
+<div class="warning-box">
+<b>⚠️ 散投限制下的真實預期</b><br>
+散投+一般顆粒(非 Cryo)的香氣強度天花板,大約是商業 DDH 的 70-80%。v2 用提量(140g)、whirlpool 補強、單段投放保香等手段把這個天花板拉高,但要 100% 趕上商業水準,未來仍建議升級到 Cryo 顆粒+不鏽鋼 dry hop 濾筒,可再拉一截。
+</div>
+
+<h2>🔧 進階微調空間</h2>
+
+<table>
+  <tr><th width="30%">如果這次成品...</th><th>下次怎麼調</th></tr>
+  <tr>
+    <td>還是覺得偏苦</td>
+    <td>Magnum/Warrior 減到 10g,whirlpool Citra 加到 35g(風味取代苦度)</td>
+  </tr>
+  <tr>
+    <td>香氣還不夠強</td>
+    <td>Dry hop 加到 160-180g,或拆成 Day 3 投 90g + Day 6 投 60g(分兩段但都在發酵期內)</td>
+  </tr>
+  <tr>
+    <td>酒體還是偏瘦</td>
+    <td>糖化溫度回升到 66°C,燕麥加到 30%,乳糖加到 150g</td>
+  </tr>
+  <tr>
+    <td>泡沫不夠持久</td>
+    <td>Carafoam 加到 8%,Flaked Wheat 加到 18%</td>
+  </tr>
+  <tr>
+    <td>有奶油味(雙乙醯)</td>
+    <td>D-rest 時間延長到 5-7 天,或下批投酵母量再加(投 2.5-3 包)</td>
+  </tr>
+</table>
+
+<div class="footer">
+  妃子起笑 v2 — NEIPA Evolution · 基於 v1 失控數據(FG 1.008)診斷修正 · 散投優化路線
+</div>
+
+</div>
+</body>
+</html>

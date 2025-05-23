@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orange Glow DDH NEIPA</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans CJK TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    font-size: 13px;
+    color: #2c2c2c;
+    background: #f5f5f5;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: 25px 30px;
+  }
+  
+  .header {
+    text-align: center;
+    border-bottom: 2.5px solid #E67E22;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 26px;
+    font-weight: bold;
+    color: #D35400;
+    margin-bottom: 4px;
+  }
+  .subtitle { font-size: 13px; color: #555; }
+  
+  h2 {
+    font-size: 17px;
+    font-weight: bold;
+    color: #fff;
+    background: #E67E22;
+    padding: 7px 14px;
+    margin: 18px 0 10px 0;
+    border-radius: 4px;
+  }
+  
+  h3 {
+    color: #D35400;
+    margin: 10px 0 6px 0;
+    font-size: 14px;
+    border-left: 3px solid #E67E22;
+    padding-left: 8px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 12px 0;
+    font-size: 12.5px;
+  }
+  th, td {
+    padding: 7px 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+    vertical-align: top;
+  }
+  th {
+    background: #FDF2E9;
+    font-weight: bold;
+    color: #D35400;
+  }
+  tr:nth-child(even) td { background: #FAFAFA; }
+  
+  .info-box {
+    background: #FDF2E9;
+    border-left: 3px solid #E67E22;
+    padding: 9px 13px;
+    margin: 9px 0;
+    border-radius: 3px;
+    font-size: 12.5px;
+  }
+  .warning-box {
+    background: #FEF5E7;
+    border-left: 3px solid #F39C12;
+    padding: 9px 13px;
+    margin: 9px 0;
+    border-radius: 3px;
+    font-size: 12.5px;
+  }
+  .danger-box {
+    background: #FADBD8;
+    border-left: 3px solid #E74C3C;
+    padding: 9px 13px;
+    margin: 9px 0;
+    border-radius: 3px;
+    font-size: 12.5px;
+  }
+  
+  .highlight {
+    background: #FFF3CD;
+    padding: 1px 4px;
+    border-radius: 2px;
+    font-weight: bold;
+  }
+  .modified { color: #E74C3C; font-weight: bold; }
+  
+  .stat-line {
+    background: #FDF2E9;
+    padding: 8px 14px;
+    border-radius: 4px;
+    margin: 10px 0;
+    font-size: 13px;
+    text-align: center;
+    border: 1px solid #F5CBA7;
+  }
+  .stat-line span { margin: 0 8px; color: #888; }
+  .stat-line b { color: #D35400; }
+  
+  .step-row {
+    display: flex;
+    margin: 7px 0;
+    font-size: 12.5px;
+  }
+  .step-num {
+    background: #E67E22;
+    color: white;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 26px;
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-right: 10px;
+    font-size: 12px;
+  }
+  .step-content { flex: 1; padding-top: 2px; }
+  .step-title { font-weight: bold; color: #D35400; }
+  
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  
+  .chart-container {
+    background: #FAFAFA;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 12px 0;
+  }
+  .chart-title {
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    color: #D35400;
+    margin-bottom: 10px;
+  }
+  .chart-wrapper {
+    position: relative;
+    height: 280px;
+  }
+  
+  .timeline-svg {
+    background: #FAFAFA;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 12px;
+    margin: 12px 0;
+  }
+  .timeline-svg svg {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+  }
+  
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 11px;
+    color: #666;
+    justify-content: center;
+  }
+  .legend-item { display: flex; align-items: center; gap: 4px; }
+  .legend-color { width: 12px; height: 12px; border-radius: 2px; }
+  
+  .footer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1.5px solid #E67E22;
+    color: #888;
+    font-size: 12px;
+  }
+  
+  @media (max-width: 600px) {
+    body { font-size: 12px; }
+    .container { padding: 15px 18px; }
+    h1 { font-size: 20px; }
+    h2 { font-size: 15px; }
+    .two-col { grid-template-columns: 1fr; }
+    .chart-wrapper { height: 220px; }
+  }
+  
+  @media print {
+    body { background: white; }
+    .container { padding: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+  <h1>🍊 Orange Glow DDH NEIPA</h1>
+  <div class="subtitle">柳橙汁色澤 × Galaxy 雙乾投 × 比利時+英國麥芽組合 × 10L 批次</div>
+</div>
+
+<div class="stat-line">
+  <span>OG <b>1.075-1.080</b></span>|
+  <span>FG <b>1.012-1.016</b></span>|
+  <span>ABV <b>7.8-8.2%</b></span>|
+  <span>IBU <b>25-30</b></span>|
+  <span>EBC <b>12-14</b></span>|
+  <span>容量 <b>10 L</b></span>
+</div>
+
+<h2>📅 14 天釀造時程</h2>
+
+<div class="timeline-svg">
+<svg viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg">
+  <text x="340" y="30" text-anchor="middle" font-size="15" font-weight="bold" fill="#D35400">Orange Glow 釀造 14 天時程</text>
+  <line x1="60" y1="80" x2="620" y2="80" stroke="#888" stroke-width="1.5"/>
+  
+  <circle cx="80" cy="80" r="14" fill="#FAEEDA" stroke="#BA7517" stroke-width="0.5"/>
+  <text x="80" y="110" text-anchor="middle" font-size="11" fill="#666">Day 0</text>
+  <text x="80" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#854F0B">釀造日</text>
+  <text x="80" y="148" text-anchor="middle" font-size="10" fill="#666">糖化→煮沸</text>
+  <text x="80" y="162" text-anchor="middle" font-size="10" fill="#666">→冷卻投酵母×2</text>
+  
+  <circle cx="180" cy="80" r="12" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="180" y="110" text-anchor="middle" font-size="11" fill="#666">Day 1-3</text>
+  <text x="180" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#0F6E56">主發酵</text>
+  <text x="180" y="148" text-anchor="middle" font-size="10" fill="#666">19°C</text>
+  
+  <circle cx="280" cy="80" r="12" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="280" y="110" text-anchor="middle" font-size="11" fill="#666">Day 4</text>
+  <text x="280" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#0F6E56">升溫</text>
+  <text x="280" y="148" text-anchor="middle" font-size="10" fill="#666">22°C</text>
+  
+  <circle cx="380" cy="80" r="14" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+  <text x="380" y="110" text-anchor="middle" font-size="11" fill="#666">Day 4-5</text>
+  <text x="380" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#3C3489">乾投 1</text>
+  <text x="380" y="148" text-anchor="middle" font-size="10" fill="#666">Galaxy+Citra</text>
+  
+  <circle cx="480" cy="80" r="14" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+  <text x="480" y="110" text-anchor="middle" font-size="11" fill="#666">Day 8-9</text>
+  <text x="480" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#3C3489">乾投 2</text>
+  <text x="480" y="148" text-anchor="middle" font-size="10" fill="#666">Galaxy+Amarillo</text>
+  
+  <circle cx="560" cy="80" r="12" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+  <text x="560" y="110" text-anchor="middle" font-size="11" fill="#666">Day 11-12</text>
+  <text x="560" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#0C447C">Cold Crash</text>
+  <text x="560" y="148" text-anchor="middle" font-size="10" fill="#666">2°C / 1-2 天</text>
+  
+  <circle cx="615" cy="80" r="12" fill="#FAEEDA" stroke="#BA7517" stroke-width="0.5"/>
+  <text x="615" y="110" text-anchor="middle" font-size="11" fill="#666">Day 13-14</text>
+  <text x="615" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#854F0B">裝瓶/桶</text>
+  
+  <rect x="60" y="210" width="270" height="140" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="195" y="232" text-anchor="middle" font-size="13" font-weight="bold" fill="#444441">關鍵控制點</text>
+  <text x="75" y="255" font-size="11" fill="#444">糖化 pH: 5.2-5.4</text>
+  <text x="75" y="275" font-size="11" fill="#444">OG 1.075-1.080(高 OG)</text>
+  <text x="75" y="295" font-size="11" fill="#444">Verdant × 2 包(必須!)</text>
+  <text x="75" y="315" font-size="11" fill="#444">Fermaid-K 5-6g 營養劑</text>
+  <text x="75" y="335" font-size="11" fill="#444">FG 1.012-1.016</text>
+  
+  <rect x="350" y="210" width="270" height="140" rx="8" fill="#FAEEDA" stroke="#BA7517" stroke-width="0.5"/>
+  <text x="485" y="232" text-anchor="middle" font-size="13" font-weight="bold" fill="#854F0B">v8 教訓改進</text>
+  <text x="365" y="255" font-size="11" fill="#633806">洗槽水 5L(不要 8-9L)</text>
+  <text x="365" y="275" font-size="11" fill="#633806">中火煮沸不蓋鍋蓋</text>
+  <text x="365" y="295" font-size="11" fill="#633806">Magnum 嚴格 6g</text>
+  <text x="365" y="315" font-size="11" fill="#633806">2 包酵母避免卡 FG</text>
+  <text x="365" y="335" font-size="11" fill="#633806">準備 2L 冷開水救援</text>
+</svg>
+</div>
+
+<h2>📋 完整配方</h2>
+
+<div class="two-col">
+  <div>
+    <table>
+      <tr><th colspan="2">穀物(總 5kg)</th></tr>
+      <tr><td>Extra Pale Ale Malt<br><small>(Simpsons, EBC 2.5-3.5)</small></td><td>2,000g</td></tr>
+      <tr><td>Munich Light Malt<br><small>(Castle, EBC 13-17)</small></td><td>1,000g</td></tr>
+      <tr><td>Wheat Blanc<br><small>(Castle, EBC 3.5-5.5)</small></td><td>1,000g</td></tr>
+      <tr><td>燕麥片<br><small>(全聯)</small></td><td>1,000g</td></tr>
+      <tr><td>葡萄糖<br><small>(煮沸末)</small></td><td>200g</td></tr>
+    </table>
+  </div>
+  <div>
+    <table>
+      <tr><th colspan="2">酒花(總 168g)</th></tr>
+      <tr><td>Magnum(60min)</td><td>6g</td></tr>
+      <tr><td>Citra(旋渦)</td><td>28g</td></tr>
+      <tr><td>Amarillo(旋渦)</td><td>28g</td></tr>
+      <tr><td>Galaxy(乾投 1)</td><td>28g</td></tr>
+      <tr><td>Citra(乾投 1)</td><td>28g</td></tr>
+      <tr><td>Galaxy(乾投 2)</td><td>28g</td></tr>
+      <tr><td>Amarillo(乾投 2)</td><td>28g</td></tr>
+    </table>
+    <table>
+      <tr><th colspan="2">酵母 + 營養劑</th></tr>
+      <tr><td><b class="modified">Verdant IPA × 2 包</b></td><td>22g</td></tr>
+      <tr><td>Fermaid-K(煮沸末)</td><td>5-6g</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="chart-container">
+<div class="chart-title">📊 麥芽配方比例(總 5kg)</div>
+<div class="chart-wrapper">
+  <canvas id="maltChart"></canvas>
+</div>
+</div>
+
+<div class="chart-container">
+<div class="chart-title">🌿 酒花投放配置(總 168g)</div>
+<div class="chart-wrapper">
+  <canvas id="hopChart"></canvas>
+</div>
+<div class="legend">
+  <span class="legend-item"><span class="legend-color" style="background: #7F77DD;"></span>苦花(煮沸)</span>
+  <span class="legend-item"><span class="legend-color" style="background: #1D9E75;"></span>旋渦(熄火)</span>
+  <span class="legend-item"><span class="legend-color" style="background: #D85A30;"></span>乾投 1(發酵中)</span>
+  <span class="legend-item"><span class="legend-color" style="background: #B7950B;"></span>乾投 2(冷崩前)</span>
+</div>
+</div>
+
+<h2>📈 發酵曲線</h2>
+
+<div class="chart-container">
+<div class="chart-title">🌡️ 14 天溫度變化</div>
+<div class="chart-wrapper">
+  <canvas id="tempChart"></canvas>
+</div>
+</div>
+
+<div class="chart-container">
+<div class="chart-title">⚖️ 比重變化(OG 1.078 → FG 1.014)</div>
+<div class="chart-wrapper">
+  <canvas id="gravityChart"></canvas>
+</div>
+</div>
+
+<h2>🌾 釀造步驟</h2>
+
+<div class="step-row"><div class="step-num">1</div><div class="step-content"><span class="step-title">糖化水準備:</span> 11L 水加熱至 72°C,加氯化鈣 1g + 石膏 0.5g,慢滴磷酸調 pH 至 <span class="highlight">5.2-5.4</span>(寧可 5.4 也不要 5.0 以下!)。</div></div>
+
+<div class="step-row"><div class="step-num">2</div><div class="step-content"><span class="step-title">投料糖化:</span> 麥芽混合,66-68°C 靜置 75 分鐘,每 15 分鐘攪拌一次,碘素測試確認完成。</div></div>
+
+<div class="step-row"><div class="step-num">3</div><div class="step-content"><span class="step-title">升溫滅酵 + 過濾:</span> 升溫 76°C 維持 10 分鐘 → 過濾收集第一道麥汁(不擠壓)。</div></div>
+
+<div class="step-row"><div class="step-num">4</div><div class="step-content"><span class="step-title">洗槽:</span> 加 <b class="modified">5L 76-78°C 熱水洗槽</b>(不要 8-9L!)浸泡 5-10 分鐘 → 過濾合併。<b>目標收集 11-12L。</b></div></div>
+
+<div class="step-row"><div class="step-num">5</div><div class="step-content"><span class="step-title">第一麥汁酒花:</span> 煮沸前加 Magnum <b>6g</b>(嚴格用電子秤秤,不要再 22g!)。</div></div>
+
+<div class="danger-box">
+<b>⚠️ Magnum 教訓:</b> v8 不小心加 22g(誤差 3.7 倍)→ IBU 60-70 → 喉頭苦+酸感放大。<b>嚴格 6g!</b>
+</div>
+
+<div class="step-row"><div class="step-num">6</div><div class="step-content"><span class="step-title">煮沸 60 分鐘 <span class="modified">(中火,不蓋鍋蓋!)</span>:</span> 維持「鼓泡狀」目標蒸發 1L。第 45 分鐘加葡萄糖 200g,第 50 分鐘加 Fermaid-K 5-6g,第 60 分鐘關火測 OG。</div></div>
+
+<div class="warning-box">
+<b>OG 救援機制(備 2L 冷開水):</b> 1.075-1.080 ✅ 繼續 / 1.080-1.085 加 0.5L / 1.085-1.090 加 1L / 1.090+ 加 1.5-2L
+</div>
+
+<div class="step-row"><div class="step-num">7</div><div class="step-content"><span class="step-title">旋渦浸泡:</span> 75-80°C 投 Citra 28g + Amarillo 28g,蓋消毒鍋蓋密封,靜置 20-30 分鐘。</div></div>
+
+<div class="step-row"><div class="step-num">8</div><div class="step-content"><span class="step-title">冷卻:</span> 冰浴快速冷卻至 20-22°C,30 分鐘內完成(冰水循環+不鏽鋼管或銅管)。</div></div>
+
+<div class="step-row"><div class="step-num">9</div><div class="step-content"><span class="step-title">充氧 + 投酵母:</span> 虹吸入發酵桶,搖桶 60-90 秒充氧。20-22°C 投 <b class="modified">Verdant IPA × 2 包(22g)</b>,裝水封。</div></div>
+
+<div class="step-row"><div class="step-num">10</div><div class="step-content"><span class="step-title">主發酵(Day 1-3):</span> 19°C 靜置,遲滯期 4-12 小時。</div></div>
+
+<div class="step-row"><div class="step-num">11</div><div class="step-content"><span class="step-title">升溫(Day 4):</span> 升至 22°C 繼續 1-2 天,提升生物轉化、清理雙乙醯。</div></div>
+
+<div class="step-row"><div class="step-num">12</div><div class="step-content"><span class="step-title">乾投 1(Day 4-5,FG 1.020):</span> CO₂ 沖桶 30 秒 → 10 秒內倒入 <b>Galaxy 28g + Citra 28g</b> → 補 CO₂ 10 秒,維持 22°C。</div></div>
+
+<div class="step-row"><div class="step-num">13</div><div class="step-content"><span class="step-title">確認 FG(Day 7-8):</span> 目標 1.012-1.016,連續 2 天不變即完成發酵。</div></div>
+
+<div class="step-row"><div class="step-num">14</div><div class="step-content"><span class="step-title">乾投 2(冷崩前 2 天):</span> CO₂ 沖桶 → 倒入 <b>Galaxy 28g + Amarillo 28g</b> → 補 CO₂,室溫 22°C 維持 2 天。</div></div>
+
+<div class="step-row"><div class="step-num">15</div><div class="step-content"><span class="step-title">Cold Crash + 裝瓶/桶:</span> 降至 2°C 冷崩 24-48 小時(<u>不要超過 3 天</u>)。吹氣管接 CO₂ 氣球防氧化。虹吸管套 60-80 目濾網,批次 CO₂ 沖瓶 + 由下往上填 + 立刻壓蓋。</div></div>
+
+<h2>🍶 二次發酵 / 碳酸化時程</h2>
+
+<h3>🍾 玻璃瓶裝瓶(加糖二發)</h3>
+
+<div class="info-box">
+<b>★ 糖量計算:</b> 目標 CO₂ 體積 <b>2.2-2.4 vol</b>(NEIPA 標準)= <b>50g 葡萄糖 / 10L</b>。<br>
+糖水準備:50g 葡萄糖 + 150ml 冷開水煮沸 1-2 分鐘殺菌,放涼至室溫。
+</div>
+
+<table>
+  <tr><th>瓶容量</th><th>葡萄糖直接秤</th><th>糖水量取(50g/150ml)</th></tr>
+  <tr><td>330 ml</td><td>1.65g</td><td>~6.6 ml</td></tr>
+  <tr><td>500 ml</td><td>2.5g</td><td>~10 ml</td></tr>
+  <tr><td>600 ml</td><td>3g</td><td>~12 ml</td></tr>
+  <tr><td>1000 ml</td><td>5g</td><td>~20 ml</td></tr>
+</table>
+
+<table>
+  <tr><th>時間</th><th>溫度</th><th>預估 CO₂ vol</th><th>預估 PSI</th></tr>
+  <tr><td>Day 3</td><td>25-27°C</td><td>1.5</td><td>~10 PSI</td></tr>
+  <tr><td>Day 5</td><td>25-27°C</td><td>2.0</td><td>~14 PSI</td></tr>
+  <tr><td><b>Day 7</b></td><td>25-27°C</td><td><b>2.2</b></td><td><b>~16 PSI</b></td></tr>
+  <tr><td>Day 10</td><td>25-27°C</td><td>2.4</td><td>~17 PSI</td></tr>
+  <tr><td>Day 14+(冷藏)</td><td>2-4°C</td><td>2.4</td><td>17 PSI(穩定)</td></tr>
+</table>
+
+<div class="warning-box">
+<b>⚠️ 高 ABV(8%)注意:</b> Orange Glow 酒精濃度高,酵母已疲勞,二發可能較慢。<b>建議延長到 10-14 天</b>確保 CO₂ 完整生成。試喝氣足後再冷藏。
+</div>
+
+<h3>🛢️ Keg 強制碳酸化(不加糖)</h3>
+
+<table>
+  <tr><th>階段</th><th>壓力</th><th>時間</th></tr>
+  <tr><td>初次飽和</td><td>10-12 PSI(2-4°C)</td><td><b>5-7 天</b></td></tr>
+  <tr><td>快速碳酸<small>(可選)</small></td><td>30 PSI 搖桶 5-8 分鐘</td><td>30 分鐘可喝</td></tr>
+  <tr><td><b>維持出酒</b></td><td><b>8-10 PSI</b></td><td>持續</td></tr>
+</table>
+
+<h2>📚 v8 失敗教訓 → 改進對照</h2>
+
+<table>
+  <tr><th width="40%">v8 問題</th><th>本批對策</th></tr>
+  <tr><td>OG 過高(1.090+)發酵停滯</td><td>洗槽水 5L + 中火煮沸,控制 1.075-1.080</td></tr>
+  <tr><td>糖化 pH 過低(5.0)</td><td>嚴格 5.2-5.4,慢滴慢測,用 Milwaukee MW102</td></tr>
+  <tr><td>Magnum 失誤(22g)</td><td>電子秤精準秤 6g</td></tr>
+  <tr><td>FG 卡 1.030</td><td><b>2 包 Verdant + Fermaid-K 5-6g</b></td></tr>
+  <tr><td>Cold Crash 太久 haze 全失</td><td>限制 24-48 小時</td></tr>
+  <tr><td>裝桶混入沉澱</td><td>虹吸管套 60-80 目濾網</td></tr>
+  <tr><td>顏色平淡</td><td>Munich Light 1kg → EBC 12-14 柳橙汁色</td></tr>
+  <tr><td>體積流失(只剩 6L)</td><td>中火煮沸 + 洗槽水降量 + 改善虹吸</td></tr>
+</table>
+
+<h2>🛡️ 全程氧化控制</h2>
+
+<div class="danger-box">
+<b>核心口訣:</b> 發酵前氧氣是朋友(酵母需要),發酵後氧氣是敵人(全力避免)
+</div>
+
+<table>
+  <tr><th width="22%">階段</th><th>操作重點</th></tr>
+  <tr><td>投酵母前</td><td>充氧 60-90 秒搖桶</td></tr>
+  <tr><td>發酵中</td><td>密封發酵桶,水封維持,絕不開蓋</td></tr>
+  <tr><td><b>乾投</b></td><td>CO₂ 沖桶 30 秒 → 10 秒內倒酒花 → 補 CO₂ 10 秒</td></tr>
+  <tr><td><b>Cold Crash</b></td><td>吹氣管接 CO₂ 氣球,防負壓吸入空氣</td></tr>
+  <tr><td><b>裝瓶</b></td><td>批次 CO₂ 沖瓶 + 蓋輕蓋 + 由下往上 + 立刻壓蓋(5 秒內)</td></tr>
+</table>
+
+<h2>🎯 風味預期</h2>
+
+<table>
+  <tr><th>視覺</th><th>嗅覺</th><th>味覺</th><th>口感</th></tr>
+  <tr>
+    <td><span class="highlight">柳橙汁橘黃色</span> + 朦朧 haze</td>
+    <td>百香果、芒果、柳橙、桃子</td>
+    <td>熱帶水果汁、柑橘酸甜、苦感柔和</td>
+    <td>飽滿綿密、酒花炸裂、餘韻長</td>
+  </tr>
+</table>
+
+<div class="footer">
+  Orange Glow DDH NEIPA — 比利時 Castle + 英國 Simpsons 麥芽組合 × Galaxy 雙乾投 × Verdant IPA 🍺🍊
+</div>
+
+</div>
+
+<script>
+// 麥芽配方圓餅圖
+new Chart(document.getElementById('maltChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Extra Pale Ale Malt', 'Munich Light Malt', 'Wheat Blanc', '燕麥片', '葡萄糖'],
+    datasets: [{
+      data: [2000, 1000, 1000, 1000, 200],
+      backgroundColor: ['#F2A623', '#D85A30', '#1D9E75', '#888780', '#FAC775'],
+      borderWidth: 2,
+      borderColor: '#fff'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 } } }
+    }
+  }
+});
+
+// 酒花投放橫條圖
+new Chart(document.getElementById('hopChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Magnum (苦花)', 'Citra (旋渦)', 'Amarillo (旋渦)', 'Galaxy (乾投 1)', 'Citra (乾投 1)', 'Galaxy (乾投 2)', 'Amarillo (乾投 2)'],
+    datasets: [{
+      label: '用量 (g)',
+      data: [6, 28, 28, 28, 28, 28, 28],
+      backgroundColor: ['#7F77DD', '#1D9E75', '#1D9E75', '#D85A30', '#D85A30', '#B7950B', '#B7950B'],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { 
+        title: { display: true, text: '用量 (g)', font: { size: 11 } },
+        beginAtZero: true,
+        max: 35
+      }
+    }
+  }
+});
+
+// 溫度曲線
+new Chart(document.getElementById('tempChart'), {
+  type: 'line',
+  data: {
+    labels: ['Day 0', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 8', 'Day 9', 'Day 10', 'Day 11', 'Day 12', 'Day 13'],
+    datasets: [{
+      label: '溫度 (°C)',
+      data: [20, 19, 19, 19, 22, 22, 22, 22, 22, 22, 22, 22, 2, 2],
+      borderColor: '#D85A30',
+      backgroundColor: 'rgba(216, 90, 48, 0.1)',
+      tension: 0.3,
+      fill: true,
+      pointRadius: 4,
+      pointBackgroundColor: '#D85A30'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { 
+        title: { display: true, text: '溫度 (°C)', font: { size: 11 } },
+        min: 0, max: 25
+      },
+      x: { title: { display: true, text: '天數', font: { size: 11 } } }
+    }
+  }
+});
+
+// 比重曲線
+new Chart(document.getElementById('gravityChart'), {
+  type: 'line',
+  data: {
+    labels: ['Day 0', 'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 8', 'Day 9', 'Day 10'],
+    datasets: [{
+      label: '比重 SG',
+      data: [1.078, 1.072, 1.060, 1.045, 1.032, 1.025, 1.020, 1.017, 1.015, 1.014, 1.014],
+      borderColor: '#D85A30',
+      backgroundColor: 'rgba(216, 90, 48, 0.1)',
+      tension: 0.3,
+      fill: true,
+      pointRadius: 4,
+      pointBackgroundColor: '#D85A30'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { 
+        title: { display: true, text: '比重 (SG)', font: { size: 11 } },
+        min: 1.010, max: 1.085,
+        ticks: { callback: function(v) { return v.toFixed(3); } }
+      },
+      x: { title: { display: true, text: '發酵天數', font: { size: 11 } } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

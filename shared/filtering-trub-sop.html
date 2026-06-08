@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orange Glow / NEIPA 完整濾渣流程(參考筆記)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans CJK TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    font-size: 13.5px;
+    color: #1f2937;
+    background: #f5f5f0;
+    line-height: 1.65;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 32px 36px;
+    border-top: 5px solid #0f766e;
+    border-bottom: 5px solid #0f766e;
+  }
+  .header {
+    text-align: center;
+    border-bottom: 2.5px solid #0f766e;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+  h1 { font-size: 25px; font-weight: 800; color: #134e4a; margin-bottom: 6px; }
+  .badge {
+    display: inline-block;
+    background: #0f766e;
+    color: #fff;
+    padding: 4px 14px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    border-radius: 2px;
+    margin-bottom: 8px;
+  }
+  .subtitle { font-size: 13px; color: #6b7280; font-style: italic; }
+
+  h2 {
+    font-size: 17px; font-weight: 800; color: #fff;
+    padding: 9px 16px; margin: 22px 0 12px 0; letter-spacing: 0.5px;
+  }
+  h2.hot { background: #c2410c; }
+  h2.ferm { background: #b45309; }
+  h2.cold { background: #1d4ed8; }
+  h2.neutral { background: #0f766e; }
+
+  h3 { color: #134e4a; margin: 14px 0 6px 0; font-size: 15px; font-weight: bold; border-left: 4px solid #0f766e; padding-left: 10px; }
+
+  ul.tight { margin: 4px 0 10px 24px; font-size: 13px; }
+  ul.tight li { margin-bottom: 4px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 14px 0; font-size: 13px; }
+  th, td { padding: 9px 12px; text-align: left; border: 1px solid #d1d5db; vertical-align: top; }
+  th { background: #0f766e; color: #fff; font-weight: bold; }
+  tr:nth-child(even) td { background: #f0fdfa; }
+
+  .principle {
+    background: #ccfbf1; border-left: 4px solid #0f766e;
+    padding: 11px 15px; margin: 11px 0; font-size: 13px;
+  }
+  .principle b { color: #0f766e; }
+  .danger-box {
+    background: #fee2e2; border-left: 4px solid #dc2626;
+    padding: 11px 15px; margin: 11px 0; font-size: 13px;
+  }
+  .info-box {
+    background: #f0f7f2; border-left: 4px solid #16a34a;
+    padding: 11px 15px; margin: 11px 0; font-size: 13px;
+  }
+  .draft {
+    background: #fef3c7; border-left: 4px solid #d97706;
+    padding: 11px 15px; margin: 11px 0; font-size: 12.5px;
+  }
+  .draft b { color: #92400e; }
+
+  .footer {
+    text-align: center; margin-top: 26px; padding-top: 16px;
+    border-top: 2.5px solid #0f766e; color: #6b7280; font-size: 12px; font-style: italic;
+  }
+
+  @media (max-width: 600px) {
+    body { font-size: 12.5px; }
+    .container { padding: 18px 20px; }
+    h1 { font-size: 21px; }
+    h2 { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+  <div class="badge">SHARED SOP · 參考筆記</div>
+  <h1>Orange Glow / NEIPA 完整濾渣流程</h1>
+  <div class="subtitle">hot side 撈大渣 → cold side 溫柔轉桶 · 兩支酒(妃子起笑 / Orange Glow)通用</div>
+</div>
+
+<div class="draft">
+<b>📌 狀態:</b>參考筆記,<b>尚未整合進各酒譜 SOP</b>。等確認後再合併進 v4 / v2.2 的 whirlpool/虹吸段落,或升級為主 README 的共通核心 SOP。
+</div>
+
+<div class="principle">
+<b>核心原則:</b>髒活在 <b>hot side</b>(不怕氧化)幹完,<b>cold side</b>(發酵後)溫柔處理不攪動。
+</div>
+
+<h2 class="hot">🔥 Hot Side(煮沸後 → 進發酵桶)｜可撈可攪,不怕氧化</h2>
+
+<h3>1. 煮沸結束 → Whirlpool</h3>
+<ul class="tight">
+  <li>同方向攪 1-2 分鐘啟動漩渦,停手</li>
+  <li>靜置 15-20 分鐘,讓 trub(熱凝固物 + 酒花渣)集中到鍋底中央</li>
+</ul>
+
+<h3>2. 撈大渣(粗濾)— 趁熱撈</h3>
+<ul class="tight">
+  <li>用 304 不鏽鋼中網濾勺(15-20cm)</li>
+  <li>撈掉浮在表面和上層的大塊酒花渣</li>
+  <li>用前 Star San 噴或熱水燙消毒</li>
+</ul>
+
+<h3>3. 冷卻 → 細目虹吸進發酵桶(第一層細濾)</h3>
+<div class="draft">
+<b>⚠️ 順序提醒:</b>細目虹吸進發酵桶是<b>冷卻之後</b>才做,不要把熱麥汁直接打進桶。撈大渣(步驟 2)可以趁熱,但「入桶」這一步一定在冷卻到投酵母溫度後。
+</div>
+<ul class="tight">
+  <li>先把麥汁冷卻到投酵母溫度(18-20°C,見各酒譜的「冷卻 + Whirlpool SOP」)</li>
+  <li>冷卻後再虹吸:管口離鍋底沉澱 1-2cm,把集中的 trub 留鍋底</li>
+  <li>這層把中小渣也濾掉</li>
+</ul>
+
+<h2 class="ferm">🫧 發酵階段｜濾袋裝 dry hop(可選)</h2>
+
+<h3>4. Dry hop(單段,卡主發酵期)</h3>
+<ul class="tight">
+  <li>散投,或裝尼龍濾袋(網眼粗、裝鬆、配重沉中段)</li>
+  <li>若裝袋,dry hop 時間到要取出(別泡整個發酵期,會過萃草味)</li>
+</ul>
+
+<h2 class="cold">❄️ Cold Side(發酵完 → 進 Keg)｜不撈不攪,低氧優先</h2>
+
+<div class="danger-box">
+<b>⚠️ cold side 不做 whirlpool、不攪、不搖。</b>發酵是好幾天的事(加上綠燈確認的穩定期),該沉的酵母/trub 早就沉好結塊在桶底了,<b>不需要再「靜置沉降」這一步</b>。任何攪動只會把沉好的渣打散 + 帶進氧氣(NEIPA 大忌)。發酵完直接轉桶即可。
+</div>
+
+<h3>5. 細目虹吸轉桶</h3>
+<ul class="tight">
+  <li>Keg 預先 CO₂ 驅氧 3 次</li>
+  <li>虹吸管離桶底 2-3cm,留底避渣</li>
+  <li>細目濾袋包管口(可選,因 hot side 已濾大渣,這層不易堵)</li>
+  <li>從 keg 底部入酒,不濺射</li>
+  <li>轉完立刻加壓冷藏</li>
+  <li>(可選)想更清可先輕度 cold crash,但本酒譜為保 haze / 香氣多半略過</li>
+</ul>
+
+<h3>6. 出酒(治本,可選)</h3>
+<ul class="tight">
+  <li>浮動 dip tube → 從上層抽酒,永遠避開 keg 底部殘渣</li>
+</ul>
+
+<h2 class="neutral">🧰 各階段濾渣工具對照</h2>
+
+<table>
+  <tr><th width="22%">階段</th><th width="38%">工具</th><th>濾什麼</th></tr>
+  <tr><td>Whirlpool 後</td><td>不鏽鋼濾勺</td><td>浮的大渣</td></tr>
+  <tr><td>進發酵桶(冷卻後)</td><td>細目虹吸 + 留底</td><td>中小渣 + trub</td></tr>
+  <tr><td>Dry hop</td><td>尼龍濾袋(可選)</td><td>dry hop 渣</td></tr>
+  <tr><td>轉 keg</td><td>細目虹吸 + 留底</td><td>殘渣</td></tr>
+  <tr><td>出酒</td><td>浮動 dip tube(可選)</td><td>keg 底部殘渣</td></tr>
+</table>
+
+<div class="info-box">
+<b>最低配置(夠用):</b>不鏽鋼濾勺 + 虹吸留底。<br>
+<b>進階(更乾淨):</b>加細目濾袋包管口 + 浮動 dip tube。<br>
+<b>關鍵時機:</b>大渣 hot side 撈掉 → cold side 細目袋不易堵 → 轉桶不攪動降氧化。
+</div>
+
+<div class="footer">
+  Orange Glow / NEIPA 濾渣流程 — 共通參考筆記 · 待整合進 v4 / v2.2 SOP
+</div>
+
+</div>
+</body>
+</html>

@@ -14,12 +14,14 @@ homebrew-recipes/
 │   ├── v3-zero-cost.html              # 零成本優化路線
 │   ├── v3.1-sop-hardening.html        # SOP 強化版
 │   └── v4-whirlpool-aroma.html        # 熱端香氣強化版(★ 目前最新)
-└── orange-glow/                       # Orange Glow · DDH NEIPA
-    ├── README.md
-    ├── v1-original.html               # 原始酒譜
-    ├── v2-lessons-learned.html        # 整合妃子起笑教訓
-    ├── v2.1-starter-fix-aldc.html     # Starter 修正 + ALDC 整合
-    └── v2.2-whirlpool-fermaid.html    # 旋渦降溫 + Fermaid-K 減量(★ 目前最新)
+├── orange-glow/                       # Orange Glow · DDH NEIPA
+│   ├── README.md
+│   ├── v1-original.html               # 原始酒譜
+│   ├── v2-lessons-learned.html        # 整合妃子起笑教訓
+│   ├── v2.1-starter-fix-aldc.html     # Starter 修正 + ALDC 整合
+│   └── v2.2-whirlpool-fermaid.html    # 旋渦降溫 + Fermaid-O 為主(★ 目前最新)
+└── shared/                            # 跨酒譜共通 SOP
+    └── filtering-trub-sop.html        # 完整濾渣流程(hot/cold side)
 ```
 
 ## 🍻 酒譜清單
@@ -59,6 +61,11 @@ DDH/hazy 不做 cold crash,避免酒花顆粒與酵母過度沉澱導致香氣�
 ### 6. 最佳賞味期
 - 一般 NEIPA:2-4 週
 - DDH NEIPA:2-3 週(對氧化更敏感)
+
+### 7. 完整濾渣流程 → [shared/filtering-trub-sop.html](./shared/filtering-trub-sop.html)
+**核心:** 髒活在 hot side(不怕氧化)幹完,cold side(發酵後)溫柔處理不攪動。
+- **Hot side:** whirlpool 聚渣 → 趁熱撈大渣 → 冷卻後細目虹吸入桶
+- **Cold side:** 不 whirlpool、不攪、不搖(該沉的早沉好)→ 細目虹吸留底轉桶 → 浮動 dip tube 出酒
 
 ## 📚 命名規範
 

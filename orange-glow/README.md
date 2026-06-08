@@ -6,15 +6,16 @@
 
 | 項目 | 規格 |
 |---|---|
-| **目前最新版本** | [v2.1](./v2.1-starter-fix-aldc.html) |
+| **目前最新版本** | [v2.2](./v2.2-whirlpool-fermaid.html) |
 | 風格 | DDH NEIPA |
 | 容量 | 10 L |
 | OG | 1.075-1.078 |
 | FG | 1.014-1.016 |
 | ABV | 7.8-8.2% |
 | IBU | 25-30 |
+| EBC | 12-14 |
 | 酵母 | Verdant IPA 1 包 + 2L Starter |
-| 添加物 | Fermaid-K 5g + Maturex L (ALDC) 0.2-0.3ml |
+| 添加物 | Fermaid-O 5g(備選 Fermaid-K 3g)+ Maturex L (ALDC) 0.2-0.3ml |
 
 ## 🍻 版本歷史
 
@@ -52,7 +53,7 @@
 
 ---
 
-### v2.1 - Starter Fix + ALDC Integration([檔案](./v2.1-starter-fix-aldc.html)) ★ 當前版本
+### v2.1 - Starter Fix + ALDC Integration([檔案](./v2.1-starter-fix-aldc.html))
 **核心:v2 的兩個小修正**
 
 1. **修正 Starter 容器尺寸**:v2 原本錯誤寫「2L 玻璃瓶」,正確應該是「4-5L 容器裝 2L 麥汁」(泡沫會佔麥汁高度 30-50%)。
@@ -64,6 +65,19 @@
    - Fermaid-O 在 v2.1 改回 Fermaid-K(因為買不到 Fermaid-O)
 
 **v2 的其他核心改造(單段 Dry Hop、綠燈確認、虹吸轉桶、低壓慢飽和、省略 Cold Crash 等)全部保留。**
+
+---
+
+### v2.2 - Whirlpool + Fermaid Tuning([檔案](./v2.2-whirlpool-fermaid.html)) ★ 當前版本
+**核心:兩個往「更果汁、更柔和」方向的風味微調 + 一項數字修正**
+
+不動發酵流程,只調兩個直接影響 NEIPA 果香的細節:
+
+1. **旋渦溫度 80°C → 75°C**:高溫旋渦會稍微烤掉嬌嫩的酒花精油、也多帶苦。降到 75°C 香氣保留更好、苦感更柔,IBU 更穩定落在 25-30 低區(75°C 仍在巴氏滅菌區間,食安沒問題)
+2. **營養劑改 Fermaid-O 5g 為主**:Fermaid-O 是純有機氮源、不含 DAP,不會抑制果香酯類(商業 NEIPA 廠首選)。v2.1 因買不到才退用 Fermaid-K,v2.2 改回 Fermaid-O 為主、**Fermaid-K 降為備選**(買不到 O 時用 3g)
+3. **修正酒花總量**:從 v1 起表頭一直誤寫「168g」,實際是 Magnum 6 + 旋渦 56 + Dry Hop 112 = **174g**(漏算了苦花 Magnum 6g)
+
+**v2.1 的其他設計(Starter 4-5L 修正、ALDC SOP、單段 Dry Hop、綠燈確認、虹吸轉桶、低壓慢飽和)全部保留。**
 
 ## 📝 實戰追蹤(尚未釀造)
 
@@ -77,7 +91,7 @@
 - [ ] DME 乾麥芽萃取物 200g 以上
 - [ ] 鋁箔紙(廚房用即可)
 - [ ] Maturex L (ALDC) 100ml + 胰島素注射器
-- [ ] Fermaid-K 5g
+- [ ] Fermaid-O 5g(買不到改 Fermaid-K 3g)
 - [ ] Verdant IPA 1 包
 - [ ] 麥芽:Extra Pale 2kg + Munich Light 1kg + Wheat 1kg + 燕麥片 1kg + 葡萄糖 200g
 - [ ] 酒花:Magnum 6g + Citra 56g + Amarillo 56g + Galaxy 56g = 174g 總計

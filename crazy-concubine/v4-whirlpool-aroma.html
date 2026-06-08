@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>妃子起笑 v4 — 熱端香氣強化版</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans CJK TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    font-size: 13.5px;
+    color: #1f2937;
+    background: #f5f5f0;
+    line-height: 1.65;
+  }
+  .container {
+    max-width: 940px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 32px 36px;
+    border-top: 5px solid #2d7a3e;
+    border-bottom: 5px solid #2d7a3e;
+  }
+
+  .header {
+    text-align: center;
+    border-bottom: 2.5px solid #2d7a3e;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #1f2937;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+  .version-tag {
+    display: inline-block;
+    background: #2d7a3e;
+    color: #ffffff;
+    padding: 4px 14px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    border-radius: 2px;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: #6b7280;
+    font-style: italic;
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #ffffff;
+    background: #2d7a3e;
+    padding: 9px 16px;
+    margin: 22px 0 12px 0;
+    letter-spacing: 0.5px;
+  }
+
+  h3 {
+    color: #1f2937;
+    margin: 14px 0 8px 0;
+    font-size: 15px;
+    font-weight: bold;
+    border-left: 4px solid #2d7a3e;
+    padding-left: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 14px 0;
+    font-size: 13px;
+  }
+  th, td {
+    padding: 9px 12px;
+    text-align: left;
+    border: 1px solid #d1d5db;
+    vertical-align: top;
+  }
+  th {
+    background: #1f2937;
+    color: #ffffff;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+  }
+  tr:nth-child(even) td { background: #f9fafb; }
+
+  .info-box {
+    background: #f0f7f2;
+    border-left: 4px solid #2d7a3e;
+    padding: 11px 15px;
+    margin: 11px 0;
+    font-size: 13px;
+  }
+  .key-change {
+    background: #fef3c7;
+    border-left: 4px solid #d97706;
+    padding: 11px 15px;
+    margin: 11px 0;
+    font-size: 13px;
+  }
+  .key-change b { color: #92400e; }
+  .new-in-v4 {
+    background: #ede9fe;
+    border-left: 4px solid #7c3aed;
+    padding: 11px 15px;
+    margin: 11px 0;
+    font-size: 13px;
+  }
+  .new-in-v4 b { color: #5b21b6; }
+  .warning-box {
+    background: #fee2e2;
+    border-left: 4px solid #dc2626;
+    padding: 11px 15px;
+    margin: 11px 0;
+    font-size: 13px;
+  }
+
+  .free-tag {
+    display: inline-block;
+    background: #2d7a3e;
+    color: #ffffff;
+    font-size: 10.5px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-left: 6px;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+  }
+  .new-tag {
+    display: inline-block;
+    background: #7c3aed;
+    color: #ffffff;
+    font-size: 10.5px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-left: 6px;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+  }
+
+  .stat-line {
+    background: #1f2937;
+    color: #ffffff;
+    padding: 12px 18px;
+    margin: 12px 0;
+    font-size: 14px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+  .stat-line span { margin: 0 6px; opacity: 0.6; }
+  .stat-line b { color: #fbbf24; font-weight: 800; }
+
+  .modified { color: #92400e; font-weight: bold; }
+  .new-content { color: #5b21b6; font-weight: bold; }
+
+  .step-row {
+    display: flex;
+    margin: 9px 0;
+    font-size: 13px;
+  }
+  .step-num {
+    background: #2d7a3e;
+    color: #ffffff;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-right: 12px;
+    font-size: 12.5px;
+  }
+  .step-num.new { background: #7c3aed; }
+  .step-content { flex: 1; padding-top: 3px; }
+  .step-title { font-weight: bold; color: #1f2937; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .timeline-block {
+    background: #f9fafb;
+    border: 1px solid #d1d5db;
+    padding: 14px;
+    margin: 12px 0;
+  }
+  .timeline-day {
+    display: flex;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px dashed #d1d5db;
+  }
+  .timeline-day:last-child { border-bottom: none; }
+  .day-label {
+    background: #1f2937;
+    color: #ffffff;
+    padding: 4px 10px;
+    font-size: 11.5px;
+    font-weight: bold;
+    margin-right: 12px;
+    flex-shrink: 0;
+    width: 90px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+  .day-label.hop { background: #d97706; }
+  .day-label.crit { background: #dc2626; }
+  .day-content { flex: 1; font-size: 12.5px; padding-top: 3px; }
+  .day-content b { color: #1f2937; }
+
+  .checklist {
+    background: #fffbeb;
+    border: 2px solid #d97706;
+    padding: 14px 18px;
+    margin: 12px 0;
+    border-radius: 4px;
+  }
+  .checklist h4 {
+    color: #92400e;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .checklist ol {
+    margin-left: 22px;
+    font-size: 12.5px;
+  }
+  .checklist ol li {
+    margin-bottom: 5px;
+  }
+
+  .greenlight {
+    background: linear-gradient(to right, #dcfce7, #f0fdf4);
+    border: 2px solid #16a34a;
+    padding: 14px 18px;
+    margin: 12px 0;
+    border-radius: 4px;
+  }
+  .greenlight h4 {
+    color: #15803d;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .greenlight .criteria {
+    background: white;
+    padding: 8px 12px;
+    margin: 6px 0;
+    border-left: 3px solid #16a34a;
+    font-size: 13px;
+  }
+
+  .log-table {
+    background: #fafafa;
+    border: 1px dashed #6b7280;
+    padding: 12px;
+    margin: 12px 0;
+  }
+  .log-table table {
+    margin: 0;
+  }
+  .log-table td {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    height: 32px;
+    font-size: 12px;
+  }
+  .log-table th {
+    background: #2d7a3e;
+    color: #ffffff;
+    border: 1px solid #e5e7eb;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 26px;
+    padding-top: 16px;
+    border-top: 2.5px solid #2d7a3e;
+    color: #6b7280;
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  .changelog {
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 12.5px;
+  }
+  .changelog ul {
+    margin-left: 22px;
+    margin-top: 6px;
+  }
+
+  ul.tight {
+    margin: 6px 0 8px 22px;
+    font-size: 12.5px;
+  }
+  ul.tight li { margin-bottom: 3px; }
+
+  @media (max-width: 600px) {
+    body { font-size: 12.5px; }
+    .container { padding: 18px 20px; }
+    h1 { font-size: 22px; }
+    h2 { font-size: 16px; }
+    .two-col { grid-template-columns: 1fr; }
+    .day-label { width: 75px; font-size: 10.5px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+  <div class="version-tag">VERSION 4 · WHIRLPOOL AROMA</div>
+  <h1>妃子起笑 v4</h1>
+  <div class="subtitle">在 v3.1 穩定流程上補足熱端香氣 · 並補回完整釀造當天步驟</div>
+</div>
+
+<div class="stat-line">
+  <span>OG <b>1.052</b></span>|
+  <span>FG <b>1.013-1.015</b></span>|
+  <span>ABV <b>4.8-5.2%</b></span>|
+  <span>IBU <b>~36</b></span>|
+  <span>EBC <b>9</b></span>|
+  <span>容量 <b>8-10 L</b></span>
+</div>
+
+<div class="changelog">
+<b>📋 v3.1 → v4 更新清單</b>
+<ul>
+  <li><b>新增熱端香氣投放</b>:78°C 旋渦浸泡 Citra 14g + Amarillo 14g(共 28g)<span class="new-tag">NEW</span></li>
+  <li><b>乳糖減量 50g → 25g</b>:讓酒體不要太濃稠滑口,口感更乾爽<span class="new-tag">NEW</span></li>
+  <li>新增可選的微量酵母營養劑(1kg 燕麥 FAN 偏低的保險)<span class="new-tag">NEW</span></li>
+  <li><b>補回完整釀造當天步驟</b>(糖化水/鹽類/pH、糖化、升溫滅酵、洗槽、煮沸時程)——v3.1 整段缺這些<span class="new-tag">NEW</span></li>
+  <li>酒花總量明確標示:煮沸 28g + 旋渦 28g + Dry Hop 112g = <b>168g</b></li>
+  <li>v3.1 全部 SOP(綠燈確認、強迫雙乙醯測試、虹吸轉桶、低壓慢飽和、省略 Cold Crash)<b>原樣保留</b></li>
+</ul>
+</div>
+
+<div class="new-in-v4">
+<b>★ v4 設計邏輯</b><br>
+v3.1 已經把 hop creep 失控的流程根因解決掉(單段 dry hop 卡進主發酵期 + 綠燈確認),酒做得穩定可預期。v4 不動發酵流程,只補一個 v1 到 v3.1 一直缺的東西:<b>熱端香氣</b>。原本香氣完全靠 dry hop,缺少旋渦/hopstand 帶來的「果汁感前段」。v4 加一個 78°C 低溫旋渦投放(像 Orange Glow 那樣),柑橘與熱帶水果的第一印象會更飽滿,而低溫旋渦只貢獻很少苦度,不會破壞 Hazy Pale Ale 的柔和苦感。
+</div>
+
+<h2>🌾 麥芽配方(總 3.05kg,跟 v3.1 相同)</h2>
+
+<div class="two-col">
+  <div>
+    <table>
+      <tr><th>原料</th><th>用量</th></tr>
+      <tr><td>比利時 Pilsner Malt</td><td>2000g</td></tr>
+      <tr><td>Flaked Oats(燕麥)</td><td>1000g</td></tr>
+      <tr><td>其他特殊麥芽</td><td>50g</td></tr>
+      <tr><td><b class="new-content">Lactose 乳糖(煮沸 55min,v4 減量)</b></td><td><b class="new-content">25g</b></td></tr>
+      <tr><td>Verdant IPA 酵母</td><td>1 包(11g)</td></tr>
+      <tr><td>酵母營養劑(可選,煮沸末)</td><td>1-2g</td></tr>
+    </table>
+  </div>
+  <div>
+    <table>
+      <tr><th colspan="2">酒花(煮沸 28g + 旋渦 28g + Dry Hop 112g = 168g)</th></tr>
+      <tr><td>Simcoe(煮沸 45min)</td><td>14g</td></tr>
+      <tr><td>Comet(煮沸 50min)</td><td>14g</td></tr>
+      <tr><td><b class="new-content">Citra(旋渦 78°C 20min)</b></td><td><b class="new-content">14g</b></td></tr>
+      <tr><td><b class="new-content">Amarillo(旋渦 78°C 20min)</b></td><td><b class="new-content">14g</b></td></tr>
+      <tr><td>Citra(Dry Hop, Day 3-4)</td><td>28g</td></tr>
+      <tr><td>Amarillo(Dry Hop, Day 3-4)</td><td>28g</td></tr>
+      <tr><td>Idaho 7(Dry Hop, Day 3-4)</td><td>56g</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="info-box">
+<b>酒花採購提醒:</b>v4 的旋渦投放是<b>新增的 28g</b>(不是從 dry hop 挪過來),所以 Citra 和 Amarillo 各要比 v3.1 多備 14g。Dry Hop 維持不變,乾投香氣強度不打折。若想維持零新增成本,可改成從 Idaho 7 乾投挪 28g 到旋渦,但會犧牲一點主香。
+</div>
+
+<h2>🌿 完整釀造當天步驟<span class="new-tag">v4 補回</span></h2>
+
+<div class="step-row"><div class="step-num">1</div><div class="step-content"><span class="step-title">糖化水準備:</span> 9L 水加熱至 73°C(目標糖化 65°C),加氯化鈣 0.5g,慢滴磷酸調 pH 至 5.2-5.4</div></div>
+
+<div class="step-row"><div class="step-num">2</div><div class="step-content"><span class="step-title">糖化(65°C 60min):</span> 投麥芽混合,維持 65°C 靜置 60 分鐘(比 v1 的 67°C 低,降低糊精、減少 hop creep 可啃對象)。期間準備 8L 熱水備用</div></div>
+
+<div class="step-row"><div class="step-num">3</div><div class="step-content"><span class="step-title">升溫滅酵:</span> 加熱水升溫到 76°C 維持 10 分鐘,過濾麥汁到煮沸鍋</div></div>
+
+<div class="step-row"><div class="step-num">4</div><div class="step-content"><span class="step-title">洗槽:</span> 加 76°C 熱水洗槽,取 1L 麥汁回倒過濾混濁,目標收集總麥汁 <b>15-16L</b></div></div>
+
+<div class="step-row"><div class="step-num">5</div><div class="step-content"><span class="step-title">煮沸 60 分鐘(中火,不蓋鍋蓋):</span> 維持鼓泡狀讓 DMS 揮發。第 45 分鐘加 Simcoe 14g → 第 50 分鐘加 Comet 14g → 第 55 分鐘加 <b class="new-content">Lactose 25g</b>(可選營養劑同時加)→ 第 60 分鐘關火</div></div>
+
+<div class="warning-box">
+<b>⚠️ 為什麼煮沸不蓋鍋蓋:</b> 麥芽會釋放 DMS(二甲硫醚),有「煮玉米」異味。蓋鍋蓋會讓 DMS 凝結回鍋,啤酒帶怪味。
+</div>
+
+<div class="step-row"><div class="step-num new">6</div><div class="step-content"><span class="step-title">旋渦/Hopstand(v4 新增):</span> 關火後先讓麥汁降到 <b class="new-content">78°C</b>(約 5-10 分鐘),投入 <b class="new-content">Citra 14g + Amarillo 14g</b>,蓋上消毒鍋蓋,靜置 <b>20 分鐘</b>。低溫旋渦最大化香氣、最小化苦度</div></div>
+
+<div class="step-row"><div class="step-num">7</div><div class="step-content"><span class="step-title">冷卻:</span> 旋渦完用銅管+冰水快速冷卻到 18°C</div></div>
+
+<div class="step-row"><div class="step-num">8</div><div class="step-content"><span class="step-title">充氧 + 投酵母:</span> 倒入發酵桶,搖桶 <b>60-120 秒充氧</b>(有 starter 投 60 秒;沒 starter 投 120 秒)。18-19°C 投 Verdant IPA 1 包(starter 整桶或乾酵母直接撒)。裝水封</div></div>
+
+<div class="info-box">
+<b>酵母營養劑(可選):</b>燕麥占穀物 1/3,提供的自由胺基氮(FAN)偏低。煮沸末加 1-2g 通用酵母營養劑是便宜的保險,幫助 Verdant 健康收尾、減少卡 FG 的機率。若有做 starter 或過往發酵都很順,可省略。
+</div>
+
+<h2>📅 14-16 天時程</h2>
+
+<div class="timeline-block">
+
+  <div class="timeline-day">
+    <span class="day-label">Day -1</span>
+    <div class="day-content"><b>(可選)做酵母 starter</b>:1L SG 1.040 麥汁 + Verdant 1 包,20°C 靜置 24h</div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label">Day 0</span>
+    <div class="day-content"><b>釀造日</b>:糖化 65°C 60min → 升溫滅酵 76°C → 煮沸 60min → <b class="new-content">78°C 旋渦投 Citra 14g + Amarillo 14g 20min</b> → 冷卻 18°C → 充氧 60-120 秒 → 投酵母</div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label">Day 1-2</span>
+    <div class="day-content"><b>主發酵啟動期</b>:18-19°C 維持。預期 Day 2 比重約 1.030-1.035</div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label hop">Day 3</span>
+    <div class="day-content"><b>測比重 → 投 Dry Hop</b>:目標比重 1.030-1.025 區間。<b>如果還在 1.035 以上 → 延到 Day 4 早上再測,別硬投。如果已掉到 1.020 以下 → 立即補投(別再拖)</b></div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label hop">Day 3-4</span>
+    <div class="day-content"><b>單段 Dry Hop</b>:CO₂ 沖桶 30 秒 → 10 秒內倒入 Citra 28g + Amarillo 28g + Idaho 7 56g → 補 CO₂ 10 秒。升溫到 20°C</div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label">Day 5-6</span>
+    <div class="day-content"><b>發酵 + dry hop 萃取同步</b>:20°C 維持。預期 Day 6 比重接近 1.016-1.014</div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label crit">Day 7</span>
+    <div class="day-content"><b>升溫到 22°C(D-rest 開始)</b>:雙乙醯清除期</div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label">Day 8-10</span>
+    <div class="day-content"><b>D-rest + hop creep 收尾</b>:22°C 維持。<b>每 2 天測一次比重(不是每天)</b>。Day 10 起追蹤是否打平</div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label crit">Day 10-14</span>
+    <div class="day-content"><b>綠燈確認流程</b>(見下方完整 SOP)。確認通過後執行虹吸轉桶</div>
+  </div>
+
+  <div class="timeline-day">
+    <span class="day-label">Day 14+</span>
+    <div class="day-content"><b>Keg 強制碳酸</b>:2-4°C,10-12 PSI 靜置慢飽和 5-7 天。再熟成 1-2 週氣泡更綿密。<b>最佳賞味期 2-4 週內喝完</b></div>
+  </div>
+
+</div>
+
+<h2 id="greenlight">✅ 綠燈確認 SOP</h2>
+
+<div class="greenlight">
+<h4>必須同時滿足兩個條件才能轉桶</h4>
+
+<div class="criteria">
+<b>條件一:比重連續兩次間隔 2 天完全不動</b><br>
+<small>例如:5/21 測 1.013 → 5/23 測 1.013 = 通過。只測一次打平不算數,必須有第二個確認點。如果第二次又掉了,繼續維持 22°C,2 天後再測。</small>
+</div>
+
+<div class="criteria">
+<b>條件二:強迫雙乙醯測試通過</b><br>
+<small>常溫抿樣聞不出來不代表沒有,因為前驅物(α-乙醯乳酸)會在後續低溫保存中慢慢氧化成雙乙醯。必須做強迫測試確認前驅物已清完。</small>
+</div>
+
+<h4 style="margin-top: 12px;">強迫雙乙醯測試方法</h4>
+<ol style="margin-left: 22px; font-size: 12.5px;">
+  <li>取 50ml 酒樣到耐熱玻璃瓶,密封</li>
+  <li>隔水加熱:小鍋裝水加熱到 60-65°C(用溫度計確認,水鍋邊緣冒小泡那種溫度)</li>
+  <li>樣本瓶放入水中浸泡 <b>15-20 分鐘</b></li>
+  <li>取出後沖冷水冷卻到室溫</li>
+  <li>開瓶聞 → 跟未加熱的樣本對比</li>
+  <li><b>沒有奶油爆米花味 = 通過</b>;有明顯奶油味 = 還沒清完,繼續 D-rest 2-3 天再測</li>
+</ol>
+
+<p style="margin-top: 10px; font-size: 12px; color: #15803d;"><b>原理:</b>加熱會強迫所有「潛在會變成雙乙醯」的前驅物加速氧化變雙乙醯,等於模擬未來在 keg 中可能出現的最壞狀況。加熱樣本沒味道 = 前驅物已被酵母清光 = 後續保存也不會出現雙乙醯。</p>
+</div>
+
+<h2 id="transfer">🚰 虹吸轉桶完整 SOP</h2>
+
+<div class="info-box">
+<b>背景:</b>沒有壓力發酵桶(無 CO₂ 進氣口/dip tube)的家釀者,closed transfer 做不到完整版,改用「強化型虹吸 + Keg 預驅氧 + 從底部入流 + 立刻加壓冷藏」流程,把氧化壓到最低。
+</div>
+
+<div class="checklist">
+<h4>🔧 轉桶前 1-2 小時:準備接收 Keg</h4>
+<ol>
+  <li>Keg 洗淨、消毒、組裝完成</li>
+  <li>接 CO₂ 灌滿到 10-15 PSI → 從 PRV 拉開排掉</li>
+  <li>重複「灌滿 → 排掉」<b>至少 3 次</b>(這是虹吸轉桶能不能成功避免氧化的最大關鍵)</li>
+  <li>最後一次灌滿後保留 5 PSI 低正壓備用,蓋好</li>
+  <li>虹吸管、所有接觸酒的器具泡消毒液</li>
+</ol>
+</div>
+
+<div class="checklist">
+<h4>🍺 轉桶當天:執行順序</h4>
+<ol>
+  <li>發酵桶輕輕移到操作位置(<b>絕對不要搖晃</b>,沉澱層被攪起就前功盡棄)</li>
+  <li>接收 keg 放在比發酵桶低的位置(重力協助虹吸)</li>
+  <li>從 keg 液體口(藍色快接頭)接管入酒 → <b>從底部入</b>,避免酒從高處落下濺射</li>
+  <li>虹吸管取酒端插入發酵桶,<b>離桶底 2-3cm</b>,不要貼底</li>
+  <li>用灌注球(auto-siphon)或預灌水方式啟動 → <b>不要用嘴吸</b></li>
+  <li>全程觀察流速,中等流速最好(8-10L 大約 5-10 分鐘轉完)</li>
+  <li>看到發酵桶底部沉澱層快被吸到 → <b>立刻停止</b>,寧可少裝一點</li>
+</ol>
+</div>
+
+<div class="checklist">
+<h4>⚡ 轉桶完立刻收尾(動作越快越好)</h4>
+<ol>
+  <li>拔起虹吸管,接收 keg 立刻蓋緊</li>
+  <li>接 CO₂ 加壓到 10-12 PSI</li>
+  <li>立刻移到冷藏 2-4°C 開始強制碳酸</li>
+  <li>(別轉完桶站著聊天 30 分鐘才去處理 keg!)</li>
+</ol>
+</div>
+
+<div class="warning-box">
+<b>⚠️ 虹吸 vs 完整 closed transfer 的差距</b><br>
+虹吸轉桶溶氧會比 closed transfer 高約 100-300 ppb。影響:成品最佳賞味期從理論 6-8 週縮短到 <b>2-4 週</b>。對應動作:出酒節奏要快,別把 keg 放超過 4 週。8-10L 一桶兩三週應該喝得完。
+</div>
+
+<h2>🎯 強制碳酸 SOP</h2>
+
+<div class="step-row"><div class="step-num">1</div><div class="step-content"><span class="step-title">降溫:</span> Keg 移至 2-4°C 冰箱/冷藏空間</div></div>
+<div class="step-row"><div class="step-num">2</div><div class="step-content"><span class="step-title">設定壓力:</span> 接 CO₂ 設定 <b>10-12 PSI</b>(不是 30 PSI 猛搖!)</div></div>
+<div class="step-row"><div class="step-num">3</div><div class="step-content"><span class="step-title">靜置慢飽和:</span> <b>5-7 天</b> 完全不動 keg、不搖、不調壓</div></div>
+<div class="step-row"><div class="step-num">4</div><div class="step-content"><span class="step-title">飽和後切換出酒壓:</span> 降到 8-10 PSI 維持出酒</div></div>
+<div class="step-row"><div class="step-num">5</div><div class="step-content"><span class="step-title">熟成期:</span> 飽和後再等 1-2 週讓氣泡和風味穩定融合再大量飲用,初期可少量試飲</div></div>
+
+<div class="info-box">
+<b>為什麼禁止 30 PSI 猛搖速成?</b>CO₂ 被「壓」進去而非「溶」進去,溶解不均勻、結合不穩定,氣泡會偏粗、衝、消得快,喝起來像汽水。慢飽和+熟成才有商業酒那種細緻綿延的氣泡流。
+</div>
+
+<h2>🛡️ 氧化控制檢核表</h2>
+
+<table>
+  <tr><th width="22%">階段</th><th>操作重點</th></tr>
+  <tr><td>投酵母前</td><td>充氧 60-120 秒(這是唯一該進氧的時刻)</td></tr>
+  <tr><td>旋渦投放</td><td>78°C 蓋鍋蓋密封靜置,熱端香氣萃取在密閉環境完成</td></tr>
+  <tr><td>發酵中</td><td>密封,絕不開蓋</td></tr>
+  <tr><td>Dry Hop 投放</td><td>CO₂ 沖桶 30 秒 → 10 秒內倒酒花 → 補 CO₂ 10 秒密封</td></tr>
+  <tr><td>比重取樣</td><td>從取樣閥取(若有);無取樣閥則開蓋前 CO₂ 沖頂空,動作快,取完立刻蓋回</td></tr>
+  <tr><td>虹吸轉桶</td><td>接收 keg 預驅氧 3 次以上 + 從底部入流 + 不濺射</td></tr>
+  <tr><td>Keg 加壓</td><td>轉完立刻加壓 10-12 PSI 並冷藏,別拖</td></tr>
+  <tr><td>Keg 出酒</td><td>維持 CO₂ 正壓,避免吸入空氣;2-4 週內喝完</td></tr>
+</table>
+
+<h2>📊 預期成品 vs v3.1 對照</h2>
+
+<table>
+  <tr><th width="20%">面向</th><th>v3.1</th><th>v4 預期</th></tr>
+  <tr>
+    <td>香氣來源</td>
+    <td>只有 dry hop(冷端)</td>
+    <td class="new-content">旋渦(熱端)+ dry hop(冷端)雙來源</td>
+  </tr>
+  <tr>
+    <td>香氣第一印象</td>
+    <td>柑橘/桃子,以乾投調性為主</td>
+    <td>果汁感前段更飽滿,層次更立體</td>
+  </tr>
+  <tr>
+    <td>IBU</td>
+    <td>33</td>
+    <td>~36(低溫旋渦只微升,苦感仍柔和)</td>
+  </tr>
+  <tr>
+    <td>苦感</td>
+    <td>柔和</td>
+    <td>仍柔和(78°C 異構化效率低)</td>
+  </tr>
+  <tr>
+    <td>FG / ABV</td>
+    <td colspan="2" style="text-align:center;">幾乎不變(發酵流程完全沿用 v3.1,乳糖減量讓 FG 可能微降 1 點)</td>
+  </tr>
+  <tr>
+    <td>酒體 / 口感</td>
+    <td>中等偏飽滿(乳糖 50g + 燕麥撐)</td>
+    <td class="new-content">略乾爽不黏口(乳糖減半到 25g),燕麥仍維持綿密霧感</td>
+  </tr>
+  <tr>
+    <td>氧化敏感度</td>
+    <td colspan="2" style="text-align:center;">相同(後段流程不變)</td>
+  </tr>
+</table>
+
+<h2>📋 本批釀造記錄單(單批詳細條件)</h2>
+
+<div class="info-box">
+從釀造當天起,逐項把<b>實測值</b>填進右欄,對照中間的 SOP 目標。事後檢討哪個環節偏離、怎麼影響成品。建議每批印一張或複製一份。
+</div>
+
+<div class="log-table">
+<table>
+  <tr><th width="34%">釀造日(Day 0)</th><th width="33%">SOP 目標</th><th width="33%">本批實測</th></tr>
+  <tr><td>釀造日期</td><td>—</td><td></td></tr>
+  <tr><td>糖化水溫</td><td>73°C</td><td></td></tr>
+  <tr><td>糖化溫度</td><td>65°C / 60min</td><td></td></tr>
+  <tr><td>糖化 pH</td><td>5.2-5.4</td><td></td></tr>
+  <tr><td>洗槽水溫</td><td>76°C</td><td></td></tr>
+  <tr><td>煮沸前麥汁量</td><td>15-16L</td><td></td></tr>
+  <tr><td>旋渦溫度 / 時間</td><td>78°C / 20min</td><td></td></tr>
+  <tr><td>關火後麥汁量</td><td>—</td><td></td></tr>
+  <tr><td>OG 實測</td><td>1.052</td><td></td></tr>
+  <tr><td>投酵母溫度</td><td>18-19°C</td><td></td></tr>
+  <tr><td>充氧時間</td><td>60-120s</td><td></td></tr>
+  <tr><td>有無做 starter</td><td>可選</td><td></td></tr>
+</table>
+</div>
+
+<div class="log-table">
+<table>
+  <tr><th width="34%">發酵期</th><th width="33%">SOP 目標</th><th width="33%">本批實測</th></tr>
+  <tr><td>Day 2 比重</td><td>~1.030-1.035</td><td></td></tr>
+  <tr><td>Day 3 比重</td><td>1.030-1.025</td><td></td></tr>
+  <tr><td>Dry Hop 投放日 / 當時比重</td><td>Day 3-4</td><td></td></tr>
+  <tr><td>主發酵溫度</td><td>18-20°C</td><td></td></tr>
+  <tr><td>D-rest 起始日 / 溫度</td><td>Day 7 / 22°C</td><td></td></tr>
+  <tr><td>穩定比重 #1(日期 / 讀數)</td><td>—</td><td></td></tr>
+  <tr><td>穩定比重 #2(日期 / 讀數)</td><td>間隔 2 天不動</td><td></td></tr>
+  <tr><td>強迫雙乙醯測試(日期 / 結果)</td><td>無奶油味</td><td></td></tr>
+  <tr><td>最終 FG / 達成日</td><td>1.013-1.015</td><td></td></tr>
+</table>
+</div>
+
+<div class="log-table">
+<table>
+  <tr><th width="34%">封裝 / 碳酸 / 品飲</th><th width="33%">SOP 目標</th><th width="33%">本批實測</th></tr>
+  <tr><td>轉桶日</td><td>Day 10-14</td><td></td></tr>
+  <tr><td>Keg 碳酸壓力 / 溫度</td><td>10-12 PSI / 2-4°C</td><td></td></tr>
+  <tr><td>碳酸起始日</td><td>—</td><td></td></tr>
+  <tr><td>初次出酒日</td><td>—</td><td></td></tr>
+  <tr><td>旋渦香氣評分(1-5)</td><td>—</td><td></td></tr>
+  <tr><td>賞味期實測(氧化味第幾週)</td><td>2-4 週</td><td></td></tr>
+  <tr><td>整體備註</td><td>—</td><td></td></tr>
+</table>
+</div>
+
+<h2>📝 跨批次追蹤摘要表</h2>
+
+<div class="info-box">
+每批釀造時記錄關鍵數據,累積 3-5 批就能看出你這套 SOP 的真實表現,知道哪裡可以微調。v4 多加一欄記錄旋渦投放對香氣的影響評分。
+</div>
+
+<div class="log-table">
+<table>
+  <tr>
+    <th>批次編號 / 釀造日</th>
+    <th>OG</th>
+    <th>Day 3 比重</th>
+    <th>Dry Hop 投放日</th>
+    <th>最終 FG / 達成日</th>
+    <th>強迫雙乙醯測試</th>
+    <th>轉桶日</th>
+    <th>旋渦香氣評分</th>
+    <th>賞味期實測</th>
+    <th>備註</th>
+  </tr>
+  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+</table>
+</div>
+
+<p style="font-size: 12px; color: #6b7280; margin-top: 6px;"><b>記錄要點:</b>「旋渦香氣評分」記錄熱端投放是否真的讓果汁感前段更明顯(1-5 分),累積幾批後決定旋渦量要不要再加到 42-56g。「賞味期實測」記錄喝到開始出現氧化味(紙板、雪莉、鈍味)是開酒後第幾週。</p>
+
+<h2>🔮 未來升級路徑(可選,不急)</h2>
+
+<table>
+  <tr><th width="35%">想改善什麼</th><th>需要投資</th></tr>
+  <tr>
+    <td>果汁感再強烈一點</td>
+    <td>旋渦投放從 28g 加到 42-56g,或溫度降到 75°C</td>
+  </tr>
+  <tr>
+    <td>避免測比重浪費酒</td>
+    <td>折射儀(便宜,只要 1-2 滴)或懸浮式電子比重計(較貴但一勞永逸)</td>
+  </tr>
+  <tr>
+    <td>香氣再強烈一點</td>
+    <td>把部分 dry hop 換成 Cryo 顆粒</td>
+  </tr>
+  <tr>
+    <td>瓶間/桶間更乾淨</td>
+    <td>不鏽鋼 dry hop 濾筒</td>
+  </tr>
+  <tr>
+    <td>徹底解決雙乙醯風險</td>
+    <td>ALDC 酵素(Maturex L),投酵母時加 0.1-0.3ml</td>
+  </tr>
+  <tr>
+    <td>真正的 closed transfer</td>
+    <td>壓力發酵桶(Fermzilla 等)</td>
+  </tr>
+  <tr>
+    <td>酒體再厚一點</td>
+    <td>加 Flaked Wheat 或 Carafoam</td>
+  </tr>
+</table>
+
+<div class="footer">
+  妃子起笑 v4 — Whirlpool Aroma · 基於 v3.1 穩定流程 + 補足熱端香氣 · 發酵流程與後段 SOP 完全沿用 v3.1
+</div>
+
+</div>
+</body>
+</html>

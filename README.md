@@ -12,20 +12,22 @@ homebrew-recipes/
 │   ├── v1-original.html               # 原始酒譜
 │   ├── v2-neipa-evolution.html        # NEIPA 進化版(評估後未採用)
 │   ├── v3-zero-cost.html              # 零成本優化路線
-│   └── v3.1-sop-hardening.html        # SOP 強化版(★ 目前最新)
+│   ├── v3.1-sop-hardening.html        # SOP 強化版
+│   └── v4-whirlpool-aroma.html        # 熱端香氣強化版(★ 目前最新)
 └── orange-glow/                       # Orange Glow · DDH NEIPA
     ├── README.md
     ├── v1-original.html               # 原始酒譜
     ├── v2-lessons-learned.html        # 整合妃子起笑教訓
-    └── v2.1-starter-fix-aldc.html     # Starter 修正 + ALDC 整合(★ 目前最新)
+    ├── v2.1-starter-fix-aldc.html     # Starter 修正 + ALDC 整合
+    └── v2.2-whirlpool-fermaid.html    # 旋渦降溫 + Fermaid-K 減量(★ 目前最新)
 ```
 
 ## 🍻 酒譜清單
 
 | 酒名 | 風格 | OG | ABV | 當前版本 |
 |---|---|---|---|---|
-| [妃子起笑](./crazy-concubine/) | Hazy Pale Ale | 1.052 | 4.8-5.2% | v3.1 |
-| [Orange Glow](./orange-glow/) | DDH NEIPA | 1.078 | 7.8-8.2% | v2.1 |
+| [妃子起笑](./crazy-concubine/) | Hazy Pale Ale | 1.052 | 4.8-5.2% | v4 |
+| [Orange Glow](./orange-glow/) | DDH NEIPA | 1.078 | 7.8-8.2% | v2.2 |
 
 ## 🔑 共通核心 SOP(兩支酒都套用)
 
@@ -83,4 +85,4 @@ DDH/hazy 不做 cold crash,避免酒花顆粒與酵母過度沉澱導致香氣�
 
 ---
 
-最後更新:2025/05/25
+最後更新:2026/06/01

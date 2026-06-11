@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>妃子起笑 v4 — 精簡列印版(Brew Sheet)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans CJK TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    font-size: 11px; color: #111; background: #eee; line-height: 1.3;
+  }
+  .sheet {
+    max-width: 760px; margin: 0 auto; background: #fff; padding: 14px 18px;
+  }
+  .top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 2px solid #2d7a3e; padding-bottom: 5px; margin-bottom: 7px;
+  }
+  .top h1 { font-size: 16px; color: #2d7a3e; }
+  .top .stats { font-size: 10.5px; color: #333; }
+  .top .stats b { color: #111; }
+
+  h2 {
+    font-size: 11.5px; font-weight: 800; color: #fff; background: #2d7a3e;
+    padding: 2px 7px; margin: 8px 0 4px; break-after: avoid;
+  }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 2px 0 4px; }
+  th, td { border: 1px solid #bbb; padding: 2px 5px; text-align: left; vertical-align: top; font-size: 10px; }
+  th { background: #2d7a3e; color: #fff; font-weight: bold; }
+  .k td:first-child { background: #f0f7f2; font-weight: bold; width: 30%; }
+
+  ol, ul { margin: 2px 0 4px 16px; }
+  li { margin-bottom: 1px; font-size: 10px; }
+
+  .flow { font-size: 10px; }
+  .flow b { color: #2d7a3e; }
+
+  .note { font-size: 9.5px; color: #555; }
+  .hl { background: #fff3c4; padding: 0 2px; font-weight: bold; }
+
+  .rec td { height: 17px; }
+  .rec td:first-child { background: #f7f7f7; font-weight: bold; width: 34%; }
+  .rec td:nth-child(2) { color: #888; width: 30%; }
+
+  @media print {
+    @page { margin: 8mm; }
+    body { background: #fff; font-size: 9.5px; }
+    .sheet { max-width: none; padding: 0; }
+    table, tr, ol, ul, .grid2 > div { break-inside: avoid; }
+    th, td { font-size: 8.8px; padding: 2px 4px; }
+    li { font-size: 8.8px; }
+    h2 { break-after: avoid; }
+    .rec td { height: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<div class="top">
+  <h1>🍺 妃子起笑 v4 · Brew Sheet</h1>
+  <div class="stats">OG <b>1.052</b> · FG <b>1.013-1.015</b> · ABV <b>4.8-5.2%</b> · IBU <b>~36</b> · EBC <b>9</b> · <b>8-10 L</b></div>
+</div>
+
+<div class="grid2">
+  <div>
+    <h2>🌾 麥芽 / 添加</h2>
+    <table class="k">
+      <tr><td>Pilsner Malt</td><td>2000g</td></tr>
+      <tr><td>Flaked Oats 燕麥</td><td>1000g</td></tr>
+      <tr><td>特殊麥芽</td><td>50g</td></tr>
+      <tr><td>乳糖(煮沸 55min)</td><td>25g</td></tr>
+      <tr><td>酵母營養劑(可選,煮沸末)</td><td>1-2g</td></tr>
+      <tr><td>Verdant IPA(直投,免 starter)</td><td>1 包 11g</td></tr>
+    </table>
+  </div>
+  <div>
+    <h2>🌿 酒花(煮沸28 + 旋渦28 + 乾投112 = 168g)</h2>
+    <table class="k">
+      <tr><td>Simcoe(煮沸 45min)</td><td>14g</td></tr>
+      <tr><td>Comet(煮沸 50min)</td><td>14g</td></tr>
+      <tr><td>Citra(旋渦 78°C 20min)</td><td>14g</td></tr>
+      <tr><td>Amarillo(旋渦 78°C 20min)</td><td>14g</td></tr>
+      <tr><td>Citra(乾投 Day3-4)</td><td>28g</td></tr>
+      <tr><td>Amarillo(乾投 Day3-4)</td><td>28g</td></tr>
+      <tr><td>Idaho 7(乾投 Day3-4)</td><td>56g</td></tr>
+    </table>
+  </div>
+</div>
+
+<h2>🔥 釀造當天流程</h2>
+<div class="flow">
+<b>1 糖化水</b> 9L 加熱 73°C + 氯化鈣 0.5g,調 pH <span class="hl">5.2-5.4</span> ·
+<b>2 糖化</b> 65°C 60min ·
+<b>3 升溫滅酵</b> 76°C 10min,過濾 ·
+<b>4 洗槽</b> 76°C 熱水,收集總麥汁 15-16L ·
+<b>5 煮沸 60min</b>(中火不蓋蓋):45min Simcoe 14g + <span class="hl">放冷卻盤管入鍋殺菌</span> → 50min Comet 14g → 55min 乳糖 25g(+營養劑)→ 60min 關火 ·
+<b>6 旋渦</b> 降到 78°C 投 Citra 14g + Amarillo 14g,蓋蓋 20min ·
+<b>7 冷卻+Whirlpool</b> 通冷水邊攪降溫 → 18-20°C 抽盤管 → 長勺攪漩渦 → 靜置 10-20min,trub 沉鍋底中央 ·
+<b>8 入桶</b> 從鍋邊抽清澈麥汁(留中央 trub),搖桶充氧 <span class="hl">120 秒</span> → 18-19°C 投 Verdant 1 包 → 裝水封
+</div>
+
+<h2>📅 發酵時程</h2>
+<table>
+  <tr><th width="14%">天</th><th width="30%">動作</th><th>目標 / 備註</th></tr>
+  <tr><td>Day 0</td><td>投酵母</td><td>18-19°C</td></tr>
+  <tr><td>Day 1-2</td><td>主發酵啟動</td><td>18-19°C;Day2 比重約 1.030-1.035</td></tr>
+  <tr><td><b>Day 3</b></td><td><b>測比重 → 乾投</b></td><td>比重落 <span class="hl">1.030-1.025</span> 就投全部 112g;&gt;1.035 延 Day4;&lt;1.020 立刻補投</td></tr>
+  <tr><td>Day 3-4</td><td>單段 Dry Hop</td><td>CO₂沖桶30s → 倒酒花 → 補CO₂10s,升 20°C</td></tr>
+  <tr><td>Day 5-6</td><td>發酵+萃取</td><td>20°C;Day6 比重近 1.016-1.014</td></tr>
+  <tr><td>Day 7</td><td>D-rest 升溫</td><td>22°C,清雙乙醯</td></tr>
+  <tr><td>Day 8-10</td><td>收尾</td><td>22°C,每 2 天測比重</td></tr>
+  <tr><td><b>Day 10-14</b></td><td><b>綠燈 → 轉桶</b></td><td>見下方綠燈條件</td></tr>
+  <tr><td>Day 14+</td><td>Keg 強制碳酸</td><td>賞味期 2-4 週內</td></tr>
+</table>
+
+<div class="grid2">
+  <div>
+    <h2>✅ 綠燈確認(兩個都要)</h2>
+    <ul>
+      <li>比重連續兩次(間隔 2 天)完全不動</li>
+      <li>強迫雙乙醯測試通過:取 50ml → 隔水加熱 60-65°C 泡 15-20min → 冷卻聞 → <b>無奶油爆米花味</b></li>
+    </ul>
+    <h2>🚰 虹吸轉桶</h2>
+    <ul>
+      <li>Keg 先 CO₂ 灌→排 <b>驅氧 3 次</b></li>
+      <li>發酵桶別搖晃;虹吸離桶底 2-3cm 留底</li>
+      <li>從 keg 底部入酒不濺射</li>
+      <li>轉完立刻加壓 10-12 PSI → 冷藏</li>
+    </ul>
+  </div>
+  <div>
+    <h2>🎯 強制碳酸</h2>
+    <ul>
+      <li>2-4°C,<b>10-12 PSI 靜置 5-7 天</b>(禁 30 PSI 猛搖)</li>
+      <li>飽和後降 8-10 PSI 出酒</li>
+      <li>再熟成 1-2 週氣泡更綿</li>
+    </ul>
+    <h2>🛡️ 氧化重點</h2>
+    <ul>
+      <li>只在投酵母前充氧;之後絕不開蓋</li>
+      <li>乾投:CO₂沖桶→快倒→補CO₂</li>
+      <li>賞味期 <b>2-4 週</b>內喝完</li>
+    </ul>
+  </div>
+</div>
+
+<h2>📋 本批記錄單</h2>
+<table class="rec">
+  <tr><td>釀造日期</td><td>—</td><td></td><td>糖化溫/pH</td><td>65°C / 5.2-5.4</td><td></td></tr>
+  <tr><td>OG 實測</td><td>1.052</td><td></td><td>投酵母溫度</td><td>18-19°C</td><td></td></tr>
+  <tr><td>Day 3 比重</td><td>1.030-1.025</td><td></td><td>乾投日</td><td>Day 3-4</td><td></td></tr>
+  <tr><td>最終 FG / 達成日</td><td>1.013-1.015</td><td></td><td>雙乙醯測試</td><td>無奶油味</td><td></td></tr>
+  <tr><td>轉桶日</td><td>Day 10-14</td><td></td><td>初次出酒日</td><td>—</td><td></td></tr>
+  <tr><td>賞味期實測</td><td>2-4 週</td><td></td><td>備註</td><td>—</td><td></td></tr>
+</table>
+
+<div class="note">本頁為實釀精簡列印版,<b>永遠對應目前最新版(現為 v4)</b>;改版時就地更新、不另開新檔。完整版(版本演化、設計邏輯、對照表)見 v4-whirlpool-aroma.html。</div>
+
+</div>
+</body>
+</html>

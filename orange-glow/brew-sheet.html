@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orange Glow v2.2 — 精簡列印版(Brew Sheet)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans CJK TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    font-size: 11px; color: #111; background: #eee; line-height: 1.3;
+  }
+  .sheet { max-width: 760px; margin: 0 auto; background: #fff; padding: 14px 18px; }
+  .top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 2px solid #D35400; padding-bottom: 5px; margin-bottom: 7px;
+  }
+  .top h1 { font-size: 16px; color: #D35400; }
+  .top .stats { font-size: 10.5px; color: #333; }
+  .top .stats b { color: #111; }
+
+  h2 {
+    font-size: 11.5px; font-weight: 800; color: #fff; background: #E67E22;
+    padding: 2px 7px; margin: 8px 0 4px; break-after: avoid;
+  }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 2px 0 4px; }
+  th, td { border: 1px solid #bbb; padding: 2px 5px; text-align: left; vertical-align: top; font-size: 10px; }
+  th { background: #E67E22; color: #fff; font-weight: bold; }
+  .k td:first-child { background: #FDF2E9; font-weight: bold; width: 32%; }
+
+  ol, ul { margin: 2px 0 4px 16px; }
+  li { margin-bottom: 1px; font-size: 10px; }
+
+  .flow { font-size: 10px; }
+  .flow b { color: #D35400; }
+
+  .note { font-size: 9.5px; color: #555; }
+  .hl { background: #fff3c4; padding: 0 2px; font-weight: bold; }
+
+  .rec td { height: 17px; }
+  .rec td:first-child { background: #f7f7f7; font-weight: bold; width: 34%; }
+  .rec td:nth-child(2) { color: #888; width: 30%; }
+
+  @media print {
+    @page { margin: 8mm; }
+    body { background: #fff; font-size: 9.5px; }
+    .sheet { max-width: none; padding: 0; }
+    table, tr, ol, ul, .grid2 > div { break-inside: avoid; }
+    th, td { font-size: 8.8px; padding: 2px 4px; }
+    li { font-size: 8.8px; }
+    h2 { break-after: avoid; }
+    .rec td { height: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<div class="top">
+  <h1>🍊 Orange Glow v2.2 · Brew Sheet</h1>
+  <div class="stats">OG <b>1.075-1.078</b> · FG <b>1.014-1.016</b> · ABV <b>7.8-8.2%</b> · IBU <b>25-30</b> · EBC <b>12-14</b> · <b>10 L</b></div>
+</div>
+
+<div class="grid2">
+  <div>
+    <h2>🌾 麥芽(總 5kg)</h2>
+    <table class="k">
+      <tr><td>Extra Pale Ale</td><td>2000g</td></tr>
+      <tr><td>Munich Light</td><td>1000g</td></tr>
+      <tr><td>Wheat Blanc</td><td>1000g</td></tr>
+      <tr><td>燕麥片</td><td>1000g</td></tr>
+      <tr><td>葡萄糖(煮沸末)</td><td>200g</td></tr>
+    </table>
+    <h2>🧫 酵母 + 添加</h2>
+    <table class="k">
+      <tr><td>Verdant IPA + 2L Starter</td><td>1 包</td></tr>
+      <tr><td>Fermaid-O(煮沸末,備選 K 3g)</td><td>5g</td></tr>
+      <tr><td>ALDC / Maturex L(投酵母時)</td><td>0.2-0.3ml</td></tr>
+    </table>
+  </div>
+  <div>
+    <h2>🌿 酒花(苦6 + 旋渦56 + 乾投112 = 174g)</h2>
+    <table class="k">
+      <tr><td>Magnum(60min)</td><td>6g</td></tr>
+      <tr><td>Citra(旋渦 75°C)</td><td>28g</td></tr>
+      <tr><td>Amarillo(旋渦 75°C)</td><td>28g</td></tr>
+      <tr><td>Galaxy(乾投 Day3-4)</td><td>56g</td></tr>
+      <tr><td>Citra(乾投 Day3-4)</td><td>28g</td></tr>
+      <tr><td>Amarillo(乾投 Day3-4)</td><td>28g</td></tr>
+    </table>
+    <h2>🧪 Starter(釀造前 1-2 天)</h2>
+    <div class="flow">2L 水 + 200g DME 煮 10min → 冷 20°C → 倒進 <span class="hl">4-5L 容器</span> → 投 1 包 Verdant → 鋁箔蓋口 → 常溫 24-36h → 整桶倒入發酵桶</div>
+  </div>
+</div>
+
+<h2>🔥 釀造當天流程</h2>
+<div class="flow">
+<b>1 糖化水</b> 11L 加熱 73°C + 氯化鈣 1g + 石膏 0.5g,pH <span class="hl">5.2-5.4</span> ·
+<b>2 糖化</b> 65°C 60min ·
+<b>3 升溫滅酵</b> 76°C 10min,過濾 ·
+<b>4 洗槽</b> 5L 76-78°C,收集 11-12L ·
+<b>5 煮沸 60min</b>:0min Magnum 6g → 45min 葡萄糖 200g + <span class="hl">放冷卻盤管入鍋殺菌</span> → 55min Fermaid-O 5g → 60min 關火測 OG(<span class="hl">救援水:1.080-1.085 加0.5L / 1.085-1.090 加1L / 1.090+ 加1.5-2L</span>)·
+<b>6 旋渦</b> 降到 75°C 投 Citra 28g + Amarillo 28g,蓋蓋 20-30min ·
+<b>7 冷卻+Whirlpool</b> 通冷水邊攪 → 18-20°C 抽盤管 → 長勺攪漩渦 → 靜置 10-20min,trub 沉中央 ·
+<b>8 入桶</b> 鍋邊抽清澈麥汁(留中央 trub),充氧 90s → 18-19°C 整桶 Starter 倒入 + <span class="hl">ALDC 0.2-0.3ml</span> → 水封
+</div>
+
+<h2>📅 發酵時程(18-20 天)</h2>
+<table>
+  <tr><th width="14%">天</th><th width="28%">動作</th><th>目標 / 備註</th></tr>
+  <tr><td>Day -2~-1</td><td>Starter</td><td>4-5L 容器,養成功(泡沫消退+酵母床)</td></tr>
+  <tr><td>Day 0</td><td>投酵母 + ALDC</td><td>18-19°C</td></tr>
+  <tr><td>Day 1-2</td><td>主發酵啟動</td><td>19°C;Day2 比重 1.050-1.045</td></tr>
+  <tr><td><b>Day 3</b></td><td><b>測比重 → 乾投</b></td><td>比重 <span class="hl">1.045-1.035</span> 投全部 112g;&gt;1.050 延 Day4;&lt;1.030 立刻投</td></tr>
+  <tr><td>Day 3-4</td><td>單段 Dry Hop</td><td>CO₂沖桶→倒酒花→補CO₂,升 20°C</td></tr>
+  <tr><td>Day 5-9</td><td>發酵+萃取</td><td>20°C 維持</td></tr>
+  <tr><td>Day 10</td><td>D-rest 升溫</td><td>22°C(雙乙醯已被 ALDC 阻斷)</td></tr>
+  <tr><td>Day 10-14</td><td>收尾</td><td>22°C,每 2 天測比重 → 近 1.016-1.014</td></tr>
+  <tr><td><b>Day 14-18</b></td><td><b>綠燈確認</b></td><td>見下方</td></tr>
+  <tr><td>Day 18-20</td><td>虹吸轉桶 + 冷藏</td><td>—</td></tr>
+  <tr><td>Day 20+</td><td>強制碳酸</td><td>賞味期 2-3 週內</td></tr>
+</table>
+
+<div class="grid2">
+  <div>
+    <h2>✅ 綠燈確認(兩個都要)</h2>
+    <ul>
+      <li>比重連續兩次(間隔 2 天)不動(高 ABV 可能 Day16-18 才打平)</li>
+      <li>強迫雙乙醯:50ml → 隔水 60-65°C 泡 15-20min → 冷卻聞 → <b>無奶油味</b>(加 ALDC 幾乎都過)</li>
+    </ul>
+    <h2>🚰 虹吸轉桶</h2>
+    <ul>
+      <li>Keg CO₂ 灌→排 <b>驅氧 3 次</b></li>
+      <li>別搖晃;虹吸離桶底 2-3cm 留底</li>
+      <li>底部入酒不濺射 → 立刻加壓 10-12 PSI 冷藏</li>
+    </ul>
+  </div>
+  <div>
+    <h2>🎯 強制碳酸</h2>
+    <ul>
+      <li>2-4°C,<b>10-12 PSI 靜置 5-7 天</b>(禁 30 PSI 猛搖)</li>
+      <li>飽和後降 8-10 PSI 出酒,再熟成 1-2 週</li>
+    </ul>
+    <h2>🛡️ DDH 氧化重點</h2>
+    <ul>
+      <li>充氧只在投酵母前(90s);之後絕不開蓋</li>
+      <li>乾投:CO₂沖桶→快倒→補CO₂</li>
+      <li>賞味期 <b>2-3 週</b>內喝完(別超過 3 週)</li>
+    </ul>
+  </div>
+</div>
+
+<h2>📋 本批記錄單</h2>
+<table class="rec">
+  <tr><td>釀造日期</td><td>—</td><td></td><td>Starter 狀態</td><td>養成功</td><td></td></tr>
+  <tr><td>OG 實測 / 救援水</td><td>1.075-1.078</td><td></td><td>糖化溫/pH</td><td>65°C / 5.2-5.4</td><td></td></tr>
+  <tr><td>Day 3 比重</td><td>1.045-1.035</td><td></td><td>乾投日</td><td>Day 3-4</td><td></td></tr>
+  <tr><td>ALDC 用量</td><td>0.2-0.3ml</td><td></td><td>Fermaid(O/K)</td><td>O 5g</td><td></td></tr>
+  <tr><td>最終 FG / 達成日</td><td>1.014-1.016</td><td></td><td>雙乙醯測試</td><td>無奶油味</td><td></td></tr>
+  <tr><td>轉桶日</td><td>Day 18-20</td><td></td><td>初次出酒日</td><td>—</td><td></td></tr>
+  <tr><td>賞味期實測</td><td>2-3 週</td><td></td><td>備註</td><td>—</td><td></td></tr>
+</table>
+
+<div class="note">本頁為實釀精簡列印版,<b>永遠對應目前最新版(現為 v2.2)</b>;改版時就地更新、不另開新檔。完整版(版本演化、設計邏輯、Fermaid/旋渦說明、對照表)見 v2.2-whirlpool-fermaid.html。</div>
+
+</div>
+</body>
+</html>

@@ -13,13 +13,15 @@ homebrew-recipes/
 │   ├── v2-neipa-evolution.html        # NEIPA 進化版(評估後未採用)
 │   ├── v3-zero-cost.html              # 零成本優化路線
 │   ├── v3.1-sop-hardening.html        # SOP 強化版
-│   └── v4-whirlpool-aroma.html        # 熱端香氣強化版(★ 目前最新)
+│   ├── v4-whirlpool-aroma.html        # 熱端香氣強化版(★ 目前最新,完整版)
+│   └── brew-sheet.html                # 精簡列印版(實釀用,永遠對應最新版)
 ├── orange-glow/                       # Orange Glow · DDH NEIPA
 │   ├── README.md
 │   ├── v1-original.html               # 原始酒譜
 │   ├── v2-lessons-learned.html        # 整合妃子起笑教訓
 │   ├── v2.1-starter-fix-aldc.html     # Starter 修正 + ALDC 整合
-│   └── v2.2-whirlpool-fermaid.html    # 旋渦降溫 + Fermaid-O 為主(★ 目前最新)
+│   ├── v2.2-whirlpool-fermaid.html    # 旋渦降溫 + Fermaid-O 為主(★ 目前最新,完整版)
+│   └── brew-sheet.html                # 精簡列印版(實釀用,永遠對應最新版)
 └── shared/                            # 跨酒譜共通 SOP
     └── filtering-trub-sop.html        # 完整濾渣流程(hot/cold side)
 ```

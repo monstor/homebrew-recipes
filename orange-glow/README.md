@@ -6,15 +6,16 @@
 
 | 項目 | 規格 |
 |---|---|
-| **目前最新版本** | [v2.2](./v2.2-whirlpool-fermaid.html) |
+| **目前最新版本** | [v2.3](./v2.3-dme.html) |
 | 風格 | DDH NEIPA |
 | 容量 | 10 L |
 | OG | 1.075-1.078 |
-| FG | 1.014-1.016 |
-| ABV | 7.8-8.2% |
+| FG | 1.016-1.018 |
+| ABV | 7.6-8.0% |
 | IBU | 25-30 |
-| EBC | 12-14 |
+| EBC | 13-15 |
 | 酵母 | Verdant IPA 1 包 + 2L Starter |
+| 可發酵糖 | 大麥 DME 220g(煮沸末) |
 | 添加物 | Fermaid-O 5g(備選 Fermaid-K 3g)+ Maturex L (ALDC) 0.2-0.3ml |
 
 ## 🍻 版本歷史
@@ -68,7 +69,7 @@
 
 ---
 
-### v2.2 - Whirlpool + Fermaid Tuning([檔案](./v2.2-whirlpool-fermaid.html)) ★ 當前版本
+### v2.2 - Whirlpool + Fermaid Tuning([檔案](./v2.2-whirlpool-fermaid.html))
 **核心:兩個往「更果汁、更柔和」方向的風味微調 + 一項數字修正**
 
 不動發酵流程,只調兩個直接影響 NEIPA 果香的細節:
@@ -79,6 +80,19 @@
 
 **v2.1 的其他設計(Starter 4-5L 修正、ALDC SOP、單段 Dry Hop、綠燈確認、虹吸轉桶、低壓慢飽和)全部保留。**
 
+---
+
+### v2.3 - DME Base([檔案](./v2.3-dme.html)) ★ 當前版本
+**核心:大麥 DME 220g 取代葡萄糖 200g**
+
+只動一項配方,其餘完全沿用 v2.2:
+
+- **葡萄糖 → 大麥 DME**:葡萄糖 100% 可發酵、把酒拉乾、不加風味;DME 約 75-80% 可發酵,留一點糊精與麥芽風味
+- **結果**:酒體更飽、尾段多一層麥香骨架、略加色(EBC 13-15);FG 略升(1.016-1.018)、ABV 略降(7.6-8.0%)
+- **採購好處**:starter 本來就用 DME,改用後**一物兩用、不必另外買葡萄糖**
+- 旋渦 75°C、Fermaid-O、單段 Dry Hop、Starter、ALDC、綠燈、虹吸轉桶、低壓慢飽和全部不變
+- 若實飲覺得偏厚/偏甜,下版可把 DME 降回 ~180g 或改回葡萄糖
+
 ## 📝 實戰追蹤(尚未釀造)
 
 | 批次 | Starter 狀態 | OG | Day 3 比重 | Dry Hop 投放日 | 最終 FG | ALDC 用量 | 雙乙醯測試 | 賞味期實測 |
@@ -88,12 +102,12 @@
 ## 🛠️ 釀造前準備清單
 
 - [ ] 4-5L Starter 容器(廣口玻璃罐或錐形瓶)
-- [ ] DME 乾麥芽萃取物 200g 以上
+- [ ] DME 乾麥芽萃取物 ~420g(starter 200g + 煮沸末 220g,v2.3 起一物兩用)
 - [ ] 鋁箔紙(廚房用即可)
 - [ ] Maturex L (ALDC) 100ml + 胰島素注射器
 - [ ] Fermaid-O 5g(買不到改 Fermaid-K 3g)
 - [ ] Verdant IPA 1 包
-- [ ] 麥芽:Extra Pale 2kg + Munich Light 1kg + Wheat 1kg + 燕麥片 1kg + 葡萄糖 200g
+- [ ] 麥芽:Extra Pale 2kg + Munich Light 1kg + Wheat 1kg + 燕麥片 1kg + 大麥 DME 220g(煮沸末)
 - [ ] 酒花:Magnum 6g + Citra 56g + Amarillo 56g + Galaxy 56g = 174g 總計
 
 ## 🔮 待決事項(等首批釀完評估)

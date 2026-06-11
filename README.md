@@ -20,7 +20,8 @@ homebrew-recipes/
 │   ├── v1-original.html               # 原始酒譜
 │   ├── v2-lessons-learned.html        # 整合妃子起笑教訓
 │   ├── v2.1-starter-fix-aldc.html     # Starter 修正 + ALDC 整合
-│   ├── v2.2-whirlpool-fermaid.html    # 旋渦降溫 + Fermaid-O 為主(★ 目前最新,完整版)
+│   ├── v2.2-whirlpool-fermaid.html    # 旋渦降溫 + Fermaid-O 為主
+│   ├── v2.3-dme.html                  # 大麥 DME 取代葡萄糖(★ 目前最新,完整版)
 │   └── brew-sheet.html                # 精簡列印版(實釀用,永遠對應最新版)
 └── shared/                            # 跨酒譜共通 SOP
     └── filtering-trub-sop.html        # 完整濾渣流程(hot/cold side)
@@ -31,7 +32,7 @@ homebrew-recipes/
 | 酒名 | 風格 | OG | ABV | 當前版本 |
 |---|---|---|---|---|
 | [妃子起笑](./crazy-concubine/) | Hazy Pale Ale | 1.052 | 4.8-5.2% | v4 |
-| [Orange Glow](./orange-glow/) | DDH NEIPA | 1.078 | 7.8-8.2% | v2.2 |
+| [Orange Glow](./orange-glow/) | DDH NEIPA | 1.078 | 7.6-8.0% | v2.3 |
 
 ## 🔑 共通核心 SOP(兩支酒都套用)
 

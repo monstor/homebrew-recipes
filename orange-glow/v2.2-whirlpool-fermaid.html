@@ -192,6 +192,31 @@
     h2 { font-size: 15px; }
     .two-col { grid-template-columns: 1fr; }
   }
+
+  @media print {
+    @page { margin: 9mm; }
+    .no-print { display: none !important; }
+    body { background: #fff; font-size: 9.5px; line-height: 1.35; }
+    .container { max-width: none; margin: 0; padding: 0; border: none; }
+    .header { padding-bottom: 8px; margin-bottom: 8px; }
+    h1 { font-size: 17px; margin-bottom: 2px; }
+    .version-tag { margin-bottom: 4px; padding: 2px 10px; }
+    .subtitle { font-size: 10px; }
+    .stat-line { padding: 6px 10px; margin: 6px 0; font-size: 10.5px; }
+    h2 { font-size: 12px; padding: 4px 9px; margin: 9px 0 5px; break-after: avoid; }
+    h3 { font-size: 11px; margin: 7px 0 3px; break-after: avoid; }
+    .info-box, .warning-box, .danger-box, .greenlight, .checklist,
+    .starter-box, .aldc-box, .new-in-v2, .new-in-v22, .log-table,
+    table, .step-row, tr { break-inside: avoid; }
+    .info-box, .warning-box, .danger-box { padding: 6px 10px; margin: 5px 0; font-size: 9.5px; }
+    .greenlight, .checklist, .starter-box, .aldc-box { padding: 8px 11px; margin: 6px 0; }
+    .step-row { margin: 4px 0; font-size: 9.5px; }
+    .step-num { width: 20px; height: 20px; line-height: 20px; font-size: 10px; margin-right: 8px; }
+    th, td { padding: 3px 6px; font-size: 9px; }
+    .checklist ol, .greenlight ol { font-size: 9px; }
+    .log-table td { height: 24px; }
+    .footer { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -213,7 +238,7 @@
   <span>容量 <b>10 L</b></span>
 </div>
 
-<div class="changelog">
+<div class="changelog no-print">
 <b>📋 v2.1 → v2.2 更新清單(2 項風味微調 + 1 項修正)</b>
 <ul>
   <li><b>旋渦溫度 80°C → 75°C</b>:香氣保留更好、苦感更柔<span class="v22-tag">v2.2</span></li>
@@ -223,7 +248,7 @@
 <p style="margin-top: 8px;">其他 v2/v2.1 已建立的設計(單段 Dry Hop、一包 Verdant + 4-5L Starter、ALDC SOP、綠燈確認、虹吸轉桶、低壓慢飽和、省略 Cold Crash)<b>完全保留不變</b>。這是 v2.1 的小幅風味微調,不是大改版。</p>
 </div>
 
-<div class="new-in-v22">
+<div class="new-in-v22 no-print">
 <b>★ v2.2 設計邏輯</b><br>
 v2.1 已經把妃子起笑教訓 + Starter 修正 + ALDC 都整合到位,流程穩定。v2.2 只動兩個會直接影響 NEIPA 果香表現的細節:把旋渦從 80°C 降到 75°C(高溫旋渦其實會稍微烤掉嬌嫩的酒花精油、也多帶苦),以及把營養劑改回 <b>Fermaid-O 為主</b>(純有機氮源,不像 Fermaid-K 的 DAP 會壓制酵母產果香酯)。兩個都是「往更果汁、更柔和」的方向微調,不改風格、不改強度、不改時程。
 </div>
@@ -552,6 +577,7 @@ DDH NEIPA 比一般 NEIPA 氧化更敏感(dry hop 量大、酒花精油豐富),�
   <tr><td>Keg 出酒</td><td>維持 CO₂ 正壓 8-10 PSI,2-3 週內喝完</td></tr>
 </table>
 
+<div class="no-print">
 <h2>📊 v2.1 vs v2.2 對照</h2>
 
 <table>
@@ -587,6 +613,7 @@ DDH NEIPA 比一般 NEIPA 氧化更敏感(dry hop 量大、酒花精油豐富),�
 <div class="new-in-v22">
 <b>★ v2.2 兩個微調對風味的影響</b><br>
 旋渦降到 75°C → 熱端果香精油保留更多,嗅覺前段更明亮;同時苦度更低,苦感更圓潤。改用 Fermaid-O → 沒有 DAP 抑酯,果香酯類(百香果、芒果)表現更突出。兩者方向一致,都是讓 Orange Glow 更往「果汁感、柔和」的 NEIPA 標竿(Tree House / Trillium 調性)靠。風格、強度、ABV、時程全部不變。
+</div>
 </div>
 
 <h2>📋 本批釀造記錄單(單批詳細條件)</h2>
@@ -650,6 +677,7 @@ DDH NEIPA 比一般 NEIPA 氧化更敏感(dry hop 量大、酒花精油豐富),�
   <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 </table>
 
+<div class="no-print">
 <h2>🔮 未來升級路徑(可選)</h2>
 
 <table>
@@ -662,6 +690,7 @@ DDH NEIPA 比一般 NEIPA 氧化更敏感(dry hop 量大、酒花精油豐富),�
   <tr><td>真正的 closed transfer</td><td>壓力發酵桶(Fermzilla 等)</td></tr>
   <tr><td>避免測比重浪費酒</td><td>折射儀(便宜)或懸浮式電子比重計</td></tr>
 </table>
+</div>
 
 <div class="footer">
   Orange Glow DDH NEIPA v2.2 — Whirlpool + Fermaid Tuning · v2.1 風味微調版 · 維持所有核心改造

@@ -23,6 +23,13 @@ homebrew-recipes/
 │   ├── v2.2-whirlpool-fermaid.html    # 旋渦降溫 + Fermaid-O 為主
 │   ├── v2.3-dme.html                  # DME 取代葡萄糖 + 燕麥減量(★ 目前最新,完整版)
 │   └── brew-sheet.html                # 精簡列印版(實釀用,永遠對應最新版)
+├── strange-haze/                      # Strange Haze · Imperial Milkshake IPA
+│   ├── README.md
+│   ├── v0-mango-passion-draft.html    # 芒果百香草稿(未採用)
+│   └── v1-blueberry-vanilla.html      # 藍莓香草版(★ 目前最新)
+├── milkshake-ipa/                     # Milkshake IPA · 低殘糖版
+│   ├── README.md
+│   └── v1-low-residual-sugar.html     # 低殘糖芒果百香(★ 目前最新)
 └── shared/                            # 跨酒譜共通 SOP
     └── filtering-trub-sop.html        # 完整濾渣流程(hot/cold side)
 ```
@@ -33,6 +40,8 @@ homebrew-recipes/
 |---|---|---|---|---|
 | [妃子起笑](./crazy-concubine/) | Hazy Pale Ale | 1.052 | 4.8-5.2% | v4 |
 | [Orange Glow](./orange-glow/) | DDH NEIPA | 1.078 | 7.7-8.1% | v2.3 |
+| [Strange Haze](./strange-haze/) | Imperial Milkshake IPA | 1.072-1.076 | 7.5-8%（標 9%） | v1 |
+| [Milkshake IPA](./milkshake-ipa/) | Milkshake IPA（低殘糖） | 1.058-1.062 | 5.5-6% | v1 |
 
 ## 🔑 共通核心 SOP(兩支酒都套用)
 

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milkshake IPA 低殘糖 — 精簡列印版(Brew Sheet)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans CJK TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    font-size: 11px; color: #111; background: #eee; line-height: 1.3;
+  }
+  .sheet { max-width: 760px; margin: 0 auto; background: #fff; padding: 14px 18px; }
+  .top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 2px solid #C77D1A; padding-bottom: 5px; margin-bottom: 7px;
+  }
+  .top h1 { font-size: 16px; color: #C77D1A; }
+  .top .stats { font-size: 10.5px; color: #333; }
+  .top .stats b { color: #111; }
+
+  h2 {
+    font-size: 11.5px; font-weight: 800; color: #fff; background: #E8A33D;
+    padding: 2px 7px; margin: 8px 0 4px; break-after: avoid;
+  }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 2px 0 4px; }
+  th, td { border: 1px solid #bbb; padding: 2px 5px; text-align: left; vertical-align: top; font-size: 10px; }
+  th { background: #E8A33D; color: #fff; font-weight: bold; }
+  .k td:first-child { background: #FDF4E7; font-weight: bold; width: 36%; }
+
+  .flow { font-size: 10px; }
+  .flow > div { margin: 0 0 3px; padding-left: 16px; text-indent: -16px; }
+  .flow b { color: #C77D1A; }
+
+  ul { margin: 2px 0 4px 16px; }
+  li { margin-bottom: 1px; font-size: 10px; }
+
+  .note { font-size: 9.5px; color: #555; }
+  .hl { background: #fff3c4; padding: 0 2px; font-weight: bold; }
+  .red { color: #C9412E; font-weight: bold; }
+
+  .tl td { height: 18px; }
+  .tl td:first-child { font-weight: bold; }
+  .tl td:nth-child(3) { color: #888; }
+
+  .rec td { height: 17px; }
+  .rec td:first-child { background: #f7f7f7; font-weight: bold; width: 34%; }
+  .rec td:nth-child(2) { color: #888; width: 30%; }
+
+  @media print {
+    @page { margin: 8mm; }
+    body { background: #fff; font-size: 9.5px; }
+    .sheet { max-width: none; padding: 0; }
+    table, tr, ul, .grid2 > div { break-inside: avoid; }
+    th, td { font-size: 8.8px; padding: 2px 4px; }
+    li { font-size: 8.8px; }
+    h2 { break-after: avoid; }
+    .rec td { height: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<div class="top">
+  <h1>🥭 Milkshake IPA(低殘糖)· Brew Sheet</h1>
+  <div class="stats">OG <b>1.058-1.062</b> · FG <b>1.014-1.016</b> · ABV <b>5.5-6%</b> · IBU <b>~18</b> · EBC <b>10-12</b> · <b>6 L</b></div>
+</div>
+
+<div class="grid2">
+  <div>
+    <h2>🌾 麥芽(總 3.3kg)+ 糖</h2>
+    <table class="k">
+      <tr><td>Extra Pale / Pilsner</td><td>1800g</td></tr>
+      <tr><td>Wheat Malt 小麥</td><td>700g</td></tr>
+      <tr><td>燕麥片</td><td>700g</td></tr>
+      <tr><td>Carapils / Carafoam(可選)</td><td>100g</td></tr>
+      <tr><td>乳糖(煮沸末,大減)</td><td>15g</td></tr>
+    </table>
+    <h2>🧫 酵母 + 水果 + 添加</h2>
+    <table class="k">
+      <tr><td>Verdant IPA / London III</td><td>1 包</td></tr>
+      <tr><td>芒果泥(無糖,加水果時)</td><td>300g</td></tr>
+      <tr><td>百香果泥(無糖,加水果時)</td><td>100g</td></tr>
+      <tr><td>香草莢(可選,泡烈酒消毒)</td><td>1/2 根</td></tr>
+      <tr><td>Fermaid-O(投酵母 1.5g + Day2 1.5g)</td><td>3g</td></tr>
+    </table>
+  </div>
+  <div>
+    <h2>🌿 酒花(總 ~90g,IBU ~18)</h2>
+    <table class="k">
+      <tr><td>Magnum / Warrior(0min 苦)</td><td>3g</td></tr>
+      <tr><td>Citra(旋渦 75°C)</td><td>20g</td></tr>
+      <tr><td>Mosaic / Galaxy(旋渦 75°C)</td><td>15g</td></tr>
+      <tr><td>Citra(乾投 Day3-4)</td><td>28g</td></tr>
+      <tr><td>Mosaic / Galaxy(乾投 Day3-4)</td><td>24g</td></tr>
+    </table>
+    <h2>✅ 綠燈確認(兩個都要)</h2>
+    <ul>
+      <li>比重連兩次(間隔 2 天)不動(水果會再發酵,務必等穩)</li>
+      <li>強迫雙乙醯:50ml → 隔水 60-65°C 泡 15-20min → 冷卻聞 → <b>無奶油味</b></li>
+    </ul>
+  </div>
+</div>
+
+<h2>🔥 釀造當天流程</h2>
+<div class="flow">
+<div><b>1 糖化水</b> ~7L 加熱 76-77°C + 氯化鈣為主(Cl⁻:SO₄²⁻ ~3:1),投麥芽後測糖化醪 pH <span class="hl">5.2-5.4</span>(不足滴磷酸)</div>
+<div><b>2 糖化</b> 67-68°C 60min(高溫留糊精撐體)</div>
+<div><b>3 升溫滅酵</b> 76°C 10min,過濾</div>
+<div><b>4 洗槽</b> ~3L 76-78°C,收集 7.5-8L</div>
+<div><b>5 煮沸 60min</b> — 投料時刻:<br>
+　• 0min:<span class="red">Magnum 3g 苦花(一下鍋就加,最易漏!)</span><br>
+　• 45min:放冷卻盤管入鍋殺菌<br>
+　• 末 10min:乳糖 15g(攪溶)<br>
+　• 60min:關火 → 取小樣冷卻測 OG(折射儀最快,別沸燙直接讀)</div>
+<div><b>6 旋渦</b> 降到 75°C 投 Citra 20g + Mosaic/Galaxy 15g,蓋蓋 20-30min</div>
+<div><b>7 冷卻 + 投酵母</b> 降 18°C → 充氧 60-90s → 投 1 包酵母 + Fermaid-O 1.5g → 水封</div>
+</div>
+
+<h2>⏱️ 當天時間軸(填實際時刻)</h2>
+<table class="tl">
+  <tr><th width="40%">步驟</th><th width="16%">耗時</th><th width="18%">預計累計</th><th width="26%">實際時刻</th></tr>
+  <tr><td>1 糖化水準備</td><td>~15min</td><td>0:00</td><td></td></tr>
+  <tr><td>2 糖化 67-68°C</td><td>60min</td><td>0:15</td><td></td></tr>
+  <tr><td>3 升溫滅酵 76°C</td><td>~15min</td><td>1:15</td><td></td></tr>
+  <tr><td>4 洗槽</td><td>~15min</td><td>1:30</td><td></td></tr>
+  <tr><td>5 煮沸(45min 放盤管)</td><td>60min</td><td>1:45</td><td></td></tr>
+  <tr><td>6 旋渦 75°C</td><td>20-30min</td><td>2:45</td><td></td></tr>
+  <tr><td>7 冷卻 + 投酵母</td><td>~30min</td><td>3:10</td><td></td></tr>
+  <tr><td>完成</td><td>—</td><td>~3:40</td><td></td></tr>
+</table>
+
+<h2>📅 發酵時程(約 16-18 天)</h2>
+<table>
+  <tr><th width="14%">天</th><th width="28%">動作</th><th>目標 / 備註</th></tr>
+  <tr><td>Day 0</td><td>投酵母 + Fermaid-O 1.5g</td><td>18-19°C</td></tr>
+  <tr><td>Day 2</td><td>Fermaid-O 1.5g(第二次)</td><td>—</td></tr>
+  <tr><td><b>Day 3-4</b></td><td><b>單段 Dry Hop(52g)</b></td><td>比重 <span class="hl">1.030-1.025</span> → CO₂沖桶→倒→補CO₂,升 20°C</td></tr>
+  <tr><td><b>Day 6-7</b></td><td><b>加芒果+百香果泥+香草</b></td><td>近 FG → CO₂沖桶 → 殺菌果泥+泡酒香草,升 20-22°C</td></tr>
+  <tr><td>Day 8-10</td><td>水果發酵 + D-rest</td><td>20-22°C,果糖部分發酵、清雙乙醯</td></tr>
+  <tr><td><b>Day 10-14</b></td><td><b>綠燈確認</b></td><td>連兩次不動 + 雙乙醯通過(等水果發酵穩)</td></tr>
+  <tr><td>Day 14-18</td><td>轉桶 + 碳酸</td><td>賞味期 2-3 週內</td></tr>
+</table>
+
+<div class="grid2">
+  <div>
+    <h2>🛡️ 低氧 / 加料重點</h2>
+    <ul>
+      <li>乾投、加水果都先 <b>CO₂ 沖桶</b> → 快投 → 補 CO₂</li>
+      <li>果泥隔水 70-75°C 泡 10-15min 殺菌(別煮滾),或用市售無菌泥</li>
+      <li>香草莢先泡伏特加/中性烈酒消毒再下</li>
+    </ul>
+  </div>
+  <div>
+    <h2>🚰 轉桶 + 碳酸</h2>
+    <ul>
+      <li>渣多(水果泥+酒花)→ 依 <a href="../shared/filtering-trub-sop.html">濾渣 SOP</a></li>
+      <li>keg 預驅氧 3 次;虹吸離底 2-3cm 留底;底部入酒</li>
+      <li>2-4°C <b>10-12 PSI 慢飽和 5-7 天</b> → 8-10 PSI 出酒</li>
+    </ul>
+  </div>
+</div>
+
+<h2>📋 本批記錄單</h2>
+<table class="rec">
+  <tr><td>釀造日期</td><td>—</td><td></td><td>糖化溫 / pH</td><td>67-68°C / 5.2-5.4</td><td></td></tr>
+  <tr><td>關火後 / 入桶體積</td><td>—</td><td></td><td>OG 實測</td><td>1.058-1.062</td><td></td></tr>
+  <tr><td>投酵母溫度</td><td>18-19°C</td><td></td><td>Day 3 比重</td><td>1.030-1.025</td><td></td></tr>
+  <tr><td>乾投日</td><td>Day 3-4</td><td></td><td>加水果日</td><td>Day 6-7</td><td></td></tr>
+  <tr><td>果泥量 / 香草</td><td>芒300+百100 / 半根</td><td></td><td>強迫雙乙醯測試</td><td>無奶油味</td><td></td></tr>
+  <tr><td>最終 FG / 達成日</td><td>1.014-1.016</td><td></td><td>ABV</td><td>5.5-6%</td><td></td></tr>
+  <tr><td>轉桶日</td><td>Day 14-18</td><td></td><td>初次出酒日</td><td>—</td><td></td></tr>
+  <tr><td>賞味期實測</td><td>2-3 週</td><td></td><td>品飲 / 香氣評語</td><td>—</td><td></td></tr>
+  <tr><td>備註</td><td>—</td><td></td><td></td><td></td><td></td></tr>
+</table>
+
+<div class="note">本頁為實釀精簡列印版,<b>永遠對應目前最新版(現為 v1 低殘糖)</b>;改版時就地更新、不另開新檔。完整版(設計邏輯、三個關鍵、微調)見 v1-low-residual-sugar.html。</div>
+
+</div>
+</body>
+</html>

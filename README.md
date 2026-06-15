@@ -31,7 +31,8 @@ homebrew-recipes/
 │   └── brew-sheet.html                # 精簡列印版(實釀用)
 ├── milkshake-ipa/                     # Milkshake IPA · 低殘糖版
 │   ├── README.md
-│   └── v1-low-residual-sugar.html     # 低殘糖芒果百香(★ 目前最新)
+│   ├── v1-low-residual-sugar.html     # 低殘糖芒果百香(★ 目前最新,完整版)
+│   └── brew-sheet.html                # 精簡列印版(實釀用)
 └── shared/                            # 跨酒譜共通 SOP
     └── filtering-trub-sop.html        # 完整濾渣流程(hot/cold side)
 ```

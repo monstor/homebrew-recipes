@@ -25,8 +25,10 @@ homebrew-recipes/
 │   └── brew-sheet.html                # 精簡列印版(實釀用,永遠對應最新版)
 ├── strange-haze/                      # Strange Haze · Imperial Milkshake IPA
 │   ├── README.md
+│   ├── label.png                      # 酒標圖(藍莓星雲)
 │   ├── v0-mango-passion-draft.html    # 芒果百香草稿(未採用)
-│   └── v1-blueberry-vanilla.html      # 藍莓香草版(★ 目前最新)
+│   ├── v1-blueberry-vanilla.html      # 藍莓香草版(★ 目前最新,完整版)
+│   └── brew-sheet.html                # 精簡列印版(實釀用)
 ├── milkshake-ipa/                     # Milkshake IPA · 低殘糖版
 │   ├── README.md
 │   └── v1-low-residual-sugar.html     # 低殘糖芒果百香(★ 目前最新)

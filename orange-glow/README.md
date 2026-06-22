@@ -9,13 +9,13 @@
 | **目前最新版本** | [v2.4](./v2.4-golden-promise.html) |
 | 風格 | DDH NEIPA |
 | 容量 | 10 L |
-| OG | 1.074-1.077 |
+| OG | 1.075-1.078 |
 | FG | 1.016-1.018 |
-| ABV | 7.5-7.9% |
+| ABV | 7.6-8.0% |
 | IBU | 25-30 |
-| EBC | 15-17 |
-| 基麥 | Golden Promise 2500g |
-| 酵母 | Verdant IPA 1 包 + 2L Starter |
+| EBC | 14-16 |
+| 基麥 | Golden Promise 2kg |
+| 酵母 | Verdant IPA 1 包 → 養成 2L Starter(菌量≈2 包,省一包) |
 | 可發酵糖 | 大麥 DME 180g(煮沸末) |
 | 添加物 | Fermaid-O 5g（投酵母時加;備選 Fermaid-K 3g 煮沸末）+ Maturex L (ALDC) 0.2-0.3ml |
 
@@ -99,16 +99,16 @@
 ---
 
 ### v2.4 - Golden Promise Base([檔案](./v2.4-golden-promise.html)) ★ 當前版本
-**核心:升級基麥 —— Golden Promise 取代 Extra Pale,給更柔順綿密的英系 juicy 酒體**
+**核心:升級基麥 —— Golden Promise 取代 Extra Pale,給更柔順綿密的英系 juicy 酒體;穀物整理成 1kg 整數單位**
 
-只動基麥骨架,其餘(糖化 65°C、旋渦 75°C、Fermaid-O、單段 Dry Hop、Starter、ALDC、綠燈、虹吸轉桶、低壓慢飽和、酒花配方)完全沿用 v2.3:
+只動基麥,其餘(糖化 65°C、旋渦 75°C、Fermaid-O、單段 Dry Hop、Starter、ALDC、綠燈、虹吸轉桶、低壓慢飽和、酒花配方)完全沿用 v2.3:
 
-- **Extra Pale 2000g → Golden Promise 2500g**:GP 是蘇格蘭傳統 2-row,蛋白質略高、帶餅乾/麵包柔甜蜜香 → 酒體更柔順綿密、泡沫更飽滿,跟 Verdant 酵母與柳橙/核果香加分。英系 NEIPA 廠(Verdant、Cloudwater)的愛用基底。設 2500g 是吃掉 Munich 減半的份額、把 OG 撐住
-- **Munich Light 1000g → 500g(減半)**:GP 已自帶麥香骨架,Munich 再給 1000g 會 GP+Munich+DME 三重疊加變太甜太厚、酒色太深。減半保留層次但不過頭
-- **大麥 DME 220g → 180g(略降)**:抵銷 GP 增加的甜厚。穀物總量維持 4.8kg、OG ~1.075 幾乎不變
-- **整體走向**:從 v2.3 的「乾淨有支撐」變「柔順綿密、泡沫飽滿」,更貼近英系 juicy NEIPA。代價是酒色略深(EBC 15-17)、收口沒那麼乾(FG 1.016-1.018,高 1-2 點)——正是這風格想要的
-- **數據**:OG 1.074-1.077、FG 1.016-1.018、ABV 7.5-7.9%、EBC 15-17
-- 微調方向:偏甜偏厚 → Munich 整個拿掉或 DME 降到 ~120g;麥味搶酒花 → GP 降到 2000g + Extra Pale 500g 折衷
+- **Extra Pale 2kg → Golden Promise 2kg(1:1 換基麥)**:GP 是蘇格蘭傳統 2-row,蛋白質略高、帶餅乾/麵包柔甜蜜香 → 酒體更柔順綿密、泡沫更飽滿,跟 Verdant 酵母與柳橙/核果香加分。英系 NEIPA 廠(Verdant、Cloudwater)的愛用基底
+- **穀物收斂成 1kg 整數:GP 2 / Munich 1 / Wheat 1 / 燕麥 1 = 5kg**:Munich 維持 1kg(保住「Orange Glow」橘金酒色與麥香層次)、燕麥由 800g 回到 1kg(多給一點綿密),採購好算
+- **大麥 DME 維持 180g(煮沸末,以 g 計、非麥芽)**:跟 starter 共用、補一點 OG。穀物到 5kg,OG 回到 v2.3 水準
+- **整體走向**:從 v2.3 的「乾淨有支撐」變「柔順綿密、泡沫飽滿」,更貼近英系 juicy NEIPA。代價是酒色略深(EBC 14-16)、收口沒那麼乾(FG 高 1-2 點)——正是這風格想要的
+- **數據**:OG 1.075-1.078、FG 1.016-1.018、ABV 7.6-8.0%、EBC 14-16
+- 微調方向:偏甜偏厚 → 燕麥回 800g 或 Munich 降到 0.5kg;麥味搶酒花 → GP 與 Extra Pale 各半
 
 ## 📝 實戰追蹤(尚未釀造)
 
@@ -124,7 +124,7 @@
 - [ ] Maturex L (ALDC) 100ml + 胰島素注射器
 - [ ] Fermaid-O 5g(買不到改 Fermaid-K 3g)
 - [ ] Verdant IPA 1 包
-- [ ] 麥芽:Golden Promise 2.5kg + Munich Light 0.5kg + Wheat 1kg + 燕麥片 800g + 大麥 DME 180g(煮沸末)
+- [ ] 麥芽:Golden Promise 2kg + Munich Light 1kg + Wheat 1kg + 燕麥片 1kg(全 1kg 整數)+ 大麥 DME 180g(煮沸末)
 - [ ] 酒花:Magnum 6g + Citra 56g + Amarillo 56g + Galaxy 56g = 174g 總計
 
 ## 🔮 待決事項(等首批釀完評估)

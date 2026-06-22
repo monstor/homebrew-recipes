@@ -43,7 +43,7 @@ homebrew-recipes/
 | 酒名 | 風格 | OG | ABV | 當前版本 |
 |---|---|---|---|---|
 | [妃子起笑](./crazy-concubine/) | Hazy Pale Ale | 1.052 | 4.8-5.2% | v4 |
-| [Orange Glow](./orange-glow/) | DDH NEIPA | 1.074-1.077 | 7.5-7.9% | v2.4 |
+| [Orange Glow](./orange-glow/) | DDH NEIPA | 1.075-1.078 | 7.6-8.0% | v2.4 |
 | [Strange Haze](./strange-haze/) | Imperial Milkshake IPA | 1.072-1.076 | 7.5-8%（標 9%） | v1 |
 | [Milkshake IPA](./milkshake-ipa/) | Milkshake IPA（低殘糖） | 1.058-1.062 | 5.5-6% | v1 |
 

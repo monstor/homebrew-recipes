@@ -22,7 +22,7 @@ homebrew-recipes/
 │   ├── v2.1-starter-fix-aldc.html     # Starter 修正 + ALDC 整合
 │   ├── v2.2-whirlpool-fermaid.html    # 旋渦降溫 + Fermaid-O 為主
 │   ├── v2.3-dme.html                  # DME 取代葡萄糖 + 燕麥減量
-│   ├── v2.4-golden-promise.html       # Golden Promise 基麥 + Munich 減半(★ 目前最新,完整版)
+│   ├── v2.4-golden-promise.html       # Golden Promise 基麥 + LalBrew Pomona 酵母(★ 目前最新,完整版)
 │   └── brew-sheet.html                # 精簡列印版(實釀用,永遠對應最新版)
 ├── strange-haze/                      # Strange Haze · Imperial Milkshake IPA
 │   ├── README.md
@@ -43,7 +43,7 @@ homebrew-recipes/
 | 酒名 | 風格 | OG | ABV | 當前版本 |
 |---|---|---|---|---|
 | [妃子起笑](./crazy-concubine/) | Hazy Pale Ale | 1.052 | 4.8-5.2% | v4 |
-| [Orange Glow](./orange-glow/) | DDH NEIPA | 1.075-1.078 | 7.6-8.0% | v2.4 |
+| [Orange Glow](./orange-glow/) | DDH NEIPA | 1.075-1.078 | 7.7-8.1% | v2.4 |
 | [Strange Haze](./strange-haze/) | Imperial Milkshake IPA | 1.072-1.076 | 7.5-8%（標 9%） | v1 |
 | [Milkshake IPA](./milkshake-ipa/) | Milkshake IPA（低殘糖） | 1.058-1.062 | 5.5-6% | v1 |
 

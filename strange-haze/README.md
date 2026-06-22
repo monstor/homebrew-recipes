@@ -42,7 +42,7 @@
 **配方重點**:
 - 穀物 5kg:Extra Pale 3kg + Château Wheat Blanc 1kg + 燕麥 1kg
 - 煮沸加:Maltodextrin 150g + 乳糖 20g
-- 酒花(整包 28g):Magnum 6g + Citra 56g + Galaxy 56g + Motueka 28g
+- 酒花(整包 28g):Magnum 6g + Citra 56g + Galaxy 56g + Mosaic 28g
 - 藍莓 600g(淡雅)+ 香草莢 1 根
 
 ## 📝 實戰追蹤

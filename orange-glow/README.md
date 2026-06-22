@@ -98,17 +98,18 @@
 
 ---
 
-### v2.4 - Golden Promise Base([檔案](./v2.4-golden-promise.html)) ★ 當前版本
-**核心:升級基麥 —— Golden Promise 取代 Extra Pale,給更柔順綿密的英系 juicy 酒體;穀物整理成 1kg 整數單位**
+### v2.4 - Golden Promise Base + Pomona([檔案](./v2.4-golden-promise.html)) ★ 當前版本
+**核心:基麥換 Golden Promise + 酒花改單一 Pomona,整體轉向英系 juicy;穀物整理成 1kg 整數單位**
 
-只動基麥,其餘(糖化 65°C、旋渦 75°C、Fermaid-O、單段 Dry Hop、Starter、ALDC、綠燈、虹吸轉桶、低壓慢飽和、酒花配方)完全沿用 v2.3:
+動基麥與酒花品種,其餘(糖化 65°C、旋渦 75°C、Fermaid-O、單段 Dry Hop 時程與技法、Starter、ALDC、綠燈、虹吸轉桶、低壓慢飽和)完全沿用 v2.3:
 
-- **Extra Pale 2kg → Golden Promise 2kg(1:1 換基麥)**:GP 是蘇格蘭傳統 2-row,蛋白質略高、帶餅乾/麵包柔甜蜜香 → 酒體更柔順綿密、泡沫更飽滿,跟 Verdant 酵母與柳橙/核果香加分。英系 NEIPA 廠(Verdant、Cloudwater)的愛用基底
-- **穀物收斂成 1kg 整數:GP 2 / Munich 1 / Wheat 1 / 燕麥 1 = 5kg**:Munich 維持 1kg(保住「Orange Glow」橘金酒色與麥香層次)、燕麥由 800g 回到 1kg(多給一點綿密),採購好算
+- **Extra Pale 2kg → Golden Promise 2kg(1:1 換基麥)**:GP 是蘇格蘭傳統 2-row,蛋白質略高、帶餅乾/麵包柔甜蜜香 → 酒體更柔順綿密、泡沫更飽滿,跟 Verdant 酵母加分。英系 NEIPA 廠(Verdant、Cloudwater)的愛用基底
+- **酒花全面改單一 Pomona(取代 Citra/Amarillo/Galaxy)**:旋渦 Pomona 56g + 乾投 Pomona 112g,苦花 Magnum 6g 不變,總量維持 174g。Pomona 是英系酒花,香型走**哈密瓜/水梨/草莓糖/淡熱帶**,跟 GP 英系麥香同調。⚠️ **橘香會明顯轉淡**,名字雖沿用 Orange Glow,風味已是另一種個性(實飲後想正名可另開新酒名)
+- **穀物收斂成 1kg 整數:GP 2 / Munich 1 / Wheat 1 / 燕麥 1 = 5kg**:Munich 維持 1kg(撐金黃酒色與麥香層次)、燕麥由 800g 回到 1kg(多給一點綿密),採購好算
 - **大麥 DME 維持 180g(煮沸末,以 g 計、非麥芽)**:跟 starter 共用、補一點 OG。穀物到 5kg,OG 回到 v2.3 水準
-- **整體走向**:從 v2.3 的「乾淨有支撐」變「柔順綿密、泡沫飽滿」,更貼近英系 juicy NEIPA。代價是酒色略深(EBC 14-16)、收口沒那麼乾(FG 高 1-2 點)——正是這風格想要的
+- **整體走向**:從 v2.3 的「美系橘香 + 乾淨有支撐」變「英系瓜果 juicy + 柔順綿密」。EBC 14-16、FG 高 1-2 點收口沒那麼乾——正合這風格
 - **數據**:OG 1.075-1.078、FG 1.016-1.018、ABV 7.6-8.0%、EBC 14-16
-- 微調方向:偏甜偏厚 → 燕麥回 800g 或 Munich 降到 0.5kg;麥味搶酒花 → GP 與 Extra Pale 各半
+- 微調方向:Pomona 太單薄 → 乾投加量或補一支搭配花(Citra 增柑橘亮度);偏甜偏厚 → 燕麥回 800g 或 Munich 降到 0.5kg
 
 ## 📝 實戰追蹤(尚未釀造)
 
@@ -125,7 +126,7 @@
 - [ ] Fermaid-O 5g(買不到改 Fermaid-K 3g)
 - [ ] Verdant IPA 1 包
 - [ ] 麥芽:Golden Promise 2kg + Munich Light 1kg + Wheat 1kg + 燕麥片 1kg(全 1kg 整數)+ 大麥 DME 180g(煮沸末)
-- [ ] 酒花:Magnum 6g + Citra 56g + Amarillo 56g + Galaxy 56g = 174g 總計
+- [ ] 酒花:Magnum 6g + Pomona 168g(旋渦 56 + 乾投 112)= 174g 總計
 
 ## 🔮 待決事項(等首批釀完評估)
 

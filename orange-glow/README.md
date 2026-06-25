@@ -127,6 +127,8 @@
 - [ ] LalBrew Pomona 1 包(乾酵母;省 starter 則備 2 包)
 - [ ] 麥芽:Golden Promise 2kg + Munich Light 1kg + Wheat 1kg + 燕麥片 0.8kg(主穀 1kg 整數)+ 大麥 DME 180g(煮沸末)
 - [ ] 酒花:Magnum 6g + Citra 56g + Amarillo 56g + Galaxy 56g = 174g 總計
+- [ ] 礦物鹽:氯化鈣 1.5g + 石膏 0.5g（偏氯化物 juicy）+ 磷酸（少量備用下調 mash pH）
+- [ ] 水質假設：過濾自來水 pH 6.35 / KH 40 / GH 25 / 無餘氯（軟水低鹼微酸）。鈣偏低故 CaCl₂ 上修到 1.5g；低鹼故 mash pH 多半自落 5.3-5.5、輕調或免調。**換水源要重量 KH/GH 再算**
 
 ## 🔮 待決事項(等首批釀完評估)
 

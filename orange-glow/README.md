@@ -99,17 +99,17 @@
 ---
 
 ### v2.4 - Golden Promise Base + LalBrew Pomona([檔案](./v2.4-golden-promise.html)) ★ 當前版本
-**核心:基麥換 Golden Promise + 酵母換 LalBrew Pomona,整體更英系 juicy、果香更外放;穀物整理成 1kg 整數單位**
+**核心:基麥換 Golden Promise + 酵母換 LalBrew Pomona,整體更英系 juicy、果香更外放;主穀整理成 1kg 整數單位、燕麥 0.8kg 控酒體**
 
 動基麥與酵母,其餘(糖化 65°C、旋渦 75°C、Fermaid-O、單段 Dry Hop、ALDC、綠燈、虹吸轉桶、低壓慢飽和、**酒花配方 Citra/Amarillo/Galaxy**)完全沿用 v2.3:
 
 - **Extra Pale 2kg → Golden Promise 2kg(1:1 換基麥)**:GP 是蘇格蘭傳統 2-row,蛋白質略高、帶餅乾/麵包柔甜蜜香 → 酒體更柔順綿密、泡沫更飽滿。英系 NEIPA 廠(Verdant、Cloudwater)的愛用基底
 - **酵母 Verdant IPA → LalBrew Pomona(乾酵母)**:Lallemand × Escarpment 的現代 hybrid IPA 酵母,專為高 ABV、重酒花 IPA 設計。**高生物轉化**——把乾投酒花的硫醇前驅物轉成桃/柑橘/熱帶香、高發酵度但不啃糊精、穩定 haze、耐操。跟本配方「發酵期單段乾投(Day 3-4)」是絕配:酵母一邊發酵一邊做生物轉化,把 Citra/Galaxy 的橘香與熱帶感放得比 Verdant 更外放。乾酵母也可省 starter 直接丟 2 包
-- **穀物收斂成 1kg 整數:GP 2 / Munich 1 / Wheat 1 / 燕麥 1 = 5kg**:Munich 維持 1kg(撐橘金酒色與麥香層次)、燕麥由 800g 回到 1kg(多給一點綿密),採購好算
-- **大麥 DME 維持 180g(煮沸末,以 g 計、非麥芽)**:跟 starter 共用、補一點 OG。穀物到 5kg,OG 回到 v2.3 水準
+- **主穀 1kg 整數 + 燕麥 0.8kg:GP 2 / Munich 1 / Wheat 1 / 燕麥 0.8 = 4.8kg**:GP/Munich/Wheat 取整好採購,燕麥維持 0.8kg 收掉油滑、避免太厚太甜(Munich 撐橘金酒色與麥香層次)
+- **大麥 DME 維持 180g(煮沸末,以 g 計、非麥芽)**:跟 starter 共用、補一點 OG。穀物 4.8kg + DME,OG 維持 v2.3 水準
 - **整體走向**:GP 給「柔順綿密、泡沫飽滿」的英系酒體,Pomona 把熱帶柑橘果香放大、haze 更穩定。橘香主軸(Citra/Amarillo/Galaxy)不變、反而更外放
 - **數據**:OG 1.075-1.078、FG 1.015-1.017、ABV 7.7-8.1%、EBC 14-16(GP 略深)
-- 微調方向:覺得太厚/偏甜 → 燕麥回 800g;想更乾淨的酒花清晰度 → GP 與 Extra Pale 各半
+- 微調方向:想更厚更綿密/泡沫更持久 → 燕麥加回 1kg;想更乾淨的酒花清晰度 → GP 與 Extra Pale 各半
 
 ## 📝 實戰追蹤(尚未釀造)
 
@@ -125,7 +125,7 @@
 - [ ] Maturex L (ALDC) 100ml + 胰島素注射器
 - [ ] Fermaid-O 5g(買不到改 Fermaid-K 3g)
 - [ ] LalBrew Pomona 1 包(乾酵母;省 starter 則備 2 包)
-- [ ] 麥芽:Golden Promise 2kg + Munich Light 1kg + Wheat 1kg + 燕麥片 1kg(全 1kg 整數)+ 大麥 DME 180g(煮沸末)
+- [ ] 麥芽:Golden Promise 2kg + Munich Light 1kg + Wheat 1kg + 燕麥片 0.8kg(主穀 1kg 整數)+ 大麥 DME 180g(煮沸末)
 - [ ] 酒花:Magnum 6g + Citra 56g + Amarillo 56g + Galaxy 56g = 174g 總計
 
 ## 🔮 待決事項(等首批釀完評估)

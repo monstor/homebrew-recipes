@@ -15,7 +15,7 @@
 | IBU | 25-30 |
 | EBC | 14-16 |
 | 基麥 | Golden Promise 2kg |
-| 酵母 | LalBrew Pomona 1 包 → 養成 2L Starter(菌量≈2 包;乾酵母亦可直接丟 2 包) |
+| 酵母 | LalBrew Pomona 1 包 → 高壓純氧直投(免 starter;保險可 2 包 / 養 2L starter) |
 | 可發酵糖 | 大麥 DME 180g(煮沸末) |
 | 添加物 | Fermaid-O 5g（投酵母時加;備選 Fermaid-K 3g 煮沸末）+ Maturex L (ALDC) 0.2-0.3ml |
 
@@ -104,7 +104,7 @@
 動基麥與酵母,其餘(糖化 65°C、旋渦 75°C、Fermaid-O、單段 Dry Hop、ALDC、綠燈、虹吸轉桶、低壓慢飽和、**酒花配方 Citra/Amarillo/Galaxy**)完全沿用 v2.3:
 
 - **Extra Pale 2kg → Golden Promise 2kg(1:1 換基麥)**:GP 是蘇格蘭傳統 2-row,蛋白質略高、帶餅乾/麵包柔甜蜜香 → 酒體更柔順綿密、泡沫更飽滿。英系 NEIPA 廠(Verdant、Cloudwater)的愛用基底
-- **酵母 Verdant IPA → LalBrew Pomona(乾酵母)**:Lallemand × Escarpment 的現代 hybrid IPA 酵母,專為高 ABV、重酒花 IPA 設計。**高生物轉化**——把乾投酒花的硫醇前驅物轉成桃/柑橘/熱帶香、高發酵度但不啃糊精、穩定 haze、耐操。跟本配方「發酵期單段乾投(Day 3-4)」是絕配:酵母一邊發酵一邊做生物轉化,把 Citra/Galaxy 的橘香與熱帶感放得比 Verdant 更外放。乾酵母也可省 starter 直接丟 2 包
+- **酵母 Verdant IPA → LalBrew Pomona(乾酵母)**:Lallemand × Escarpment 的現代 hybrid IPA 酵母,專為高 ABV、重酒花 IPA 設計。**高生物轉化**——把乾投酒花的硫醇前驅物轉成桃/柑橘/熱帶香、高發酵度但不啃糊精、穩定 haze、耐操。跟本配方「發酵期單段乾投(Day 3-4)」是絕配:酵母一邊發酵一邊做生物轉化,把 Citra/Galaxy 的橘香與熱帶感放得比 Verdant 更外放。**標準走 1 包 + 投酵母前高壓純氧 60-90s 直投、免 starter**;想保險再上 2 包或養 2L starter
 - **主穀 1kg 整數 + 燕麥 0.8kg:GP 2 / Munich 1 / Wheat 1 / 燕麥 0.8 = 4.8kg**:GP/Munich/Wheat 取整好採購,燕麥維持 0.8kg 收掉油滑、避免太厚太甜(Munich 撐橘金酒色與麥香層次)
 - **大麥 DME 維持 180g(煮沸末,以 g 計、非麥芽)**:跟 starter 共用、補一點 OG。穀物 4.8kg + DME,OG 維持 v2.3 水準
 - **整體走向**:GP 給「柔順綿密、泡沫飽滿」的英系酒體,Pomona 把熱帶柑橘果香放大、haze 更穩定。橘香主軸(Citra/Amarillo/Galaxy)不變、反而更外放

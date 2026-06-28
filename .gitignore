@@ -35,3 +35,4 @@ notes/
 *.tar.gz
 *.rar
 tommy_home_brewing.xlsx
+.~lock.*#

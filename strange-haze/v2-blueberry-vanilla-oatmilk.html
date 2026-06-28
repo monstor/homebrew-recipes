@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strange Haze — Imperial Milkshake IPA v2</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans CJK TC','Noto Sans TC','Microsoft JhengHei',sans-serif; font-size: 13px; color: #2c2c2c; background: #f5f5f5; line-height: 1.6; }
+  .container { max-width: 900px; margin: 0 auto; background: white; padding: 25px 30px; border-top: 5px solid #7B3FA0; border-bottom: 5px solid #C9412E; }
+  .header { text-align: center; border-bottom: 2.5px solid #7B3FA0; padding-bottom: 12px; margin-bottom: 16px; }
+  h1 { font-size: 26px; font-weight: bold; color: #6A2C8F; margin-bottom: 4px; letter-spacing: 1px; }
+  .version-tag { display: inline-block; background: linear-gradient(90deg,#C9412E,#7B3FA0); color: white; padding: 4px 14px; font-size: 11px; font-weight: bold; letter-spacing: 1.5px; border-radius: 2px; margin-bottom: 8px; }
+  .subtitle { font-size: 13px; color: #555; }
+  h2 { font-size: 17px; font-weight: bold; color: #fff; background: #7B3FA0; padding: 7px 14px; margin: 18px 0 10px 0; border-radius: 4px; }
+  h3 { color: #6A2C8F; margin: 10px 0 6px 0; font-size: 14px; border-left: 3px solid #C9412E; padding-left: 8px; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 12px 0; font-size: 12.5px; }
+  th, td { padding: 7px 10px; text-align: left; border: 1px solid #ddd; vertical-align: top; }
+  th { background: #F3EAF7; font-weight: bold; color: #6A2C8F; }
+  tr:nth-child(even) td { background: #FAFAFA; }
+  .info-box { background: #F3EAF7; border-left: 3px solid #7B3FA0; padding: 9px 13px; margin: 9px 0; border-radius: 3px; font-size: 12.5px; }
+  .warning-box { background: #FEF5E7; border-left: 3px solid #F39C12; padding: 9px 13px; margin: 9px 0; border-radius: 3px; font-size: 12.5px; }
+  .key-box { background: linear-gradient(90deg,#FCE8E3,#F3EAF7); border-left: 3px solid #C9412E; padding: 9px 13px; margin: 9px 0; border-radius: 3px; font-size: 12.5px; }
+  .key-box b { color: #A02818; }
+  .new-box { background: #E8F5E9; border-left: 3px solid #2E7D32; padding: 9px 13px; margin: 9px 0; border-radius: 3px; font-size: 12.5px; }
+  .new-box b { color: #1B5E20; }
+  .label-box { background: #2A1A3A; color: #F0D98C; padding: 12px 16px; margin: 10px 0; border-radius: 4px; font-size: 12.5px; text-align:center; }
+  .label-box b { color: #F0D98C; font-size: 14px; }
+  .stat-line { background: #F3EAF7; padding: 8px 14px; border-radius: 4px; margin: 10px 0; font-size: 13px; text-align: center; border: 1px solid #D8BCE5; }
+  .stat-line span { margin: 0 8px; color: #888; }
+  .stat-line b { color: #6A2C8F; }
+  .step-row { display: flex; margin: 7px 0; font-size: 12.5px; }
+  .step-num { background: #7B3FA0; color: white; width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px; font-weight: bold; flex-shrink: 0; margin-right: 10px; font-size: 12px; }
+  .step-content { flex: 1; padding-top: 2px; }
+  .step-title { font-weight: bold; color: #6A2C8F; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .highlight { background: #FFF3CD; padding: 1px 4px; border-radius: 2px; font-weight: bold; }
+  .highlight-new { background: #C8E6C9; padding: 1px 4px; border-radius: 2px; font-weight: bold; color: #1B5E20; }
+  .v2-badge { display: inline-block; background: #2E7D32; color: white; padding: 1px 6px; border-radius: 2px; font-size: 10px; font-weight: bold; margin-left: 4px; }
+  .footer { text-align: center; margin-top: 20px; padding-top: 12px; border-top: 1.5px solid #7B3FA0; color: #888; font-size: 12px; }
+  .diff-table th { background: #2A1A3A; color: #F0D98C; }
+  .diff-old { color: #999; text-decoration: line-through; }
+  .diff-new { color: #2E7D32; font-weight: bold; }
+  @media (max-width: 600px){ body{font-size:12px;} .container{padding:15px 18px;} h1{font-size:20px;} h2{font-size:15px;} .two-col{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <div class="version-tag">IMPERIAL BLUEBERRY OATMILK MILKSHAKE IPA · v2</div>
+  <h1>🌌 STRANGE HAZE</h1>
+  <div class="subtitle">外表溫柔，內心強大 · 燕麥奶滑順 · 淡紫星雲 · 高ABV輕盈感</div>
+</div>
+
+<div style="text-align:center; margin:14px 0;">
+  <img src="label.png" alt="Strange Haze 酒標" style="max-width:260px; width:62%; height:auto; border-radius:6px; box-shadow:0 2px 12px rgba(0,0,0,0.45);">
+</div>
+
+<div class="label-box">
+  🏷️ 酒標標示：<b>STRANGE HAZE · piz brewing</b><br>
+  <span style="font-size:11px; color:#C9A86A;">ABV / IBU 另貼瓶頸標，酒標保持彈性不印死</span>
+</div>
+
+<div class="stat-line">
+  <span>OG <b>1.085–1.090</b></span>|
+  <span>FG <b>1.018–1.022</b></span>|
+  <span>ABV <b>~9%</b></span>|
+  <span>IBU <b>~25</b></span>|
+  <span>容量 <b>10 L</b></span>
+</div>
+
+<div class="key-box">
+<b>★ V2 設計核心：外表溫柔，內心強大</b><br>
+入口：牛奶般滑順、淡淡甜感、輕盈不厚重。
+喝完：才發現 ABV 9%，後勁像好烈酒一樣悄悄到來。
+關鍵策略：<b>葡萄糖拉高 ABV（完全發酵不留殘甜）+ 燕麥奶帶來真實奶感 + 嚴格低溫發酵抑制雜醇油 + 乳糖增加牛奶圓潤 + 藍莓 200g 淡紫色調</b>。香草莢以紀凡琴酒浸泡，增加花香層次。
+</div>
+
+<h2>🔄 V1 → V2 主要調整</h2>
+<table class="diff-table">
+  <tr><th>項目</th><th>V1</th><th>V2</th><th>原因</th></tr>
+  <tr><td>乳糖</td><td class="diff-old">20g</td><td class="diff-new">200g</td><td>增加真實牛奶圓潤感</td></tr>
+  <tr><td>葡萄糖</td><td class="diff-old">無</td><td class="diff-new">400g</td><td>拉高ABV至9%，完全發酵不增甜膩</td></tr>
+  <tr><td>燕麥奶</td><td class="diff-old">無</td><td class="diff-new">200ml（裝瓶前）</td><td>真實燕麥奶香，天生與啤酒相容</td></tr>
+  <tr><td>藍莓用量</td><td class="diff-old">600g</td><td class="diff-new">200g</td><td>淡紫色調不搶戲，風味細緻</td></tr>
+  <tr><td>香草莢浸泡</td><td class="diff-old">伏特加</td><td class="diff-new">紀凡琴酒 50ml</td><td>花香葡萄花增加複雜度</td></tr>
+  <tr><td>發酵溫度</td><td class="diff-old">19°C</td><td class="diff-new">嚴格 18–20°C</td><td>抑制雜醇油，酒精感更柔順</td></tr>
+  <tr><td>酒標標示</td><td class="diff-old">印有ABV/IBU/風格</td><td class="diff-new">只有品牌名稱</td><td>每批彈性不受限</td></tr>
+</table>
+
+<h2>🌾 配方（10L 批量）</h2>
+
+<div class="two-col">
+  <div>
+    <table>
+      <tr><th colspan="2">基礎麥芽（糖化，總 3.9kg）</th></tr>
+      <tr><td>Extra Pale / Pilsner Malt</td><td>2.8kg</td></tr>
+      <tr><td>Wheat Malt（小麥麥芽）</td><td>500g</td></tr>
+      <tr><td>燕麥片（Flaked Oats）</td><td>600g</td></tr>
+    </table>
+    <table>
+      <tr><th colspan="2">糖 / 酒體 / 奶昔（煮沸時加）</th></tr>
+      <tr><td><b class="highlight-new">葡萄糖 <span class="v2-badge">V2新增</span></b></td><td><b>400g</b></td></tr>
+      <tr><td><b class="highlight">乳糖（牛奶圓潤感）</b></td><td><b>200g</b></td></tr>
+      <tr><td>Maltodextrin 麥芽糊精</td><td>150g</td></tr>
+    </table>
+    <table>
+      <tr><th colspan="2">特殊添加</th></tr>
+      <tr><td><b class="highlight">香草莢</b></td><td>1 根</td></tr>
+      <tr><td><b class="highlight-new">紀凡琴酒（G'Vine Floraison）浸泡香草莢 <span class="v2-badge">V2新增</span></b></td><td>50ml</td></tr>
+      <tr><td><b class="highlight-new">燕麥奶（裝瓶前加）<span class="v2-badge">V2新增</span></b></td><td>200ml</td></tr>
+      <tr><td>冷凍藍莓（壓碎）</td><td>200g</td></tr>
+    </table>
+  </div>
+  <div>
+    <table>
+      <tr><th colspan="2">酒花（總 106g，IBU ~25）</th></tr>
+      <tr><td>Magnum（60min 苦味基底）</td><td>6g</td></tr>
+      <tr><td>Citra（熄火 &lt;80°C）</td><td>20g</td></tr>
+      <tr><td>Amarillo（熄火 &lt;80°C）</td><td>15g</td></tr>
+      <tr><td>Mosaic（冷泡，藍莓/熱帶水果）</td><td>35g</td></tr>
+      <tr><td>Citra（冷泡）</td><td>20g</td></tr>
+      <tr><td>Amarillo（冷泡）</td><td>10g</td></tr>
+      <tr><td colspan="2" style="color:#888; font-size:11px;">★ Mosaic 加重呼應藍莓風味，Amarillo 收尾柳橙</td></tr>
+    </table>
+    <table>
+      <tr><th colspan="2">酵母 + 營養鹽</th></tr>
+      <tr><td><b>Verdant IPA（Lallemand）</b></td><td>1–2 包</td></tr>
+      <tr><td>Fermaid-O（分兩次）</td><td>5g</td></tr>
+      <tr><td>ALDC（可選）</td><td>0.3ml</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="new-box">
+<b>★ 燕麥奶的角色（V2 新增）</b><br>
+燕麥奶含有天然 β-葡聚糖，與啤酒風味天生相容，脂肪含量極低不破壞泡沫。裝瓶前加入 200ml，帶來真實燕麥奶香氣，強化「牛奶滑順」的感受。效果比牛奶安全，比乳糖更自然。<br>
+選用市售無糖燕麥奶（如 Oatly 原味），確保無額外甜味干擾。
+</div>
+
+<div class="new-box">
+<b>★ 紀凡琴酒浸泡香草莢（V2 升級）</b><br>
+G'Vine Floraison 以葡萄花為基底，帶有花香、荔枝、萊姆香氣。浸泡香草莢後投入發酵桶（約 50ml），在 10L 酒液中稀釋約 200 倍，帶來隱約的花香底韻，與香草莢甜香融合，層次更豐富。
+</div>
+
+<div class="warning-box">
+<b>★ 高ABV輕盈感的關鍵：嚴格控溫</b><br>
+酒精的「熱感」來自發酵產生的雜醇油（Fusel Alcohol）。嚴格維持 <b>18–20°C</b> 發酵，可大幅減少雜醇油，讓 9% ABV 喝起來如同 6% 的輕盈感。溫度超過 22°C 會明顯增加刺喉感，請務必監控。
+</div>
+
+<h2>🔑 五個關鍵設計</h2>
+
+<h3>① 葡萄糖 400g — 高ABV的秘密武器</h3>
+<div class="info-box">
+葡萄糖完全被酵母發酵，不留任何殘糖。加入 400g 可讓 OG 提升約 0.015–0.020，換算 ABV 約 +2%。與乳糖搭配：葡萄糖負責「拉高酒精」，乳糖負責「留住圓潤」，兩者各司其職，缺一不可。
+</div>
+
+<h3>② 乳糖 200g — 牛奶感的真實來源</h3>
+<div class="info-box">
+乳糖是牛奶中天然存在的糖，不被酵母分解，永遠留在酒液中。200g 帶來真實的牛奶甜感和滑順感，搭配燕麥奶 200ml，形成雙層奶感：乳糖給甜潤，燕麥奶給香氣。
+</div>
+
+<h3>③ 燕麥奶 200ml — 裝瓶前的秘密</h3>
+<div class="info-box">
+裝瓶前加入，保留最完整的燕麥香氣。燕麥奶的 β-葡聚糖與啤酒中的蛋白質協同，讓口感更絲滑。脂肪含量極低，不影響泡沫穩定性。選無糖燕麥奶避免帶入額外甜味。
+</div>
+
+<h3>④ 藍莓 200g — 淡紫非主角</h3>
+<div class="info-box">
+V1 的 600g 藍莓風味過於強烈，容易搶過酒花和香草。V2 減至 200g，花青素帶來淡紫色調，莓果香若隱若現，呼應酒標星雲而不主導風味。Mosaic 酒花本身帶有藍莓調，兩者互相強化而不過度。
+</div>
+
+<h3>⑤ 紀凡琴酒浸泡 — 花香底韻</h3>
+<div class="info-box">
+香草莢剖開刮籽，莢殼和籽剪成 2–3 段放入小容器，倒入紀凡琴酒 50ml 剛好蓋過，靜置 30 分鐘消毒。連同琴酒一起投入發酵桶。G'Vine 的葡萄花香與香草甜香融合，形成獨特的花草奶昔底韻。
+</div>
+
+<h2>📅 時程（約 18–22 天）</h2>
+<table>
+  <tr><th width="14%">時間</th><th width="22%">階段</th><th>動作</th></tr>
+  <tr><td>Day 0</td><td>釀造日</td><td>糖化 67–68°C，60min → 洗槽收 11–12L → 煮沸 60min（第 45 分加葡萄糖 400g + Maltodextrin 150g + 乳糖 200g）→ 關火降至 80°C 以下加 Citra 20g + Amarillo 15g → 浸泡 20–30 分鐘 → 冷卻至 18°C → 高壓純氧充氧 60–90s → 投酵母 + Fermaid-O 2.5g + ALDC（可選）</td></tr>
+  <tr><td>Day 2</td><td>營養補充</td><td>Fermaid-O 2.5g（第二次）</td></tr>
+  <tr><td><b style="color:#6A2C8F;">Day 3</b></td><td><b>冷泡酒花 + 香草莢</b></td><td>比重降至 1.040–1.030 → 投入 Mosaic 35g + Citra 20g + Amarillo 10g → 同時投入香草莢（紀凡琴酒浸泡 30min 後連酒一起倒入）→ 升溫 20°C</td></tr>
+  <tr><td><b style="color:#6A2C8F;">Day 5</b></td><td><b>加藍莓</b></td><td>冷凍藍莓 200g 壓碎（或加熱殺菌至 70–75°C 後冷卻）→ 投入發酵桶 → 升溫 20–22°C</td></tr>
+  <tr><td>Day 8–12</td><td>尾發酵 + D-rest</td><td>22°C，等比重穩定。藍莓果糖部分發酵，雙乙醯清除</td></tr>
+  <tr><td>Day 12–16</td><td>綠燈確認</td><td>比重連兩次（間隔 2 天）不動 + 雙乙醯測試（取 50ml 隔水加熱 65°C 15min，聞無奶油味）</td></tr>
+  <tr><td><b style="color:#2E7D32;">Day 16–18</b></td><td><b style="color:#2E7D32;">加燕麥奶 + 裝瓶</b></td><td>虹吸前加入燕麥奶 200ml，輕輕混合 → 依瓶型加糖水（330ml:5ml / 600ml:9ml / 1L:15ml / 2.15L:32.5ml）→ 室溫 20–23°C 靜置 14 天 → 冷藏 4°C 熟成</td></tr>
+  <tr><td>Day 45+</td><td>開瓶品飲</td><td>🟣 淡紫白霧、燕麥奶滑順、香草花香、淡淡藍莓 🍺</td></tr>
+</table>
+
+<div class="warning-box">
+<b>★ 燕麥奶加入時機</b>：裝瓶前而非發酵中。發酵中加入溫度偏高，部分香氣會散逸。裝瓶前低溫加入，保留最完整的燕麥香氣和 β-葡聚糖口感。<br>
+<b style="color:#A02818;">⚠️ 過碳酸 / 瓶炸風險：</b>市售「無糖」燕麥奶仍含<b>麥芽糖</b>（燕麥酶解產生，約每 240ml ~7g 糖），200ml 等於帶入 ~5g 可發酵糖進瓶 → 瓶內會多一輪發酵。<b>務必：priming 糖水減量約 1/3</b>（抵銷燕麥奶帶的糖），或<b>燕麥奶先 70°C 低溫殺菌再加</b>，避免過壓爆瓶。植物奶易腐，加入器具務必消毒。
+</div>
+
+<h2>🌾 釀造步驟</h2>
+<div class="step-row"><div class="step-num">1</div><div class="step-content"><span class="step-title">糖化水準備：</span>約 11L 水加熱至 76–77°C（目標糖化 67–68°C），加氯化鈣為主（Cl⁻ 圓潤）。投麥芽攪勻後測糖化醪 pH，目標 5.2–5.4</div></div>
+<div class="step-row"><div class="step-num">2</div><div class="step-content"><span class="step-title">糖化：</span>67–68°C 60 分鐘（高溫留糊精撐酒體）。每 15 分鐘攪拌一次</div></div>
+<div class="step-row"><div class="step-num">3</div><div class="step-content"><span class="step-title">升溫滅酵 + 過濾：</span>升溫 76°C 維持 10 分鐘 → 過濾收第一道麥汁</div></div>
+<div class="step-row"><div class="step-num">4</div><div class="step-content"><span class="step-title">洗槽：</span>加約 5.5L 76–78°C 熱水洗槽，目標收集 11–12L 麥汁</div></div>
+<div class="step-row"><div class="step-num">5</div><div class="step-content"><span class="step-title">煮沸 60min：</span>第 0 分加 Magnum 6g；第 45 分慢加 <b>葡萄糖 400g + Maltodextrin 150g + 乳糖 200g</b>（邊撒邊攪防結塊）；第 60 分關火 → 測 OG（目標 1.085–1.090；基麥少、靠糖補，實際可能落 1.080–1.085，以實測為準）</div></div>
+<div class="step-row"><div class="step-num">6</div><div class="step-content"><span class="step-title">熄火浸泡：</span>降至 80°C 以下投入 Citra 20g + Amarillo 15g，蓋鍋蓋靜置 20–30 分鐘。鎖住香氣精油</div></div>
+<div class="step-row"><div class="step-num">7</div><div class="step-content"><span class="step-title">冷卻 + 充氧 + 投酵母：</span>快速降至 18°C → 高壓純氧充氧 60–90s → 投 Verdant IPA 酵母 + Fermaid-O 2.5g + ALDC（可選）→ 裝水封。<b>嚴格維持 18–20°C</b></div></div>
+<div class="step-row"><div class="step-num">8</div><div class="step-content"><span class="step-title">主發酵：</span>18–20°C。Day 2 補 Fermaid-O 2.5g</div></div>
+<div class="step-row"><div class="step-num">9</div><div class="step-content"><span class="step-title">冷泡酒花 + 香草莢（Day 3）：</span>比重降至 1.040–1.030 → 投 Mosaic 35g + Citra 20g + Amarillo 10g → 香草莢剖開刮籽剪段，紀凡琴酒 50ml 浸泡 30min，<b>連同琴酒一起倒入</b> → 升溫 20°C</div></div>
+<div class="step-row"><div class="step-num">10</div><div class="step-content"><span class="step-title">加藍莓（Day 5）：</span>冷凍藍莓 200g 壓碎（可加熱殺菌至 70–75°C 後冷卻）→ 投入發酵桶 → 升溫 20–22°C</div></div>
+<div class="step-row"><div class="step-num">11</div><div class="step-content"><span class="step-title">綠燈確認：</span>比重連兩次不動 + 雙乙醯測試通過。水果會再發酵一點，務必等比重真正穩定</div></div>
+<div class="step-row"><div class="step-num">12</div><div class="step-content"><span class="step-title">加燕麥奶 + 裝瓶：</span>虹吸前加入無糖燕麥奶 200ml，輕輕混合 → 依瓶型量取糖水裝瓶 → 室溫 20–23°C 靜置 14 天 → 冷藏 4°C 熟成 2 週 → 開瓶</div></div>
+
+<h2>🍾 裝瓶糖水參考</h2>
+<table>
+  <tr><th>瓶子容量</th><th>糖水用量</th></tr>
+  <tr><td>330 ml</td><td>5 ml</td></tr>
+  <tr><td>600 ml</td><td>9 ml</td></tr>
+  <tr><td>1000 ml</td><td>15 ml</td></tr>
+  <tr><td>1500 ml</td><td>22.5 ml</td></tr>
+  <tr><td>2150 ml</td><td>32.5 ml</td></tr>
+</table>
+<div class="info-box">糖水準備：40g 葡萄糖 + 100ml 冷開水 → 小火煮沸 1–2 分鐘殺菌 → 放涼至室溫再使用。注射器量取最精準。<br><b style="color:#A02818;">※ 本批有加燕麥奶（帶入額外可發酵糖）→ 上表糖水用量先減 ~1/3，避免過碳酸。</b></div>
+
+<h2>🎯 風味預期</h2>
+<table>
+  <tr><th>視覺</th><th>嗅覺</th><th>味覺</th><th>口感</th></tr>
+  <tr>
+    <td>淡紫白霧，輕盈如星雲，呼應酒標</td>
+    <td>香草花香（紀凡琴酒底韻）+ Mosaic 藍莓 + Citra 百香果萊姆 + 隱約燕麥奶甜香</td>
+    <td>入口淡淡甜、香草奶昔感，藍莓若隱若現，後段才感受到 9% 的暖意</td>
+    <td>燕麥奶 + 乳糖雙層滑順，如牛奶般絲滑，收口不甜膩</td>
+  </tr>
+</table>
+
+<div class="key-box">
+<b>★ Strange Haze V2 的核心體驗</b><br>
+第一口：「好滑順，好淡雅，像在喝燕麥奶昔。」<br>
+第二口：「有香草味？還有花香？」<br>
+半杯後：「等等，這好像不太一般……」<br>
+喝完：「這有 9%？！」<br>
+<b>這就是 Strange Haze — 外表溫柔，內心強大。</b>
+</div>
+
+<h2>🔧 微調建議</h2>
+<table>
+  <tr><th width="35%">調整目標</th><th>怎麼改</th></tr>
+  <tr><td>更強烈牛奶感</td><td>乳糖加到 250g，燕麥奶加到 300ml</td></tr>
+  <tr><td>更深紫色</td><td>藍莓加到 350–400g（風味也會更明顯）</td></tr>
+  <tr><td>ABV 拉到 10%</td><td>葡萄糖加到 500g，或再加 DME 200g</td></tr>
+  <tr><td>香草更濃郁</td><td>香草莢加到 1.5 根，或延長琴酒浸泡至 2 小時</td></tr>
+  <tr><td>花香更明顯</td><td>琴酒加到 80ml</td></tr>
+  <tr><td>更輕盈甜感</td><td>乳糖減至 150g，葡萄糖維持</td></tr>
+</table>
+
+<div class="footer">
+  Strange Haze · piz brewing · Imperial Blueberry Oatmilk Milkshake IPA v2<br>
+  外表溫柔，內心強大 · ABV ~9% · 燕麥奶滑順 · 淡紫星雲 · 香草花香
+</div>
+
+</div>
+</body>
+</html>

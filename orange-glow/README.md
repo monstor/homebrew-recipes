@@ -6,17 +6,17 @@
 
 | 項目 | 規格 |
 |---|---|
-| **目前最新版本** | [v2.4](./v2.4-golden-promise.html) |
-| 風格 | DDH NEIPA |
+| **目前最新版本** | [v2.5](./v2.5-clean-neipa.html)(清爽版) |
+| 風格 | Clean NEIPA(清爽版;v2.4 為厚實 DDH) |
 | 容量 | 10 L |
-| OG | 1.075-1.078 |
-| FG | 1.015-1.017 |
-| ABV | 7.7-8.1% |
-| IBU | 25-30 |
-| EBC | 14-16 |
-| 基麥 | Golden Promise 2kg |
+| OG | 1.062-1.066 |
+| FG | 1.010-1.012 |
+| ABV | ~7.0% |
+| IBU | ~20 |
+| EBC | 10-12 |
+| 基麥 | Golden Promise 3.0kg(+ Munich 0.5 + 小麥 0.9,無燕麥) |
 | 酵母 | LalBrew Pomona 1 包 → 高壓純氧直投(免 starter;保險可 2 包 / 養 2L starter) |
-| 可發酵糖 | 大麥 DME 180g(煮沸末) |
+| 可發酵糖 | 無(v2.5 不加 DME/Maltodextrin,走清爽) |
 | 添加物 | Fermaid-O 5g（投酵母 2.5g + 投後 24h 2.5g;備選 Fermaid-K 3g 煮沸末）+ Maturex L (ALDC) 0.2-0.3ml |
 
 ## 🍻 版本歷史
@@ -98,7 +98,7 @@
 
 ---
 
-### v2.4 - Golden Promise Base + LalBrew Pomona([檔案](./v2.4-golden-promise.html)) ★ 當前版本
+### v2.4 - Golden Promise Base + LalBrew Pomona([檔案](./v2.4-golden-promise.html))
 **核心:基麥換 Golden Promise + 酵母換 LalBrew Pomona,整體更英系 juicy、果香更外放;主穀整理成 1kg 整數單位、燕麥 0.8kg 控酒體**
 
 動基麥與酵母,其餘(糖化 65°C、旋渦 75°C、Fermaid-O、單段 Dry Hop、ALDC、綠燈、虹吸轉桶、低壓慢飽和、**酒花配方 Citra/Amarillo/Galaxy**)完全沿用 v2.3:
@@ -110,6 +110,19 @@
 - **整體走向**:GP 給「柔順綿密、泡沫飽滿」的英系酒體,Pomona 把熱帶柑橘果香放大、haze 更穩定。橘香主軸(Citra/Amarillo/Galaxy)不變、反而更外放
 - **數據**:OG 1.075-1.078、FG 1.015-1.017、ABV 7.7-8.1%、EBC 14-16(GP 略深)
 - 微調方向:想更厚更綿密/泡沫更持久 → 燕麥加回 1kg;想更乾淨的酒花清晰度 → GP 與 Extra Pale 各半
+
+### v2.5 - Clean NEIPA([檔案](./v2.5-clean-neipa.html)) ★ 當前版本
+**核心:清爽版 NEIPA + 全面修正 #0007 過苦**
+
+從 v2.4「高 OG 厚實 DDH」轉向乾淨清爽、低苦(~20 IBU),香氣靠 Whirlpool + Dry hop 疊:
+
+- **酒花處理(最大改變,修 #0007 太苦)**:苦花 Magnum 6g 準時 60min 加、裝濾袋、**煮完撈出**(#0007 忘加→補煮一小時 + 沒撈是過苦主因);**Whirlpool 列為必做** 71-82°C(目標 78°C)大量香花 84g(濾袋)靜置 20-30min 後撈出(#0007 疑似漏做→香氣不足);**Dry hop 84g 限時 3-5 天**就撈出/轉桶(#0007 泡到發酵完→冷側粗糙苦 humulinone/多酚)
+- **Dry hop 時機看比重**:OG 降一半(~1.037)時投,不看固定天數——避開 #0008 太晚投、biotransformation 打折
+- **穀物走清爽**:去燕麥(太絲滑)、只留小麥 ~20%(Château Wheat Blanc);不加 DME/Maltodextrin;糖化 67→65°C(發酵度高、酒體清爽)。GP 3.0 / Munich 0.5 / Wheat 0.9 = 4.4kg
+- **水質**:氯化物主導 CaCl₂:石膏 ≥ 2:1(圓潤、平衡苦);**pH 計換 SR44 電池**、校正、確實調糖化 pH 5.2-5.4
+- **沿用不變**:Pomona 1 包 + 純氧直投、ALDC、低氧虹吸轉桶、控溫 18-20°C、綠燈確認、趁鮮喝(碳酸完成後 1-2 週內)
+- **數據**:OG 1.062-1.066、FG 1.010-1.012、ABV ~7.0%、IBU ~20、EBC 10-12
+- 微調:想更厚 → 燕麥加回 0.5-0.8kg;想更烈 → 補 DME 拉 OG;想更苦 → whirlpool 往 82°C 或苦花加到 8-10g
 
 ## 📝 實戰追蹤(尚未釀造)
 

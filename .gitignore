@@ -36,3 +36,12 @@ notes/
 *.rar
 tommy_home_brewing.xlsx
 .~lock.*#
+
+# 相機原圖(大檔)——只把縮圖版進 git
+# 注意:macOS core.ignorecase=true,*.JPG 會連小寫 .jpg 一起擋,
+# 所以改用相機檔名樣式(K3II*, IMG_*, DSC*)而非副檔名
+K3II*
+IMG_*
+DSC*
+DSCF*
+_MG_*

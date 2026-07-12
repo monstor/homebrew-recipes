@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>封裝端抗氧化 SOP — VC + KMS(共通)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans CJK TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    font-size: 13.5px;
+    color: #1f2937;
+    background: #f5f5f0;
+    line-height: 1.65;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 32px 36px;
+    border-top: 5px solid #0f766e;
+    border-bottom: 5px solid #0f766e;
+  }
+  .header {
+    text-align: center;
+    border-bottom: 2.5px solid #0f766e;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+  h1 { font-size: 25px; font-weight: 800; color: #134e4a; margin-bottom: 6px; }
+  .badge {
+    display: inline-block;
+    background: #0f766e;
+    color: #fff;
+    padding: 4px 14px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    border-radius: 2px;
+    margin-bottom: 8px;
+  }
+  .subtitle { font-size: 13px; color: #6b7280; font-style: italic; }
+
+  h2 {
+    font-size: 17px; font-weight: 800; color: #fff;
+    padding: 9px 16px; margin: 22px 0 12px 0; letter-spacing: 0.5px;
+  }
+  h2.cold { background: #1d4ed8; }
+  h2.neutral { background: #0f766e; }
+  h2.danger { background: #b91c1c; }
+
+  h3 { color: #134e4a; margin: 14px 0 6px 0; font-size: 15px; font-weight: bold; border-left: 4px solid #0f766e; padding-left: 10px; }
+
+  ul.tight { margin: 4px 0 10px 24px; font-size: 13px; }
+  ul.tight li { margin-bottom: 4px; }
+  ol.tight { margin: 4px 0 10px 24px; font-size: 13px; }
+  ol.tight li { margin-bottom: 5px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 14px 0; font-size: 13px; }
+  th, td { padding: 9px 12px; text-align: left; border: 1px solid #d1d5db; vertical-align: top; }
+  th { background: #0f766e; color: #fff; font-weight: bold; }
+  tr:nth-child(even) td { background: #f0fdfa; }
+
+  .principle {
+    background: #ccfbf1; border-left: 4px solid #0f766e;
+    padding: 11px 15px; margin: 11px 0; font-size: 13px;
+  }
+  .principle b { color: #0f766e; }
+  .danger-box {
+    background: #fee2e2; border-left: 4px solid #dc2626;
+    padding: 11px 15px; margin: 11px 0; font-size: 13px;
+  }
+  .danger-box b { color: #b91c1c; }
+  .info-box {
+    background: #f0f7f2; border-left: 4px solid #16a34a;
+    padding: 11px 15px; margin: 11px 0; font-size: 13px;
+  }
+  .draft {
+    background: #fef3c7; border-left: 4px solid #d97706;
+    padding: 11px 15px; margin: 11px 0; font-size: 12.5px;
+  }
+  .draft b { color: #92400e; }
+
+  .footer {
+    text-align: center; margin-top: 26px; padding-top: 16px;
+    border-top: 2.5px solid #0f766e; color: #6b7280; font-size: 12px; font-style: italic;
+  }
+
+  @media (max-width: 600px) {
+    body { font-size: 12.5px; }
+    .container { padding: 18px 20px; }
+    h1 { font-size: 21px; }
+    h2 { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+  <div class="badge">SHARED SOP · 共通標準</div>
+  <h1>封裝端抗氧化 SOP</h1>
+  <div class="subtitle">L-抗壞血酸 + KMS 成對使用 · 只在強制碳酸時加 · 全酒譜通用</div>
+</div>
+
+<div class="danger-box">
+<b>⚠️ 第一條規則:維生素C 絕對不可單獨使用</b><br>
+抗壞血酸(維生素C)抓走氧氣時,副產物是<b>過氧化氫(H₂O₂)</b>。酒中只要有微量鐵/銅離子(自來水、器具、麥芽本來就有),H₂O₂ 就會走 <b>Fenton 反應</b>生成毀滅性的羥自由基 → <b>氧化得比不加還兇</b>(紙板味、酒花香更快掉)。<br><br>
+<b>KMS(焦亞硫酸鉀)的工作就是把 H₂O₂ 收掉。兩者是協同關係,缺一不可。</b><br>
+<b>手上只有 VC、沒有 KMS → 寧可兩個都不加,改做低氧流程。</b>
+</div>
+
+<h2 class="neutral">🧪 藥劑與劑量</h2>
+
+<table>
+  <tr><th>藥劑</th><th>濃度</th><th>6L 批</th><th>10L 批</th><th>角色</th></tr>
+  <tr>
+    <td><b>L-抗壞血酸</b><br><small>(維生素C · Ascorbic Acid)</small></td>
+    <td>30 mg/L</td>
+    <td><b>0.18 g</b></td>
+    <td><b>0.3 g</b></td>
+    <td>抓溶氧</td>
+  </tr>
+  <tr>
+    <td><b>焦亞硫酸鉀 KMS</b><br><small>(K₂S₂O₅ · 或 Campden 錠壓碎)</small></td>
+    <td>25 mg/L<br><small>≈14 ppm 總 SO₂</small></td>
+    <td><b>0.15 g</b></td>
+    <td><b>0.25 g</b></td>
+    <td><b>收掉 VC 產生的 H₂O₂</b><br>+ 自身抗氧</td>
+  </tr>
+</table>
+
+<div class="draft">
+<b>⚠️ Campden 錠各廠劑量不同</b>——有的是焦亞硫酸<b>鈉</b>、克數也不一定是 0.44g/錠。<b>買到後看包裝標示自己重算</b>,別照抄「半錠」。錠劑要<b>壓碎 + 先溶解</b>,別整錠丟(不會溶勻,賦形劑沉底)。<br>
+<b>上限:KMS 不要超過 0.5 g / 10L</b>(≈28 ppm 總 SO₂),超過才有硫味風險。
+</div>
+
+<h2 class="cold">🚰 執行 SOP(轉桶時)</h2>
+
+<div class="principle">
+<b>核心順序:先下藥 → 再 purge → 再入酒。</b>藥劑躺在 keg 底部,酒從底部灌進來時<b>一進來就被保護、還順便攪勻</b>,不必事後開蓋(開蓋 = 進氧,本末倒置)。
+</div>
+
+<h3>轉桶前 1-2 小時</h3>
+<ol class="tight">
+  <li>Keg 洗淨、消毒、組裝完成</li>
+  <li><b>秤好 VC + KMS</b>(依上表批量),用 <b>20-30ml 煮沸放涼的水</b>溶開</li>
+  <li><b>倒進 keg 底部</b></li>
+  <li>接 CO₂ 灌滿到 10-15 PSI → 從 PRV 拉開排掉,<b>重複至少 3 次</b></li>
+  <li>最後一次灌滿後保留 5 PSI 低正壓備用</li>
+</ol>
+
+<h3>轉桶當天</h3>
+<ol class="tight">
+  <li>發酵桶輕輕移到操作位置(<b>絕對不要搖晃</b>)</li>
+  <li>從 keg 液體口接管入酒 → <b>從底部入,避免濺射</b></li>
+  <li>虹吸管取酒端<b>離桶底 2-3cm</b>,看到沉澱層快被吸到就立刻停</li>
+  <li><b>盡量裝滿、頂空最小</b>(頂空空氣 = 氧化來源)</li>
+  <li>立刻蓋緊 → 加壓 10-12 PSI → 立刻冷藏</li>
+</ol>
+
+<h2 class="danger">🚫 什麼時候「不要」加</h2>
+
+<table>
+  <tr><th>碳酸方式</th><th>加不加</th><th>原因</th></tr>
+  <tr>
+    <td><b>強制碳酸 / KEG</b><br><small>(本家標準)</small></td>
+    <td style="color:#15803d;"><b>✅ 加 VC + KMS</b></td>
+    <td>不靠酵母打氣,亞硫酸完全無影響</td>
+  </tr>
+  <tr>
+    <td><b>瓶內二發(priming 糖水)</b></td>
+    <td style="color:#b91c1c;"><b>❌ 兩個都不加</b></td>
+    <td>
+      <b>亞硫酸會壓制酵母</b> → 高 ABV 的疲勞酵母可能打不出氣、變扁酒(不可逆)。<br>
+      而且<b>瓶內二發本身就是抗氧化機制</b>——二發酵母會吃掉瓶內頂空的殘氧,等於天然除氧。<br>
+      <b>VC 也不能單加</b>(見第一條規則)。
+    </td>
+  </tr>
+</table>
+
+<div class="info-box">
+<b>💡 所以:瓶內二發的酒,靠酵母自己除氧就好,別加藥。</b>要用抗氧化劑,就走強制碳酸。
+</div>
+
+<h2 class="neutral">👃 硫味疑慮:正常劑量聞不到</h2>
+
+<ul class="tight">
+  <li><b>SO₂ 進酒後大半立刻「結合」掉。</b>它會跟酒中的醛/酮/糖結合成亞硫酸加成物——<b>結合態 = 無味</b>,只有<b>游離態</b>才有那個「燒過的火柴」味。啤酒裡羰基化合物一堆,加進去的 SO₂ 大半當場被綁走。</li>
+  <li><b>總量本來就低。</b>KMS 只有 ~57% 是 SO₂ → 0.25g/10L ≈ <b>14 ppm 總 SO₂</b>,游離態還要再打折。而<b>感知門檻約 20-25 ppm 游離 SO₂</b>。</li>
+  <li><b>你的酒本來就有亞硫酸。</b>Ale 酵母發酵中自然產生 <b>5-20 ppm SO₂</b>——過去每一批都含,只是沒人講。</li>
+</ul>
+
+<div class="draft">
+<b>亞硫酸過敏提醒:</b>少數人(氣喘者)對亞硫酸鹽敏感。此劑量遠低於葡萄酒,自己喝沒問題,但<b>招待客人時值得知道</b>。
+</div>
+
+<h2 class="cold">⚖️ 權重:藥劑是保險(20%),流程才是主力(80%)</h2>
+
+<div class="danger-box">
+<b>不要以為加了 VC + KMS 就能免掉低氧流程。</b><br>
+亞硫酸跟氧的反應<b>偏慢</b>,它是「<b>跟氧氣搶反應的競爭者</b>」,不是把氧氣關在門外的盾牌——同一時間氧氣也在直接啃酒花香氣化合物。<b>流程沒做好,加再多藥也救不回。</b>
+</div>
+
+<table>
+  <tr><th>做法</th><th>貢獻</th><th>成本</th></tr>
+  <tr><td><b>Keg 三次 CO₂ purge + 底部入酒不濺 + 頂空最小</b></td><td><b>~80%</b>(真正的勝負手)</td><td>免費</td></tr>
+  <tr><td><b>趁鮮喝(2-3 週內)</b></td><td>大加分</td><td>免費</td></tr>
+  <tr><td><b>VC + KMS</b></td><td><b>~20%(保險)</b></td><td>便宜</td></tr>
+</table>
+
+<div class="principle">
+<b>換算給你看容量其實夠:</b>14 ppm SO₂ 理論上能吃掉 <b>~3500 ppb 的氧</b>,而一次「還可以」的轉桶大約帶進 200-500 ppb。<b>看起來綽綽有餘——但問題在速度,不在容量。</b>這就是為什麼流程仍是主力。
+</div>
+
+<h2 class="neutral">🛒 採購</h2>
+
+<table>
+  <tr><th>品項</th><th>別名 / 搜尋關鍵字</th><th>備註</th></tr>
+  <tr><td><b>L-抗壞血酸</b></td><td>維生素C / Ascorbic Acid / L-Ascorbic Acid</td><td>食品級。食品級 VC 本來就都是 L 型</td></tr>
+  <tr><td><b>焦亞硫酸鉀</b></td><td>Potassium Metabisulfite / KMS / K-Meta / <b>Campden 錠</b> / K₂S₂O₅</td><td><b>食品級</b>。自釀店、釀酒材料行、蝦皮都有,一罐用好幾年</td></tr>
+  <tr><td><small>(鈉版亦可)</small></td><td>焦亞硫酸鈉 / Sodium Metabisulfite / SMB / Na₂S₂O₅</td><td>效果一樣,會多帶一點鈉</td></tr>
+</table>
+
+<ul class="tight">
+  <li><b>有 0.01g 精度電子秤</b> → 買<b>粉末</b>(便宜、溶得乾淨、能微調)</li>
+  <li><b>沒有精密秤</b> → 買 <b>Campden 錠</b>(免秤,但劑量依包裝重算)</li>
+</ul>
+
+<div class="footer">
+封裝端抗氧化 SOP · 共通標準 · Orange Glow / Strange Haze / Milkshake IPA 通用<br>
+自 orange-glow v2.5 導入
+</div>
+
+</div>
+
+</body>
+</html>

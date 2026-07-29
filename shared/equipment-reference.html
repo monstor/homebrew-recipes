@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>共用器材資料(空鍋重等)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans CJK TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    font-size: 13.5px;
+    color: #1f2937;
+    background: #f5f5f0;
+    line-height: 1.65;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 32px 36px;
+    border-top: 5px solid #0f766e;
+    border-bottom: 5px solid #0f766e;
+  }
+  .header {
+    text-align: center;
+    border-bottom: 2.5px solid #0f766e;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+  h1 { font-size: 25px; font-weight: 800; color: #134e4a; margin-bottom: 6px; }
+  .badge {
+    display: inline-block;
+    background: #0f766e; color: #fff;
+    padding: 4px 14px; font-size: 11px; font-weight: bold;
+    letter-spacing: 1.5px; border-radius: 2px; margin-bottom: 8px;
+  }
+  .subtitle { font-size: 13px; color: #6b7280; font-style: italic; }
+
+  h2 {
+    font-size: 17px; font-weight: 800; color: #fff;
+    padding: 9px 16px; margin: 22px 0 12px 0; letter-spacing: 0.5px;
+    background: #0f766e;
+  }
+  h3 { color: #134e4a; margin: 14px 0 6px 0; font-size: 15px; font-weight: bold; border-left: 4px solid #0f766e; padding-left: 10px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 14px 0; font-size: 13px; }
+  th, td { padding: 9px 12px; text-align: left; border: 1px solid #d1d5db; vertical-align: top; }
+  th { background: #0f766e; color: #fff; font-weight: bold; }
+  tr:nth-child(even) td { background: #f0fdfa; }
+
+  .principle {
+    background: #ccfbf1; border-left: 4px solid #0f766e;
+    padding: 11px 15px; margin: 11px 0; font-size: 13px;
+  }
+  .principle b { color: #0f766e; }
+  .draft {
+    background: #fef3c7; border-left: 4px solid #d97706;
+    padding: 11px 15px; margin: 11px 0; font-size: 12.5px;
+  }
+  .draft b { color: #92400e; }
+  code { background: #ecfdf5; padding: 1px 6px; border-radius: 3px; font-size: 12.5px; }
+
+  .footer {
+    text-align: center; margin-top: 26px; padding-top: 16px;
+    border-top: 2.5px solid #0f766e; color: #6b7280; font-size: 12px; font-style: italic;
+  }
+  @media (max-width: 600px) {
+    body { font-size: 12.5px; }
+    .container { padding: 18px 20px; }
+    h1 { font-size: 21px; }
+    h2 { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+  <div class="badge">SHARED · 共用器材資料</div>
+  <h1>共用器材資料</h1>
+  <div class="subtitle">跨批次共用的設備數據 · 全酒譜通用</div>
+</div>
+
+<h2>⚖️ 空鍋重(皮重 / tare)</h2>
+
+<table>
+  <tr><th>煮鍋</th><th>空鍋重</th><th>用途</th></tr>
+  <tr><td><b>大鍋</b></td><td><b>1.70 kg</b></td><td rowspan="2">秤「鍋+麥汁」總重 → 減皮重 → 估麥汁體積</td></tr>
+  <tr><td><b>小鍋</b></td><td><b>1.45 kg</b></td></tr>
+</table>
+
+<h2>📐 用重量估麥汁體積</h2>
+
+<div class="principle">
+<b>體積(L) = (總重 − 空鍋重) ÷ 密度</b><br>
+沒有量筒/視鏡時,拿秤就能量體積。淨重(麥汁重)除以密度就是升數。
+</div>
+
+<h3>密度怎麼取</h3>
+<table>
+  <tr><th>情況</th><th>密度(kg/L)</th><th>算法</th></tr>
+  <tr><td>清水 / 粗估</td><td>~1.00</td><td>淨重 kg ≈ 升數(誤差小,方便)</td></tr>
+  <tr><td>已知比重的麥汁(冷)</td><td>= SG 本身</td><td>淨重 ÷ SG。例:11 kg 淨重、SG 1.064 → <code>11 ÷ 1.064 = 10.3 L</code></td></tr>
+  <tr><td>滾沸中的熱麥汁</td><td>~0.96</td><td>熱脹密度低;<b>且冷卻後體積會再縮 ~4%</b>,估「入桶冷麥汁量」要記得扣</td></tr>
+</table>
+
+<div class="draft">
+<b>實務建議:</b>釀造當天粗抓體積用 <b>淨重 ≈ 升數(密度 1.0)</b> 就夠決策(要不要洗槽補水、救援水加多少)。要精算入桶量再用 SG 或熱→冷 4% 收縮修正。<br>
+<b>秤同一個鍋務必先確認是大鍋(1.70)還是小鍋(1.45)</b>,別拿錯皮重。
+</div>
+
+<div class="footer">
+共用器材資料 · 全酒譜通用 · 新器材數據就往這裡加
+</div>
+
+</div>
+
+</body>
+</html>

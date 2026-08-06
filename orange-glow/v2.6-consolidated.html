@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orange Glow v2.6 — 統整版・回歸橘金 juicy(GP + Munich)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans CJK TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    font-size: 13px;
+    color: #2c2c2c;
+    background: #f5f5f5;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: 25px 30px;
+    border-top: 5px solid #E67E22;
+    border-bottom: 5px solid #E67E22;
+  }
+  .header {
+    text-align: center;
+    border-bottom: 2.5px solid #E67E22;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+  }
+  h1 { font-size: 26px; font-weight: bold; color: #D35400; margin-bottom: 4px; }
+  .version-tag {
+    display: inline-block;
+    background: #D35400;
+    color: white;
+    padding: 4px 14px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    border-radius: 2px;
+    margin-bottom: 8px;
+  }
+  .subtitle { font-size: 13px; color: #555; }
+
+  h2 {
+    font-size: 17px; font-weight: bold; color: #fff;
+    background: #E67E22; padding: 7px 14px;
+    margin: 18px 0 10px 0; border-radius: 4px;
+  }
+  h3 {
+    color: #D35400; margin: 10px 0 6px 0; font-size: 14px;
+    border-left: 3px solid #E67E22; padding-left: 8px;
+  }
+
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 12px 0; font-size: 12.5px; }
+  th, td { padding: 7px 10px; text-align: left; border: 1px solid #ddd; vertical-align: top; }
+  th { background: #FDF2E9; font-weight: bold; color: #D35400; }
+  tr:nth-child(even) td { background: #FAFAFA; }
+
+  .info-box { background: #FDF2E9; border-left: 3px solid #E67E22; padding: 9px 13px; margin: 9px 0; border-radius: 3px; font-size: 12.5px; }
+  .warning-box { background: #FEF5E7; border-left: 3px solid #F39C12; padding: 9px 13px; margin: 9px 0; border-radius: 3px; font-size: 12.5px; }
+  .danger-box { background: #FADBD8; border-left: 3px solid #E74C3C; padding: 9px 13px; margin: 9px 0; border-radius: 3px; font-size: 12.5px; }
+  .new-in-v22 {
+    background: #CCFBF1;
+    border-left: 3px solid #0D9488;
+    padding: 9px 13px;
+    margin: 9px 0;
+    border-radius: 3px;
+    font-size: 12.5px;
+  }
+  .new-in-v22 b { color: #0F766E; }
+  .v22-tag {
+    display: inline-block;
+    background: #0D9488;
+    color: white;
+    font-size: 10.5px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-left: 6px;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+  }
+  .new-in-v2 { background: #D5F0DC; border-left: 3px solid #2D7A3E; padding: 9px 13px; margin: 9px 0; border-radius: 3px; font-size: 12.5px; }
+  .new-in-v2 b { color: #1E5E2C; }
+  .new-tag {
+    display: inline-block;
+    background: #2D7A3E;
+    color: white;
+    font-size: 10.5px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-left: 6px;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+  }
+
+  .highlight { background: #FFF3CD; padding: 1px 4px; border-radius: 2px; font-weight: bold; }
+  .modified { color: #E74C3C; font-weight: bold; }
+  .updated { color: #0D9488; font-weight: bold; }
+  .removed { color: #999; text-decoration: line-through; }
+
+  .stat-line {
+    background: #FDF2E9; padding: 8px 14px; border-radius: 4px;
+    margin: 10px 0; font-size: 13px; text-align: center;
+    border: 1px solid #F5CBA7;
+  }
+  .stat-line span { margin: 0 8px; color: #888; }
+  .stat-line b { color: #D35400; }
+
+  .step-row { display: flex; margin: 7px 0; font-size: 12.5px; }
+  .step-num {
+    background: #E67E22; color: white;
+    width: 26px; height: 26px; border-radius: 50%;
+    text-align: center; line-height: 26px; font-weight: bold;
+    flex-shrink: 0; margin-right: 10px; font-size: 12px;
+  }
+  .step-num.new { background: #2D7A3E; }
+  .step-num.v22 { background: #0D9488; }
+  .step-content { flex: 1; padding-top: 2px; }
+  .step-title { font-weight: bold; color: #D35400; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .greenlight {
+    background: linear-gradient(to right, #dcfce7, #f0fdf4);
+    border: 2px solid #16a34a;
+    padding: 14px 18px;
+    margin: 12px 0;
+    border-radius: 4px;
+  }
+  .greenlight h4 {
+    color: #15803d;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .greenlight .criteria {
+    background: white;
+    padding: 8px 12px;
+    margin: 6px 0;
+    border-left: 3px solid #16a34a;
+    font-size: 12.5px;
+  }
+
+  .checklist {
+    background: #fffbeb;
+    border: 2px solid #d97706;
+    padding: 14px 18px;
+    margin: 12px 0;
+    border-radius: 4px;
+  }
+  .checklist h4 { color: #92400e; margin-bottom: 8px; font-size: 14px; }
+  .checklist ol { margin-left: 22px; font-size: 12px; }
+  .checklist ol li { margin-bottom: 5px; }
+
+  .starter-box {
+    background: linear-gradient(to right, #fef3c7, #fef9e3);
+    border: 2px solid #D97706;
+    padding: 14px 18px;
+    margin: 12px 0;
+    border-radius: 4px;
+  }
+  .starter-box h4 { color: #92400E; margin-bottom: 8px; font-size: 14px; }
+
+  .aldc-box {
+    background: linear-gradient(to right, #ddd6fe, #ede9fe);
+    border: 2px solid #7C3AED;
+    padding: 14px 18px;
+    margin: 12px 0;
+    border-radius: 4px;
+  }
+  .aldc-box h4 { color: #5B21B6; margin-bottom: 8px; font-size: 14px; }
+
+  .changelog {
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 12px;
+  }
+  .changelog ul { margin-left: 22px; margin-top: 6px; }
+
+  .log-table { background: #fafafa; border: 1px dashed #999; padding: 12px; margin: 12px 0; }
+  .log-table table { margin: 0; }
+  .log-table td { background: #ffffff; border: 1px solid #eee; height: 32px; font-size: 12px; }
+  .log-table th { background: #E67E22; color: #ffffff; border: 1px solid #eee; height: 32px; font-size: 12px; }
+
+  .footer { text-align: center; margin-top: 20px; padding-top: 12px; border-top: 1.5px solid #E67E22; color: #888; font-size: 12px; }
+
+  @media (max-width: 600px) {
+    body { font-size: 12px; }
+    .container { padding: 15px 18px; }
+    h1 { font-size: 20px; }
+    h2 { font-size: 15px; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    @page { margin: 9mm; }
+    .no-print { display: none !important; }
+    body { background: #fff; font-size: 9.5px; line-height: 1.35; }
+    .container { max-width: none; margin: 0; padding: 0; border: none; }
+    .header { padding-bottom: 8px; margin-bottom: 8px; }
+    h1 { font-size: 17px; margin-bottom: 2px; }
+    .version-tag { margin-bottom: 4px; padding: 2px 10px; }
+    .subtitle { font-size: 10px; }
+    .stat-line { padding: 6px 10px; margin: 6px 0; font-size: 10.5px; }
+    h2 { font-size: 12px; padding: 4px 9px; margin: 9px 0 5px; break-after: avoid; }
+    h3 { font-size: 11px; margin: 7px 0 3px; break-after: avoid; }
+    .info-box, .warning-box, .danger-box, .greenlight, .checklist,
+    .starter-box, .aldc-box, .new-in-v2, .new-in-v22, .log-table,
+    table, .step-row, tr { break-inside: avoid; }
+    .info-box, .warning-box, .danger-box { padding: 6px 10px; margin: 5px 0; font-size: 9.5px; }
+    .greenlight, .checklist, .starter-box, .aldc-box { padding: 8px 11px; margin: 6px 0; }
+    .step-row { margin: 4px 0; font-size: 9.5px; }
+    .step-num { width: 20px; height: 20px; line-height: 20px; font-size: 10px; margin-right: 8px; }
+    th, td { padding: 3px 6px; font-size: 9px; }
+    .checklist ol, .greenlight ol { font-size: 9px; }
+    .log-table td { height: 24px; }
+    .footer { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+  <div class="version-tag">VERSION 2.5 · CLEAN NEIPA · 修正 #0007 過苦</div>
+  <h1>🍊 Orange Glow v2.6 · 統整版</h1>
+  <div class="subtitle">回歸 Orange Glow 主題(橘金 juicy DDH NEIPA)+ 統整所有優勢 · GP 基麥 + Munich 橘金 · 雙段乾投 · pH 雙向 · 煮前 OG 檢查 · <a href="../shared/signature-process.html">獨門製程</a></div>
+</div>
+
+<div class="stat-line">
+  <span>OG <b>1.064-1.068</b></span>|
+  <span>FG <b>1.014-1.016</b></span>|
+  <span>ABV <b>~7.0-7.3%</b></span>|
+  <span>IBU <b>~25-30</b></span>|
+  <span>EBC <b>13-15(橘金)</b></span>|
+  <span>容量 <b>10 L</b></span>
+</div>
+
+<div class="changelog no-print">
+<b>📋 v2.5 → v2.6 重點變更(回歸橘金主題 + 統整所有優勢)</b>
+<p style="margin:4px 0 8px;"><b>核心目標:</b>做一支乾淨清爽<b>而且夠香</b>的 NEIPA。苦度乾淨(~25-30 IBU,靠<b>流程</b>而非砍酒花來控),香氣靠 <b>Whirlpool(口中風味)+ 雙段 Dry hop(鼻子的香)</b>疊出來,並全面避開 #0007 的過苦失誤。</p>
+<ul>
+  <li><b>① 酒花處理(修 #0007 太苦):</b>苦花 Magnum 6g <b>準時 60min 加、裝濾袋、煮完撈出</b>(#0007 忘加→補煮一小時 + 沒撈是過苦主因);<b>Whirlpool</b> 71-82°C 香花 84g(濾袋)靜置 20-30min 後<b>撈出</b>;<b>Dry hop 限時 3-5 天</b>就撈出(#0007 泡到發酵完→冷側粗糙苦 humulinone/多酚)<span class="v22-tag">v2.5</span></li>
+  <li><b>② Dry hop 時機看比重:</b>OG 降一半時投(不看固定天數)——避開 #0008 太晚投(發酵完才投、biotransformation 打折)<span class="v22-tag">v2.5</span></li>
+  <li><b>③ 穀物回主題(GP + Munich):</b>基麥回 <b>Golden Promise 2.5kg</b>(英系綿密橘金)+ <b>Munich 1.0kg 回歸</b>(橘金色 EBC 13-15)+ 小麥 1.0kg(haze)= 4.5kg,無燕麥/無 DME。糖化 67°C 留殘糖墊酒花(FG 1.014-1.016)。想更濃霧再加燕麥 0.5kg<span class="v22-tag">v2.6</span></li>
+  <li><b>④ pH 雙向調整(v2.6 關鍵升級):</b>水的 mash pH <b>批次間會變</b>(#0008 糖化醪 4.76 太酸 / #0009 麥汁 5.81 偏鹼)→ <b>不能預設方向</b>。做法:pH 計每次校正 → 量糖化醪(冷卻)→ 目標 5.2-5.4 → <b>低加小蘇打、高加乳酸/磷酸,兩樣都備</b>。氯化物主導 CaCl₂ ~1.5g、石膏 0-0.5g<span class="v22-tag">v2.6</span></li>
+</ul>
+<p style="margin-top: 8px;"><b>沿用不變(已驗證):</b>低氧轉桶(keg 驅氧 + 底部填充)、控溫發酵 18-20°C、Pomona 1 包 + 純氧直投、ALDC、綠燈確認、<b>趁鮮喝(碳酸完成後 1-2 週內)</b>。</p>
+<p style="margin-top: 8px;"><b class="updated">④ 新增抗氧化劑(封裝端):</b>轉桶時在接收 keg 底部先放 <b>L-抗壞血酸 0.3g + 焦亞硫酸鉀 KMS 0.25g</b>(必須成對——VC 單用會產生 H₂O₂ 走 Fenton 反應,反而助氧化)。DDH NEIPA 對氧極敏感,這是<b>保險</b>;<b>主力仍是流程</b>(keg 三次 CO₂ purge、底部入酒不濺、頂空最小、趁鮮喝)。<span class="v22-tag">v2.5</span></p>
+</div>
+
+<div class="new-in-v22 no-print">
+<b>★ v2.6 設計邏輯(回主題 + 統整優勢)</b><br>
+v2.6 把 Orange Glow <b>拉回主題</b>(#0009 因補水意外變成淺金 5.8%,偏離了「橘金 juicy」的酒名本體),並<b>統整這一路的所有優勢</b>。<br><b>回主題:</b>基麥回 <b>Golden Promise(英系綿密)+ Munich 1.0kg 回歸橘金(EBC 13-15)+ OG 回到 ~1.066 / ABV ~7%</b>(比 v2.4 的 8% 少一點酒精灼熱、比 #0009 的 5.8% 有體)。<br><b>統整優勢:</b><b>雙段乾投(DH1 生轉化 + DH2 純香)、pH 雙向調整(#0008 酸/#0009 鹼的和解)、煮前 OG 檢查 + 秤鍋控體積、苦味從源頭治不砍酒花(IBU 25-30)、Whirlpool 疊口中果汁感、VC+KMS 抗氧化、Pomona/純氧/ALDC/低氧轉桶/綠燈/趁鮮</b>。糖化 67°C 留殘糖墊酒花。完整技法見 <a href="../shared/signature-process.html">獨門製程</a>。
+</div>
+
+<div class="danger-box no-print">
+<b>🚫 #0007 失誤清單(v2.5 全避開):</b>
+<ul style="margin:4px 0 0 18px;">
+  <li>苦花忘加 → 補煮多煮一小時(麥味重、色深)　➜ v2.5:先秤好、60min 準時加、設計時器提醒</li>
+  <li>酒花沒撈 → 泡到發酵完(粗糙苦)　➜ v2.5:苦花與 Whirlpool 都用濾袋、當步驟撈出;Dry hop 限時 3-5 天</li>
+  <li>香氣不足　➜ <b>#0007 其實有做 Whirlpool、也有 dry hop 112g,兩步都沒漏</b>——所以香氣不足<b>不是漏做步驟,是結構性問題</b>(見下方「為什麼一定要有 DH2」)➜ v2.5:補上<b>發酵後的 DH2</b></li>
+  <li>pH 計沒電(水質沒調準)　➜ v2.5:先換 SR44 電池、校正、確實調糖化 pH 5.2-5.4</li>
+</ul>
+</div>
+
+<div class="danger-box no-print">
+<b>🍺 #0008 實飲回饋 → v2.5 據此修訂(最新)</b><br>
+實飲評語:「<b>有果汁感,但還是被大量苦味蓋過</b>」。關鍵線索:#0008 的苦花<b>只有 Magnum 6g、而且是準時加的</b>(沒有 #0007 那些失誤)—— 所以<b>苦不是「酒花量」的問題</b>,砍酒花只會砍掉香氣。真兇是下面四個,v2.5 逐一處理:
+<ul style="margin:4px 0 0 18px;">
+  <li><b>成酒 pH 3.83 太酸</b>(糖化醪 4.76,目標 5.2-5.4)→ 苦味<b>尖銳咬喉</b>　➜ <b>量了才調、雙向靠 5.2-5.4</b>(#0008 太酸該加鹼、但 #0009 偏鹼要加酸 → 兩樣都備)</li>
+  <li><b>石膏(硫酸鹽)會放大苦味</b>　➜ <b>氯化物主導:CaCl₂ ~1.5g、石膏 0-0.5g</b></li>
+  <li><b>太乾 —— FG 1.015 配 9.8%,沒有殘糖墊住酒花</b> → 苦味裸露　➜ <b>糖化回 67°C,FG 收在 1.014-1.016</b></li>
+  <li><b>9.8% 的酒精灼熱感會被舌頭讀成苦</b>　➜ v2.6 收在 <b>OG ~1.066 / ABV ~7%</b>(遠低於 9.8%,有體不燥)</li>
+</ul>
+<b>乾投維持 112g 不動</b> —— 香氣火力不能省;苦味從上面四個源頭治,不從酒花量下手。
+</div>
+
+<div class="new-in-v2 no-print">
+<b>🎯 風味北極星(拿商業 NEIPA 實飲對照得出)</b><br>
+<b>目標:苦味要像「百香果籽」—— 包在果肉裡、跟果汁一起進來,是一體的;而不是站在果汁前面、擋住果汁的那獨立一層。</b>#0008 的苦正是後者:裸露、尖銳、跟果汁分離。<b>判斷成功與否不看 IBU 數字,看苦味「有沒有被果汁包住」。</b>
+<br><br>
+<b>✅ 已排除的兩條死路(對照後確認,別再浪費力氣):</b>
+<ul style="margin:4px 0 0 18px;">
+  <li><b>氣泡感 / 泡沫不是問題</b> —— 商業 NEIPA 倒出來也<b>沒有厚厚一層泡沫</b>,碳酸感跟 #0008 差不多。<b>不要為了「泡沫飽滿」去加燕麥/蛋白質</b>(那還會帶回不想要的絲滑感)</li>
+  <li><b>顏色回歸橘金</b> —— v2.6 <b>Munich 1.0kg 回歸 → 橘金色(EBC 13-15)</b>,這是「Orange Glow」的本體(#0009 無 Munich 變淺金是意外)</li>
+  <li><b>霧度靠小麥 + 乾投</b> —— 小麥 1.0kg(~22%)+ 大量雙段乾投 + Pomona 低絮凝 = 濃霧;v2.6 不加燕麥(控 ~7% 酒體),想更濃霧再加 0.5kg 燕麥(會帶絲滑)</li>
+</ul>
+→ 火力集中在真問題:<b>苦壓過果汁 + 香氣要足</b>。<b>味覺端</b>靠 pH 雙向(成酒 4.2-4.5)/ 氯化物主導 / 67°C 留殘糖;<b>嗅覺端</b>靠 <b>雙段乾投(DH2 零 CO₂ 沖刷)</b>+ 全熱帶調(Citra / Galaxy / Mosaic)。
+</div>
+
+<h2>🔑 核心配置摘要</h2>
+
+<div class="two-col">
+  <div>
+    <table>
+      <tr><th colspan="2">穀物(總 <b class="modified">4.5kg</b>・無 DME)</th></tr>
+      <tr><td><b class="modified">Golden Promise(基麥・英系綿密橘金)</b></td><td><b class="modified">2.5 kg</b></td></tr>
+      <tr><td><b class="modified">Munich Light Malt(橘金色主力・麥香層次)</b></td><td><b class="modified">1.0 kg</b></td></tr>
+      <tr><td><b class="modified">Château Wheat Blanc(小麥,haze 主力)</b></td><td><b class="modified">1.0 kg</b></td></tr>
+      <tr><td class="removed">燕麥片(v2.6 不加——~7% 控體;想更霧再加 0.5kg,GP 挪出)</td><td class="removed">0</td></tr>
+      <tr><td class="removed">大麥 DME / Maltodextrin(v2.5 不加,走清爽)</td><td class="removed">0</td></tr>
+    </table>
+  </div>
+  <div>
+    <table>
+      <tr><th colspan="2">酒花(總 <b class="modified">202g</b>・IBU ~25-30)</th></tr>
+      <tr><td>Magnum(苦花・60min・濾袋・煮完撈出)</td><td>6g</td></tr>
+      <tr><td><b class="updated">Whirlpool 71-82°C 20-30min(濾袋・撈出):</b></td><td><b class="updated">84g</b></td></tr>
+      <tr><td>　・Citra</td><td>28g</td></tr>
+      <tr><td>　・Galaxy</td><td>28g</td></tr>
+      <tr><td>　・Mosaic</td><td>28g</td></tr>
+      <tr><td><b class="modified">DH1 乾投①(活躍發酵期・OG 降一半投・泡 3-5 天撈出):</b></td><td><b class="modified">56g</b></td></tr>
+      <tr><td>　・Galaxy</td><td>28g</td></tr>
+      <tr><td>　・Citra</td><td>28g</td></tr>
+      <tr><td><b class="modified">DH2 乾投②(發酵完成後・綠燈才投・泡 2-3 天):</b></td><td><b class="modified">56g</b></td></tr>
+      <tr><td>　・Citra</td><td>28g</td></tr>
+      <tr><td>　・Mosaic</td><td>28g</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="new-in-v22">
+<b>★ 酒花配置(v2.5 修訂:雙段乾投,全力衝香)</b>
+<p style="margin-top:6px;">Magnum 6g(苦)+ Whirlpool 84g + <b>DH1 56g + DH2 56g(乾投共 112g)</b> = <b>202g</b>。</p>
+<table style="margin-top:8px;">
+  <tr><th>階段</th><th>量</th><th>它給你什麼</th></tr>
+  <tr><td><b>Whirlpool 78°C</b></td><td>84g</td><td><b>口中的風味、果汁感、厚度</b>(舌頭的事)</td></tr>
+  <tr><td><b>DH1</b> 活躍發酵期</td><td>56g</td><td><b>生物轉化</b>——Pomona 把 Galaxy/Citra 的硫醇前驅物轉成桃/柑橘/熱帶香</td></tr>
+  <tr><td><b>DH2</b> 發酵完成後</td><td>56g</td><td><b>純香氣、零 CO₂ 沖刷</b>(鼻子的事)← <b>這段是 v2.5 修訂新增的重點</b></td></tr>
+</table>
+<p style="margin-top:8px;"><b>採購(全部 28g 整包):</b>Citra 84g(3 包)/ Galaxy 56g(2 包)/ <b class="modified">Mosaic 56g(2 包)</b>/ Magnum 6g。<br><span style="font-size:11.5px;color:#555;">v2.5 修訂:<b>Amarillo → Mosaic</b>(1:1、總量不變)。Amarillo 是三支裡最柑橘/橙花、最不熱帶的;Mosaic(芒果/藍莓/熱帶)跟 Citra、Galaxy 同屬熱帶果汁調,更貼「果汁感壓過苦感」的目標。</span></p>
+</div>
+
+<div class="warning-box">
+<b>⚠️ 為什麼一定要有 DH2 —— CO₂ 沖刷(修訂主因)</b><br>
+<b>先排除廉價解釋:#0007 有確實做 Whirlpool,也有投滿 112g dry hop,酒花是真空包裝、買回即冷凍、開了就用完。兩個熱冷端都沒漏、酒花也不舊——但香氣還是不夠。</b>所以問題<b>不是漏做步驟</b>,是結構性的。<br><br>只在<b>活躍發酵期</b>乾投(v2.3/v2.4 / 原 v2.5 的做法),有個隱藏代價:<b>劇烈發酵產生的 CO₂ 會把揮發性酒花香氣從酒裡帶走、從水封噴掉</b>(CO₂ scrubbing)。生物轉化雖然有做到,但<b>「鼻子的香」被吹跑了一部分</b>。<b>#0007 更慘:它走瓶內二發,那 2 週是室溫——室溫是酒花香的頭號殺手,等於一邊磨柔苦味一邊把香氣烤掉。</b><br><br>
+<b>解法是雙段:DH1 卡發酵期做轉化(接受沖刷),DH2 等發酵完成後才投(零沖刷、純香)。</b>這是頂級 NEIPA 廠的標準做法。<br>
+<b>DH2 的前提是走 KEG 強制碳酸</b>——本配方本來就是。hop creep 在 keg 裡不會炸瓶,只要投完再確認一次比重穩定即可(見時程)。
+</div>
+
+<div class="info-box">
+<b>🎨 色澤:Munich 1.0kg 回歸 → 橘金色(v2.6 回主題)</b><br>
+Munich 是橘金色的<b>主要來源</b>。v2.6 回到 <b>Munich 1.0kg</b> → 成酒<b>橘金色 EBC 13-15</b>,呼應「Orange Glow」酒名本體。<br>
+<b>基麥回 Golden Promise</b>(英系綿密、餅乾麥甜、略深)取代 #0009 的 Extra Pale(乾淨中性)→ 酒體更柔順、泡沫更飽、色更貼橘金。<br>
+霧度靠<b>小麥 1.0kg(~22%)+ 雙段乾投 + Pomona 低絮凝</b>,v2.6 不加燕麥(控 ~7% 酒體)。⚠️ 想加深顏色請加 Munich(1.2-1.5kg),<b>別拿結晶/焦糖/烘焙麥</b>(帶甜/焦味毀果汁感)。<br>
+最終穀物:<b>GP 2.5 / Munich 1.0 / 小麥 1.0 = 4.5kg</b>(無燕麥、無 DME)。糖化 67°C 留殘糖墊酒花。
+</div>
+
+<div class="info-box">
+<b>📌 香花配置說明:</b>曾為降苦把<b>一半香花從 dry hop 挪去 whirlpool</b>(dry hop 112g → 84g)。後來 #0007 熟成 3 週後<b>苦度自行收斂到「剛好」、燒喉感消失</b>,證明「過苦」<b>大半是新酒問題 + 流程失誤,不是配方問題</b>。<br>
+→ <b>降苦交給流程</b>(苦花準時+濾袋+煮完撈出、dry hop 限時),<b>不再犧牲香氣</b>。Whirlpool <b>留著</b>(它給的是口中風味,取代不了 dry hop 的鼻子香),dry hop <b>加回 112g 並拆雙段</b>。IBU 目標從 ~20 放回 <b>~25-30</b>(主流 NEIPA 區間;既然苦味可控,不必壓到寡淡)。
+</div>
+
+<table>
+  <tr><th colspan="2">酵母 + 添加物</th></tr>
+  <tr><td><b class="modified">LalBrew Pomona × 1 包 → 高壓純氧直投(免 starter;保險可 2 包 / 養 starter)</b></td><td>11g</td></tr>
+  <tr><td><b class="updated">Fermaid-O(投酵母 2.5g + 投後 24h 2.5g,不煮)</b></td><td><b class="updated">5g</b></td></tr>
+  <tr><td>　└ 備選:買不到 O 用 Fermaid-K(煮沸末加)</td><td>3g</td></tr>
+  <tr><td>ALDC / Maturex L(投酵母時加)</td><td>0.2-0.3ml</td></tr>
+  <tr><td><b class="updated">L-抗壞血酸(維生素C,轉桶時加進接收 keg)</b><span class="v22-tag">v2.5</span></td><td><b class="updated">0.3g</b></td></tr>
+  <tr><td><b class="updated">　└ 焦亞硫酸鉀 KMS(必須同時加,或半錠 Campden)</b></td><td><b class="updated">0.25g</b></td></tr>
+</table>
+
+<div class="warning-box">
+<b>⚠️ 維生素C 一定要配 KMS,不可單用</b><br>
+抗壞血酸抓氧時會產生<b>過氧化氫(H₂O₂)</b>,遇到酒中微量鐵/銅離子會走 <b>Fenton 反應</b>生成羥自由基 → <b>氧化得比不加還兇</b>。KMS(焦亞硫酸鉀)負責把 H₂O₂ 收掉,兩者是<b>協同</b>關係。<b>只有 VC 沒有 KMS → 寧可兩個都不加。</b>
+</div>
+
+<h2>🌡️ 旋渦降溫 SOP<span class="v22-tag">v2.2 微調</span></h2>
+
+<div class="new-in-v22">
+<b>★ Whirlpool 溫度 78°C(區間 71-82°C)</b>
+<ul style="margin-left: 22px; margin-top: 6px;">
+  <li><b>保香:</b>Citra、Galaxy 的硫醇前驅物與酯類在 80°C 以上會被部分揮發/氧化,~78°C 多留住「果汁感」前段香。</li>
+  <li><b>控苦:</b>旋渦溫度越高,α-酸異構化越多、苦度越高。壓在 ~78°C 讓 IBU 穩在 ~25-30(主流 NEIPA 區間);偏 82°C 多一點萃取、偏 71°C 更柔香。</li>
+  <li><b>食安:</b>≥71°C 浸泡 20-30 分鐘在巴氏滅菌區間,沒問題。</li>
+</ul>
+<p style="margin-top: 8px;"><b>操作:</b>關火後讓麥汁自然降到 78°C(約 5-10 分鐘,用溫度計確認),投<b>裝濾袋</b>的 Citra 28g + Galaxy 28g + Mosaic 28g(共 84g),蓋消毒鍋蓋靜置 20-30 分鐘,<b>撈出濾袋</b>後才開始冰浴冷卻。</p>
+</div>
+
+<h2>🌀 冷卻 + Whirlpool SOP(浸入式盤管 + 攪拌)<span class="v22-tag">v2.2 新增</span></h2>
+
+<div class="info-box">
+浸入式盤管的冷卻分兩個目的相反的階段:先「<b>邊冷卻邊攪拌</b>」衝降溫速度,再「<b>靜置 whirlpool</b>」讓 trub 集中到鍋底中央,最後從鍋邊抽清澈麥汁、把沉澱留在鍋裡。順序搞反(冷卻時就想沉澱、或 whirlpool 後又去攪)只會白費工。
+</div>
+
+<div class="checklist">
+<h4>完整順序</h4>
+<ol>
+  <li><b>煮沸最後 15 分鐘:盤管泡入</b>麥汁一起煮殺菌(見上方煮沸步驟)</li>
+  <li><b>關火 → 降到 78°C 做 Whirlpool 香花浸泡</b>:投<b>裝濾袋</b>的 Citra 28g + Galaxy 28g + Mosaic 28g(共 <b>84g</b>),蓋蓋靜置 20-30 分鐘(此時<b>還不通冷水</b>,維持 78°C 萃取香氣)→ <b>結束撈出濾袋</b></li>
+  <li><b>香花浸泡結束 → 通冷水冷卻</b>:同時輕輕上下移動盤管 / 攪拌,加速熱交換。<b>這時 trub 懸浮、攪起來沒關係</b>,目的是越快降溫越好(30 分鐘內到位,縮短污染與 DMS 窗口)</li>
+  <li><b>降到 18-20°C → 停止攪拌,抽出盤管</b></li>
+  <li><b>用長勺單向攪出漩渦(whirlpool)</b>:沿鍋壁同方向繞圈帶動麥汁旋轉,然後抽出長勺</li>
+  <li><b>靜置 10-20 分鐘</b>:離心力會把 trub(熱凝固蛋白 + 酒花渣)集中沉到<b>鍋底中央</b></li>
+  <li><b>從鍋邊虹吸麥汁進發酵桶</b>:取酒端靠鍋壁邊緣取清澈麥汁,<b>留下中央那坨沉澱</b>,搭配<b>高壓純氧充氧 60-90s</b> + 投酵母 + 加 ALDC</li>
+</ol>
+</div>
+
+<div class="warning-box">
+<b>⚠️ 為什麼冷卻要攪、whirlpool 後不能攪:</b>冷卻階段要的是「<b>快</b>」,trub 懸浮無所謂;whirlpool 後要的是「<b>靜</b>」,一攪 trub 又浮起來就分不了。兩階段目的相反,別搞混。DDH 入桶的 trub 越少,後續氧化褐變與雜味風險越低。
+</div>
+
+<h2>💊 酵母營養劑:Fermaid-O 為主<span class="v22-tag">v2.2 微調</span></h2>
+
+<div class="aldc-box">
+<h4>★ 為什麼改用 Fermaid-O</h4>
+<p>NEIPA 的靈魂是熱帶水果香,而那來自酵母發酵時產生的<b>果香酯類</b>。營養劑的氮源型態會直接左右酯類表現:</p>
+<table style="margin-top: 8px;">
+<tr><th>營養劑</th><th>氮源</th><th>對 NEIPA 果香</th></tr>
+<tr><td><b class="updated">Fermaid-O(主)</b></td><td>純有機氮(酵母自溶物)</td><td><b class="updated">不抑制酯類 ✓ 商業 NEIPA 廠首選</b></td></tr>
+<tr><td>Fermaid-K(備選)</td><td>含 DAP(磷酸二銨,無機氮)</td><td>DAP 會壓制果香酯 ✗</td></tr>
+</table>
+<p style="margin-top: 8px;">v2.1 因為當時買不到 Fermaid-O 才退用 Fermaid-K。v2.2 把 <b>Fermaid-O 5g 設為主用</b>,讓百香果/芒果酯香完整發揮。</p>
+
+<h4 style="margin-top: 12px;">用量與時機</h4>
+<ul style="margin-left: 22px; font-size: 12.5px; margin-top: 6px;">
+  <li><b>主用:Fermaid-O 共 5g,分兩次——投酵母當下撒 2.5g(跟 ALDC 同時)、投後約 24h 再撒 2.5g,不煮。</b>有機氮要靠酵母在活躍發酵期分段代謝吸收,分兩次比一次倒更貼合酵母需氮曲線、發酵更穩、果香酯類更飽(高 OG + 只丟 1 包時尤其有感);拿去煮用不到那優勢、還可能沉澱流失,所以改投酵母期加。兩次都在發酵前段(桶內已被 CO₂ 充滿)加,不算 NEIPA 怕的後段進氧——第二劑快開快蓋即可。</li>
+  <li><b>備選:買不到 Fermaid-O → Fermaid-K 3g,煮沸末(第 55 分鐘)加。</b>K 含 DAP(無機氮、即時可用),留在煮沸加反而對,不必改投酵母時。</li>
+  <li>若某批發酵明顯卡關(FG 停在 1.020 以上不動),下批營養劑可酌量加回。</li>
+</ul>
+<div style="background: white; padding: 8px 12px; margin-top: 10px; border-left: 3px solid #0D9488; font-size: 12px;">
+<b>注意:</b>ALDC 才是阻斷雙乙醯的主力,營養劑選擇不影響雙乙醯控制。雙乙醯防線(ALDC + D-rest + 強迫測試)維持 v2.1 不變。
+</div>
+</div>
+
+<h2>🧪 Starter SOP(維持 v2.1)</h2>
+
+<div class="starter-box">
+<h4>★ 容器選擇(v2.1 重要修正,維持)</h4>
+<p>starter 培養時泡沫會佔麥汁高度 30-50%,2L 容器裝 2L 麥汁會 blow off(泡沫溢出)。正確規格:</p>
+<table style="margin-top: 8px;">
+<tr>
+  <th>麥汁量</th>
+  <th>最小容器</th>
+  <th>推薦容器</th>
+</tr>
+<tr>
+  <td><b>2L(本配方所需)</b></td>
+  <td><b>3L</b>(勉強夠,有 blow off 風險)</td>
+  <td><b>4-5L(安全)</b></td>
+</tr>
+</table>
+
+<h4 style="margin-top: 12px;">具體容器選項(任選其一)</h4>
+<ul style="margin-left: 22px; font-size: 12.5px; margin-top: 6px;">
+  <li><b>4L 廣口玻璃罐</b>(IKEA / 特力屋 / 蝦皮儲物罐,200-400 元)— 最務實</li>
+  <li><b>5L 硼矽酸鹽錐形瓶</b>(實驗器材行 / 蝦皮,800-1500 元)— 一次到位</li>
+  <li><b>4L 大泡菜罐 / 醃漬罐</b>(家裡現成或蝦皮,200 元)— 預算最低</li>
+</ul>
+<p style="margin-top: 8px; font-size: 12px;"><b>容器口蓋鋁箔紙</b>(廚房用一般鋁箔),包住瓶頸但不密封,讓 CO₂ 排出+空氣交換+擋灰塵飛蟲。不要用水封、不要旋緊蓋子。</p>
+</div>
+
+<div class="checklist">
+<h4>🧫 Starter 製作步驟(釀造前 1-2 天)</h4>
+<ol>
+  <li>準備好 4-5L 容器,熱水洗淨 → Star San 浸泡 2 分鐘 → 倒出晾乾</li>
+  <li><b>不鏽鋼湯鍋</b>裝 2L 水加熱,加 <b>200g DME</b>(乾麥芽萃取物)攪溶</li>
+  <li>煮沸 10 分鐘殺菌</li>
+  <li>冰水浴或沖冷水<b>快速冷卻到 20°C</b></li>
+  <li>倒進消毒過的 4-5L 容器</li>
+  <li>直接撒入 <b>1 包 LalBrew Pomona</b>(乾酵母,不用水化)</li>
+  <li>鋁箔紙覆蓋容器口,包住瓶頸輕壓但不密封</li>
+  <li>常溫 18-22°C 靜置 <b>24-36 小時</b>,中間搖晃 2-3 次(搖前用手按住鋁箔)</li>
+  <li>看到泡沫已消退、底部有 2-3cm 酵母床 = 養成功</li>
+  <li>釀造當天<b>整桶倒進發酵桶</b>(連 starter 麥汁一起)</li>
+</ol>
+</div>
+
+<div class="warning-box">
+<b>★ Starter 養成功的訊號</b><br>
+✓ 麥汁變混濁(細胞繁殖中)<br>
+✓ 8-12 小時後有泡沫產生<br>
+✓ 24-36 小時泡沫消退,底部有酵母床<br>
+✓ 聞起來正常麥芽香+輕微酒精/酵母味<br>
+✗ 有<b>酸味、霉味、異味</b> = 污染,整桶倒掉重做(別投進發酵桶)
+</div>
+
+<h2>💊 ALDC(Maturex L)SOP(維持 v2.1)</h2>
+
+<div class="aldc-box">
+<h4>★ ALDC 的作用</h4>
+<p>ALDC(α-乙醯乳酸脫羧酶)是酵素,在投酵母當下加入,會從化學源頭<b>阻斷雙乙醯(奶油爆米花味)生成</b>。對 Orange Glow 特別有價值,因為:</p>
+<ul style="margin-left: 22px; font-size: 12.5px; margin-top: 6px;">
+  <li>OG 1.078 糊精多,hop creep 啃出來的副產物(雙乙醯前驅物)也多</li>
+  <li>8% ABV 酵母提前疲勞,自然清除雙乙醯能力差</li>
+  <li>乾投共 112g(DH1 56 + DH2 56)帶進酵素多,hop creep 會分兩波:DH1 後一波、<b>DH2 後還會再一波</b>(所以 DH2 後必須再確認比重不動才轉桶)</li>
+  <li>雙乙醯對 NEIPA 風格致命(會蓋掉熱帶水果香)</li>
+</ul>
+
+<h4 style="margin-top: 12px;">取量方法(0.2-0.3ml 微量處理)</h4>
+<p>0.2ml 用一般注射器難取,選下面任一方式:</p>
+<table style="margin-top: 8px;">
+<tr>
+  <th>方法</th>
+  <th>說明</th>
+</tr>
+<tr>
+  <td><b>胰島素注射器(推薦)</b></td>
+  <td>藥局買,1ml 細分到 100 格(每格 0.01ml),取 0.2ml = 對到第 20 格,精度 ±0.02ml,單支幾十塊</td>
+</tr>
+<tr>
+  <td><b>稀釋法</b></td>
+  <td>9ml 煮沸冷卻水 + 1ml Maturex L → 10ml 稀釋液 → 取 2ml(等同 0.2ml 純 ALDC)。冷藏可放 1-2 個月</td>
+</tr>
+</table>
+
+<h4 style="margin-top: 12px;">投放時機與步驟</h4>
+<ol style="margin-left: 22px; font-size: 12.5px; margin-top: 6px;">
+  <li>釀造當天,麥汁冷卻到 18°C 投酵母時順便加</li>
+  <li>用胰島素注射器或稀釋液取 <b>0.2-0.3ml Maturex L</b>(等同稀釋液 2-3ml)</li>
+  <li>倒進消毒過的小杯子,加入發酵桶</li>
+  <li>跟整桶 Starter 一起進入發酵桶</li>
+  <li>輕微搖晃讓酵素均勻分布</li>
+  <li>蓋上水封,正常發酵</li>
+</ol>
+
+<div style="background: white; padding: 8px 12px; margin-top: 10px; border-left: 3px solid #7C3AED; font-size: 12px;">
+<b>注意:</b>ALDC 不取代 D-rest,只阻斷雙乙醯生成。後段 D-rest 升溫 22°C 仍要做,但「綠燈確認」的雙乙醯壓力大幅降低,強迫測試通過機率接近 100%。
+</div>
+</div>
+
+<h2>📅 18-20 天時程(維持 v2)</h2>
+
+<table>
+  <tr><th width="14%">時間</th><th width="20%">階段</th><th>動作</th></tr>
+  <tr><td>Day -2 至 -1</td><td>Starter 準備</td><td>2L 麥汁 + 1 包 LalBrew Pomona,在 4-5L 容器內常溫靜置 24-36h(Pomona 為乾酵母,亦可改直接丟 2 包免 starter)</td></tr>
+  <tr><td>Day 0</td><td>釀造日</td><td>糖化 67°C 60min → 煮沸 60min(0min 苦花濾袋・煮完撈｜45min 盤管殺菌・不加糖)→ <b class="updated">78°C Whirlpool 84g・撈出</b> → 冷卻 18°C → <b class="updated">高壓純氧充氧 60-90s</b> → 投酵母 → <b class="updated">同時加 ALDC 0.2-0.3ml + Fermaid-O 2.5g(24h 後再 2.5g)</b></td></tr>
+  <tr><td>Day 0-1</td><td>主發酵啟動</td><td>遲滯期 12-24h 後 19°C 大量冒泡。Pomona 快,Day 1 起就量;Day 1 比重可能已 ~1.045</td></tr>
+  <tr><td><b style="color:#D35400;">Day 1-2</b></td><td><b>比重檢查 → DH1 乾投①(OG 降一半)</b></td><td>OG 降一半(~1.037)投 <b>DH1 56g(Galaxy 28 + Citra 28,濾袋)</b>:CO₂ 沖桶 30s → 倒酒花 → 補 CO₂ 10s 密封,升溫 20°C。<b>卡活躍發酵期做生物轉化</b>。<b>只泡 3-5 天就撈出,別泡到發酵完(#0007 過苦教訓);Pomona 快,通常 Day 1-2 就到</b></td></tr>
+  <tr><td>Day 5-7</td><td><b>撈出 DH1 濾袋</b></td><td>20°C 維持。DH1 泡滿 <b>3-5 天就撈出</b>(別泡到發酵完)。發酵 + hop creep 同步進行</td></tr>
+  <tr><td>Day 10</td><td>D-rest 開始</td><td>升溫到 22°C 清除其他發酵副產物(雙乙醯已被 ALDC 預先阻斷)</td></tr>
+  <tr><td>Day 10-14</td><td>D-rest + hop creep 收尾</td><td>22°C 維持,每 2 天測比重。預期 FG 慢慢逼近 1.016-1.014</td></tr>
+  <tr><td><b style="color:#dc2626;">Day 14-16</b></td><td><b>綠燈確認</b></td><td>連兩次比重不動 + 強迫雙乙醯測試通過 → <b>先別轉桶,接 DH2</b></td></tr>
+  <tr><td><b style="color:#7c3aed;">Day 16-18</b></td><td><b>DH2 乾投②(發酵完成後・純香)</b></td><td><b>綠燈後才投 DH2 56g(Citra 28 + Mosaic 28,濾袋)</b>:CO₂ 沖桶 30s → 倒酒花 → 補 CO₂ 10s 密封。<b>18-20°C 泡 2-3 天</b>(不要更久,會萃粗糙冷側苦)。<b>此時發酵已停 → 零 CO₂ 沖刷 → 香氣全留住</b></td></tr>
+  <tr><td><b style="color:#7c3aed;">Day 18-19</b></td><td><b>⚠️ hop creep 再確認</b></td><td>DH2 帶進酵素可能再啃糊精 → <b>再測連兩次比重不動</b>才可轉桶。keg 不會炸瓶,但帶著未停的 creep 轉桶會過碳酸。<b>比重沒停就等,別急</b></td></tr>
+  <tr><td>Day 19-21</td><td>虹吸轉桶 + 冷藏</td><td><b class="updated">先把 L-抗壞血酸 0.3g + KMS 0.25g 溶水倒進 keg 底部 → CO₂ purge ×3</b> → 從發酵桶虹吸到已驅氧 keg(底部入酒、頂空最小、<b>離開 DH2 酒花</b>),降 2-4°C 開始強制碳酸</td></tr>
+  <tr><td>Day 21+</td><td>強制碳酸</td><td>10-12 PSI 靜置慢飽和 5-7 天,降 8-10 PSI 出酒。<b>⚠️ 趁鮮喝——DH2 的香氣就是拿來現在喝的,別放</b>。<b>最佳賞味期 2-3 週內</b></td></tr>
+</table>
+
+<h2 id="greenlight">✅ 綠燈確認 SOP(維持 v2)</h2>
+
+<div class="greenlight">
+<h4>必須同時滿足兩個條件才能虹吸轉桶</h4>
+
+<div class="criteria">
+<b>條件一:比重連續兩次間隔 2 天完全不動</b><br>
+<small>Orange Glow 高 OG 高 ABV 的 hop creep 收尾較慢,可能要等到 Day 16-18 才打平。</small>
+</div>
+
+<div class="criteria">
+<b>條件二:強迫雙乙醯測試通過</b><br>
+<small>加了 ALDC 之後這個測試應該幾乎都會過,但仍建議做一次確認。</small>
+</div>
+
+<h4 style="margin-top: 12px;">強迫雙乙醯測試方法</h4>
+<ol style="margin-left: 22px; font-size: 12px;">
+  <li>取 50ml 酒樣到耐熱玻璃瓶,密封</li>
+  <li>隔水加熱:小鍋裝水加熱到 60-65°C</li>
+  <li>樣本瓶放入水中浸泡 15-20 分鐘</li>
+  <li>取出後沖冷水冷卻到室溫</li>
+  <li>開瓶聞 → 跟未加熱的樣本對比</li>
+  <li><b>沒有奶油爆米花味 = 通過</b></li>
+</ol>
+</div>
+
+<h2 id="transfer">🚰 虹吸轉桶 SOP(維持 v2)</h2>
+
+<div class="checklist">
+<h4>🔧 轉桶前 1-2 小時:準備接收 Keg</h4>
+<ol>
+  <li>Keg 洗淨、消毒、組裝完成</li>
+  <li><b class="updated">秤好抗氧化劑:L-抗壞血酸 0.3g + KMS 0.25g(或半錠 Campden 壓碎)</b>,用<b>少量煮沸放涼的水</b>(約 20-30ml)溶開 → 倒進 keg 底部<span class="v22-tag">v2.5</span></li>
+  <li>接 CO₂ 灌滿到 10-15 PSI → 從 PRV 拉開排掉</li>
+  <li>重複「灌滿 → 排掉」<b>至少 3 次</b></li>
+  <li>最後一次灌滿後保留 5 PSI 低正壓備用</li>
+</ol>
+<p style="margin-top: 8px; font-size: 12px;"><b>為什麼先放藥再 purge:</b>藥劑躺在 keg 底部,酒從底部灌進來時<b>一進來就被保護</b>、還順便攪勻,不必事後開蓋(開蓋 = 進氧,本末倒置)。</p>
+</div>
+
+<div class="checklist">
+<h4>🍺 轉桶當天:執行順序</h4>
+<ol>
+  <li>發酵桶輕輕移到操作位置(<b>絕對不要搖晃</b>)</li>
+  <li>接收 keg 放在比發酵桶低的位置(<b class="updated">藥劑已在 keg 底部、已 purge</b>)</li>
+  <li>從 keg 液體口接管入酒 → <b>從底部入</b>,避免濺射</li>
+  <li>虹吸管取酒端插入發酵桶,<b>離桶底 2-3cm</b></li>
+  <li>用灌注球啟動 → 不要用嘴吸</li>
+  <li>中等流速(10L 大約 8-10 分鐘轉完)</li>
+  <li>看到沉澱層快被吸到 → <b>立刻停止</b></li>
+  <li><b class="updated">盡量裝滿、頂空最小</b>(頂空空氣 = 氧化來源)</li>
+  <li>拔起虹吸管,keg 立刻蓋緊 → 加壓 10-12 PSI → 立刻冷藏</li>
+</ol>
+</div>
+
+<div class="new-in-v22">
+<b>★ 抗氧化劑:VC + KMS(封裝端加,不在煮沸加)<span class="v22-tag">v2.5 新增</span></b>
+<table style="margin-top: 8px;">
+  <tr><th>藥劑</th><th>10L 用量</th><th>濃度</th><th>角色</th></tr>
+  <tr><td><b>L-抗壞血酸(維生素C)</b></td><td><b>0.3g</b></td><td>30 mg/L</td><td>抓溶氧</td></tr>
+  <tr><td><b>焦亞硫酸鉀 KMS</b><br><small>或半錠 Campden(壓碎)</small></td><td><b>0.25g</b></td><td>25 mg/L<br><small>≈14 ppm 總 SO₂</small></td><td><b>收掉 VC 產生的 H₂O₂</b> + 自身抗氧</td></tr>
+</table>
+<ul style="margin-left: 22px; margin-top: 8px;">
+  <li><b>加在轉桶時、進接收 keg,不要煮沸加</b>——煮沸會把它耗盡,等於白加。氧氣入侵的時刻是<b>封裝</b>,藥就要卡在那裡。</li>
+  <li><b>不會有硫味:</b>SO₂ 進酒後大半立刻跟醛/酮結合成<b>無味的結合態</b>,只有游離態才有火柴味。14 ppm 總 SO₂ 遠低於感知門檻(~20-25 ppm 游離),而且 <b>Ale 酵母本來就自產 5-20 ppm SO₂</b>。<b>別超過 KMS 0.5g / 10L</b>。</li>
+  <li><b>⚠️ Campden 各廠劑量不同</b>(有的是鈉版、克數也不一),<b>依包裝標示重算</b>,別照抄。要<b>壓碎 + 先溶解</b>,別整錠丟。</li>
+  <li><b>⚠️ 走瓶內二發時要小心:</b>亞硫酸會稍微壓制酵母,瓶內二發打氣會變慢。<b>本配方走強制碳酸,完全無影響。</b></li>
+  <li><b>完整說明 → <a href="../shared/antioxidant-packaging-sop.html">共通封裝端抗氧化 SOP</a></b>(全酒譜通用,含 6L/10L 劑量表、採購指南)</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<b>⚠️ 藥劑是保險,流程才是主力(80/20)</b><br>
+抗氧化劑只能<b>跟氧氣搶反應</b>,不是把氧氣關在門外——亞硫酸跟氧的反應偏慢,同時氧氣也在直接啃酒花香氣。<b>真正的勝負手是「一開始就別讓氧進來」:keg 三次 CO₂ purge、底部入酒不濺、頂空最小、趁鮮喝。</b>流程沒做好,加再多 VC/KMS 也救不回。
+</div>
+
+<div class="warning-box">
+<b>⚠️ DDH 最佳賞味期 2-3 週</b><br>
+DDH NEIPA 比一般 NEIPA 氧化更敏感(dry hop 量大、酒花精油豐富),加上虹吸轉桶溶氧比 closed transfer 高。<b>10L 一桶兩三週要喝完</b>,別超過 3 週。
+</div>
+
+<h2>🌾 完整釀造步驟</h2>
+
+<div class="step-row"><div class="step-num new">1</div><div class="step-content"><span class="step-title">Day -2 至 -1:Starter(備選——本批走純氧直投,免做)</span> <b>標準作法 = 1 包直投 + 投酵母前高壓純氧 60-90s(見步驟 9),不需 starter。</b>想多一層保險才養:2L 水煮沸+200g DME→冷卻 20°C→倒進 4-5L 容器→投 1 包→鋁箔蓋口→常溫 24-36h;或乾脆直接 rehydrate 後丟 2 包。</div></div>
+
+<div class="step-row"><div class="step-num">2</div><div class="step-content"><span class="step-title">糖化水準備:</span> 11L 水加熱至 73°C,加<b class="updated">氯化鈣 1.5g</b>(氯化物主導 juicy)、石膏 0-0.5g(NEIPA 少量或不加,硫酸鹽會放大苦)。<b>pH 不在這步調——鹽下水、投麥芽後才測糖化醪(見步驟 3)</b></div></div>
+
+<div class="info-box">
+<b>💧 水質 + pH(v2.6 關鍵升級:雙向調整):</b>本水源=淡水區自來水 + 櫻花 F0271+F0231(不軟化水),pH ~6.35 / KH 40 / GH 25 / 餘氯 0 → <b>軟水 + 低鹼</b>(緩衝弱、對酸鹼都敏感)。<br><br>
+<b class="modified">⚠️ 最重要的教訓(#0008 vs #0009):這支水的 mash pH「批次間會變」,不能預設方向!</b><br>
+・#0008 糖化醪 <b>4.76(太酸)</b> → 當時該加鹼<br>
+・#0009 洗槽後麥汁 <b>5.81(偏鹼)</b> → 該加酸<br>
+<b>方向相反 → 不量就賭錯。正確做法 = 量了才調、雙向都備:</b><br>
+① pH 計<b>每次開釀都校正</b>(換電池 + 4.01/7.00 標準液)—— #0008/#0009 都栽在沒校正<br>
+② 投麥芽後 10-15min 取小樣、<b>冷卻到 20-25°C 再量</b>(熱讀偏低 ~0.3)<br>
+③ 目標糖化醪 <b>5.2-5.4</b>:<b>低於 5.2 → 加小蘇打</b>(先 1g、攪勻、再量、上限 3g);<b>高於 5.4 → 加乳酸/磷酸</b>(少量、慢滴、再量)<br>
+④ <b>小蘇打 + 乳酸/磷酸「兩樣都要備」在手邊,別賭方向</b><br>
+⑤ 鹽走氯化物主導:<b>CaCl₂ ~1.5g、石膏 0-0.5g</b>(NEIPA 圓潤;硫酸鹽放大苦,少量或不加);餘氯 0 → 釀造水免 Campden。<b>換水源務必重量 KH/GH。</b></div>
+
+<div class="step-row"><div class="step-num new">3</div><div class="step-content"><span class="step-title">糖化:</span> <b class="modified">67°C 60 分鐘</b>(留一點殘糖與酒體墊住酒花、給果汁感;全乾會讓苦味裸露。預期 FG 1.014-1.016)。每 15 分鐘攪拌一次。<b>投麥芽後 10-15min 量糖化醪 pH → 雙向調整(見上方水質)</b>。
+<div class="danger-box" style="margin:6px 0;font-size:12px;">
+<b>⚠️ pH 是這支酒最關鍵、也最容易做反的一步(#0008 就做反了)</b>
+<ol style="margin:4px 0 0 18px;">
+  <li>開釀前 pH 計<b>換 SR44 電池</b>,並用 <b>pH 4.01 / 7.00 標準液校正</b>(#0008 讀到 4.76,不排除有一部分是儀器誤差)</li>
+  <li>投麥芽攪勻後 10-15 分鐘取小樣,<b>冷卻到 20-25°C 再量</b>(熱的會讀低約 0.3)</li>
+  <li><b>目標 5.2-5.4。低於 5.2 → 加小蘇打(NaHCO₃):先下 1g → 攪勻 → 再測,不夠再補 1g</b>(上限約 <b>3g</b>,再多鈉會有鹹味;仍不足改用少量熟石灰 Ca(OH)₂,不帶鈉)</li>
+  <li><b style="color:#dc2626;">❌ 絕對不要加磷酸/乳酸。</b>這支水又軟又低鹼,加酸只會把 pH 推得更低 —— #0008 就是這樣掉到 4.76</li>
+</ol>
+<b>成酒目標 pH 4.2-4.5</b>(#0008 是 3.83 → 太酸、苦味尖銳咬喉)。
+</div></div></div>
+
+<div class="step-row"><div class="step-num">4</div><div class="step-content"><span class="step-title">升溫滅酵 + 過濾:</span> 升溫 76°C 維持 10 分鐘 → 過濾收集第一道麥汁</div></div>
+
+<div class="step-row"><div class="step-num">5</div><div class="step-content"><span class="step-title">洗槽:</span> 加 5L 76-78°C 熱水洗槽,目標收集 11-12L</div></div>
+
+<div class="step-row"><div class="step-num v22">6</div><div class="step-content"><span class="step-title">煮沸(滾沸時間共 60 分鐘,中火、不蓋鍋蓋):</span>
+<div class="info-box" style="margin:4px 0;font-size:11.5px;">下面「第 X 分」都指<b>實際滾沸時間</b>。v2.5 走清爽、<b>煮沸不加糖</b>(不加 DME/Maltodextrin),流程更單純;苦花煮完要撈出。</div>
+<ul style="margin:5px 0 0 20px; font-size:12.5px;">
+  <li><b style="color:#dc2626;">0 分(一下鍋、開始計時):</b>Magnum 6g 苦花裝酒花濾袋丟入,<b>煮滿全程 60 分＝主苦</b>(濾袋別塞緊、留空間漂浮);<b>關火後把苦花濾袋撈出</b>,別留在鍋裡。#0007 就是忘加又沒撈 → 過苦。最易漏,先秤好備旁、設計時器提醒。</li>
+  <li><b>45 分(剩最後 15 分):</b>把<b class="updated">冷卻盤管</b>整支泡入一起煮,滾到關火＝順便消毒約 15 分(關火後直接拿來冷卻,免另泡消毒液)。<b>v2.5 不加 DME/Maltodextrin</b>(走清爽);萬一 OG 太低才用救援 DME(見下)。</li>
+  <li><b>55 分:</b>只有「買不到 Fermaid-O、改用備選 Fermaid-K 3g」時才在此加;主用 Fermaid-O <b>不在煮沸加</b>(改投酵母時撒,見步驟 9)。</li>
+  <li><b>60 分(關火):</b><b class="updated">取小樣快速冷卻後測 OG</b>(折射儀 1-2 滴最快;比重計要降到 20°C 或溫度校正,熱麥汁直讀會偏低)。目標 <b>~1.064-1.068</b>(4.5kg 穀物)。<b class="modified">★ 更好:洗槽後「煮前就量 OG + 秤鍋算目標體積、煮到那升數關火」(見 brew-sheet 煮前 OG 檢查點),別盲煮暴衝(#0009 教訓)。</b>偏高用下方救援水稀釋。</li>
+</ul>
+<div style="margin-top:5px;font-size:12px;color:#555;">關火後接著 → <b>步驟 7:降到 78°C 投旋渦香花</b>。</div></div></div>
+
+<div class="info-box">
+<b>💡 為什麼第 45 分要把盤管丟進去煮:</b>盤管是冷卻時唯一會碰到麥汁的器具,跟著滾煮到關火(約 15 分)= 徹底消毒,關火後直接拿來冷卻,免再另泡消毒液。DDH NEIPA 對污染與氧化都敏感,這步省事又降風險。
+</div>
+
+<div class="warning-box">
+<b>OG 校準(目標 1.064-1.068):</b> 太高(備 1L 冷開水):1.070-1.074 加 0.3-0.5L / 1.074+ 加 0.5-1L。太低(&lt;1.058):可接受或煮久一點濃縮。<br><small>※ 判讀前務必先把樣本冷卻(折射儀最方便),別在沸燙時直接讀比重計。</small>
+</div>
+
+<div class="step-row"><div class="step-num v22">7</div><div class="step-content"><span class="step-title">Whirlpool 浸泡(v2.5 必做・疊香關鍵):</span> 關火後降到 <b class="updated">78°C(區間 71-82:偏低更柔香、偏高多一點萃取)</b>,投入<b>裝濾袋</b>的香花 <b class="updated">Citra 28g + Galaxy 28g + Mosaic 28g(共 84g)</b>,蓋鍋蓋靜置 <b>20-30 分鐘</b>,<b>結束後把濾袋撈出</b>,別留在鍋裡繼續泡。<b>Whirlpool 給的是「口中的風味 / 果汁感」,取代不了 dry hop 的「鼻子的香」——兩個都要做滿</b></div></div>
+
+<div class="step-row"><div class="step-num">8</div><div class="step-content"><span class="step-title">冷卻 + Whirlpool 沉澱:</span> Whirlpool 後通冷水冷卻,<b class="updated">邊冷卻邊輕輕移動盤管 / 攪拌</b>加速降溫(30 分鐘內到 18-20°C);抽出盤管 → 長勺攪出漩渦 → 靜置 10-20 分鐘讓 trub 沉到鍋底中央(詳見下方「冷卻 + Whirlpool SOP」)</div></div>
+
+<div class="step-row"><div class="step-num v22">9</div><div class="step-content"><span class="step-title">充氧 + 投酵母 + 加 ALDC + Fermaid-O:</span> <b class="updated">從鍋邊虹吸清澈麥汁入發酵桶(留下中央 trub 沉澱)</b>,<b class="updated">高壓純氧充氧 60-90s</b>(純氧溶氧遠高於搖桶充空氣,讓酵母長到足菌數——高 OG 尤其關鍵,本配方靠它讓 1 包 Pomona 免 starter 也夠)。18-19°C 投酵母。<b>同時加入 0.2-0.3ml Maturex L(ALDC,胰島素注射器)＋直接撒入 Fermaid-O 2.5g(不必煮;另在投後約 24h 補第二劑 2.5g,見步驟 10)</b>。輕微搖晃讓均勻分布。裝水封</div></div>
+
+<div class="step-row"><div class="step-num">10</div><div class="step-content"><span class="step-title">補第二劑 Fermaid-O + 主發酵(Day 1-2):</span> <b>投後約 24h 補 Fermaid-O 2.5g</b>(快開快蓋、輕搖均勻,別讓後段進氧)。19°C 靜置。1 包 Pomona + 純氧直投的遲滯期約 12-24h(比 starter 略長,屬正常),之後快速啟動</div></div>
+
+<div class="step-row"><div class="step-num new">11</div><div class="step-content"><span class="step-title">比重檢查 → DH1 乾投①時機(看比重,Pomona 約 Day 1-2):</span> <b class="modified">目標「OG 降一半」時投</b>(OG 1.064 → 約 <b>1.037</b>;看比重不看天數,卡在活躍發酵期做 biotransformation)。<b>⚠️ Pomona 發酵極快,通常 Day 1-2 就到;#0008 拖到第 3 天(已 1.015)才投 → biotransformation 打折。從 Day 1(投酵母約 24h、泡沫起來)就開始量。</b>還在半程以上 → 隔半天再測;已接近終點(&lt;1.020)→ 馬上投(生物轉化雖打折,也比不投好)</div></div>
+
+<div class="step-row"><div class="step-num new">12</div><div class="step-content"><span class="step-title">DH1 乾投①(活躍發酵期・生物轉化・限時 3-5 天):</span> CO₂ 沖桶 30 秒 → 10 秒內倒入 <b class="modified">Galaxy 28g + Citra 28g(共 56g,裝濾袋方便撈)</b> → 補 CO₂ 10 秒密封,升溫到 20°C。<b>卡在活躍發酵期,讓 Pomona 一邊發酵一邊做生物轉化</b>(硫醇前驅物 → 桃/柑橘/熱帶香)。<b class="modified">⚠️ 只泡 3-5 天就把濾袋撈出</b>——泡到發酵完(#0007)會萃出粗糙的 humulinone/多酚冷側苦。<b>⚠️ 這段香氣會被發酵的 CO₂ 沖刷掉一部分,那是生物轉化的必要代價——鼻子的香交給 DH2(步驟 16)補回來</b></div></div>
+
+<div class="step-row"><div class="step-num">13</div><div class="step-content"><span class="step-title">撈出 DH1 + 發酵續行(Day 5-7):</span> DH1 泡滿 3-5 天<b>撈出濾袋</b>。20°C 維持。主發酵 + hop creep 同步進行</div></div>
+
+<div class="step-row"><div class="step-num new">14</div><div class="step-content"><span class="step-title">D-rest 升溫(Day 10):</span> 升到 22°C 維持。雙乙醯已被 ALDC 預先阻斷,D-rest 主要清其他副產物</div></div>
+
+<div class="step-row"><div class="step-num new">15</div><div class="step-content"><span class="step-title">綠燈確認(Day 14-16):</span> 22°C 維持,每 2 天測比重。連續兩次讀數不動 + 強迫雙乙醯測試通過 = 發酵真正完成。<b>⚠️ 先別轉桶,接 DH2</b></div></div>
+
+<div class="step-row"><div class="step-num new">16</div><div class="step-content"><span class="step-title">★ DH2 乾投②(發酵完成後・純香氣・泡 2-3 天):</span> <b>綠燈後才投。</b>降到 18-20°C → CO₂ 沖桶 30 秒 → 10 秒內倒入 <b class="modified">Citra 28g + Mosaic 28g(共 56g,裝濾袋)</b> → 補 CO₂ 10 秒密封。<b>泡 2-3 天,不要更久</b>(久泡會萃粗糙冷側苦)。<b>★ 此時發酵已停 → 沒有 CO₂ 把香氣沖走 → 這 56g 的香幾乎完整留在酒裡。這就是「鼻子的香」的來源</b></div></div>
+
+<div class="step-row"><div class="step-num new">17</div><div class="step-content"><span class="step-title">⚠️ hop creep 再確認(Day 18-19):</span> DH2 帶進酵素,可能再啃糊精讓比重續降。<b>必須再測到連兩次比重不動才可轉桶</b>。keg 不會像瓶子一樣爆炸,但帶著未停的 creep 轉桶會<b>過碳酸</b>。<b>比重沒停就等,別急著轉</b></div></div>
+
+<div class="step-row"><div class="step-num new">18</div><div class="step-content"><span class="step-title">虹吸轉桶 + 進 Keg(含抗氧化劑):</span> 按「虹吸轉桶 SOP」執行。<b class="updated">先把 L-抗壞血酸 0.3g + KMS 0.25g(或半錠壓碎 Campden)用 20-30ml 煮沸放涼的水溶開,倒進 keg 底部</b> → Keg 預驅氧 3 次 → 從底部入(不濺)→ <b class="updated">裝滿、頂空最小</b> → 轉完立刻加壓冷藏。<b>⚠️ VC 必須配 KMS,單用 VC 會催出 H₂O₂ 反而助氧化</b></div></div>
+
+<div class="step-row"><div class="step-num new">19</div><div class="step-content"><span class="step-title">低壓慢飽和強制碳酸:</span> Keg 降溫到 2-4°C,接 CO₂ 設 10-12 PSI 靜置 5-7 天。<b>禁止 30 PSI 猛搖速成法</b>。飽和後降到 8-10 PSI 維持出酒</div></div>
+
+<h2>🛡️ 全程氧化控制</h2>
+
+<table>
+  <tr><th width="22%">階段</th><th>操作重點</th></tr>
+  <tr><td>投酵母前</td><td><b>高壓純氧充氧 60-90s</b>(純氧溶氧遠高於搖桶,高 OG 養足菌數的關鍵)</td></tr>
+  <tr><td>投酵母當下</td><td>同時加入 0.2-0.3ml ALDC</td></tr>
+  <tr><td>發酵中</td><td>密封發酵桶,絕不開蓋</td></tr>
+  <tr><td>雙段 Dry Hop</td><td>DH1/DH2 都是:CO₂ 沖桶 30s → 10s 內倒酒花 → 補 CO₂ 10s</td></tr>
+  <tr><td>比重取樣</td><td>從取樣閥取;動作快,取完立刻蓋回</td></tr>
+  <tr><td>虹吸轉桶</td><td>接收 keg 預驅氧 3 次 + 從底部入流 + 頂空最小 + 立刻加壓冷藏</td></tr>
+  <tr><td class="updated"><b>抗氧化劑(v2.5 新增)</b></td><td class="updated"><b>轉桶時 keg 底部先放 L-抗壞血酸 0.3g + KMS 0.25g(必須成對,VC 不可單用)</b></td></tr>
+  <tr><td>Keg 出酒</td><td>維持 CO₂ 正壓 8-10 PSI,2-3 週內喝完</td></tr>
+</table>
+
+<div class="no-print">
+<h2>📊 v2.4 → v2.5 對照</h2>
+
+<table>
+  <tr>
+    <th width="25%">項目</th>
+    <th width="35%">v2.4(厚實 DDH)</th>
+    <th width="40%">v2.6(統整版)</th>
+  </tr>
+  <tr><td>穀物</td><td>GP2 / Mun1 / Wheat1 / 燕麥0.8 = 4.8kg + DME 180g</td><td class="updated"><b>GP2.5 / Munich1.0</b> / Wheat1.0 = 4.5kg・無 DME</td></tr>
+  <tr><td>小麥 / 燕麥</td><td>小麥 1kg + 燕麥 0.8kg(絲滑厚)</td><td class="updated">小麥 1.0kg(~22% 撐霧)+ <b>無燕麥</b>(控 ~7% 酒體)</td></tr>
+  <tr><td>糖化溫</td><td>67°C(增酒體)</td><td class="updated">67°C(維持——#0008 太乾太苦,需殘糖墊住酒花)</td></tr>
+  <tr><td>苦花</td><td>Magnum 6g @60min 濾袋</td><td class="updated">同,+ 準時加、煮完撈出(修 #0007 過苦)</td></tr>
+  <tr><td>Whirlpool</td><td>75°C・56g(Citra+Amarillo)</td><td class="updated">78°C(71-82)・84g(+Galaxy)・濾袋撈出・必做</td></tr>
+  <tr><td><b>Dry Hop</b></td><td>Day 1-2・112g・<b>單段</b>・泡到轉桶</td><td class="updated"><b>雙段共 112g</b>:DH1 56g(OG降一半・3-5天撈出)+ <b>DH2 56g(綠燈後投・2-3天・零 CO₂ 沖刷)</b></td></tr>
+  <tr><td><b>酒花總量</b></td><td>174g</td><td class="updated"><b>202g</b>(Citra 84 / Galaxy 56 / <b>Mosaic 56</b> / Magnum 6)</td></tr>
+  <tr><td>水質 / pH</td><td>單向猜(叫你滴磷酸)</td><td class="updated"><b>雙向:量了才調</b>——低加小蘇打、高加乳酸/磷酸,兩樣都備;每次校正 pH 計(#0008 酸/#0009 鹼)</td></tr>
+  <tr><td>OG / FG / ABV / IBU</td><td>1.075-1.078 / 1.015-1.017 / 7.7-8.1% / 25-30</td><td class="updated">1.064-1.068 / 1.014-1.016 / <b>~7.0-7.3%</b> / ~25-30(EBC 13-15 橘金)</td></tr>
+  <tr><td>口感 / 苦感</td><td>柔順綿密、圓潤</td><td class="updated">清爽乾淨、苦低而圓、香氣前衝</td></tr>
+  <tr><td class="updated"><b>抗氧化劑</b></td><td>無</td><td class="updated"><b>轉桶時加 VC 0.3g + KMS 0.25g(封裝端)</b></td></tr>
+  <tr><td>沿用不變</td><td colspan="2" style="text-align:center;">Pomona 1包+純氧直投・ALDC・Fermaid-O・低氧虹吸轉桶・綠燈確認・趁鮮喝</td></tr>
+</table>
+
+<h2>🎯 風味預期(v2.5)</h2>
+
+<table>
+  <tr><th>視覺</th><th>嗅覺</th><th>味覺</th><th>口感</th></tr>
+  <tr>
+    <td><span class="highlight">橘金色</span>(Munich)+ 濃霧 haze(小麥+乾投)</td>
+    <td>百香果、芒果、柳橙、桃(Whirlpool + Dry hop 疊香、Pomona 生物轉化)</td>
+    <td>熱帶水果汁、柑橘酸甜、<b>苦感低而乾淨</b>、麥味淡</td>
+    <td>清爽、俐落、氣泡細緻,不絲滑不厚重</td>
+  </tr>
+</table>
+
+<div class="new-in-v22">
+<b>★ v2.5 改動對風味的影響</b><br>
+v2.6 把 Orange Glow <b>拉回主題(橘金 juicy)並統整所有優勢</b>。<b>回主題:</b>基麥回 Golden Promise(英系綿密)、<b>Munich 1.0kg 回歸橘金 EBC 13-15</b>、OG ~1.066 / ABV ~7%(比 v2.4 少一點灼熱、比 #0009 有體)。糖化 67°C 留殘糖墊酒花。<b>統整優勢:</b><b>雙段乾投</b>——DH1 卡活躍發酵期做 Pomona 生物轉化,<b>DH2 綠燈後投(發酵已停 → 零 CO₂ 沖刷 → 鼻子香完整留住)</b>,修 #0007/#0008「不夠香」;<b>pH 雙向調整</b>(#0008 酸 / #0009 鹼 → 量了才調、小蘇打+酸兩樣都備);<b>煮前 OG 檢查 + 秤鍋控體積</b>(防 #0009 盲煮暴衝);<b>苦味從源頭治不砍酒花</b>(pH/趁鮮,IBU 25-30);Whirlpool 84g 疊口中果汁感;VC+KMS 抗氧化;Pomona/純氧/ALDC/低氧轉桶/綠燈/趁鮮。霧度靠小麥 1.0kg(~22%)+ 乾投 + Pomona 低絮凝。完整技法見 <a href="../shared/signature-process.html">獨門製程</a>。微調:想更濃霧 → 加燕麥 0.5kg(會帶絲滑);想更烈 → 加穀物拉 OG;想更苦 → whirlpool 往 82°C 或苦花 8-10g;想更香 → DH2 加到 84g;想顏色更深 → Munich 1.2-1.5kg。
+</div>
+</div>
+
+<h2>📋 本批釀造記錄單(單批詳細條件)</h2>
+
+<div class="info-box">
+從釀造當天起,逐項把<b>實測值</b>填進右欄,對照中間的 SOP 目標。事後檢討哪個環節偏離、怎麼影響成品。建議每批印一張或複製一份。
+</div>
+
+<div class="log-table">
+<table>
+  <tr><th width="34%">釀造日(Day 0)</th><th width="33%">SOP 目標</th><th width="33%">本批實測</th></tr>
+  <tr><td>釀造日期</td><td>—</td><td></td></tr>
+  <tr><td>Starter 狀態(泡沫/酵母床/氣味)</td><td>4-5L 容器,養成功</td><td></td></tr>
+  <tr><td>糖化水溫</td><td>73°C</td><td></td></tr>
+  <tr><td>糖化溫度</td><td>67°C / 60min</td><td></td></tr>
+  <tr><td>糖化 pH</td><td>5.2-5.4</td><td></td></tr>
+  <tr><td>洗槽水量</td><td>5L / 76-78°C</td><td></td></tr>
+  <tr><td>關火後麥汁量</td><td>~11-12L</td><td></td></tr>
+  <tr><td>OG 實測 / 是否動用救援水</td><td>~1.064-1.068</td><td></td></tr>
+  <tr><td>旋渦溫度 / 時間</td><td>78°C / 20-30min</td><td></td></tr>
+  <tr><td>投酵母溫度</td><td>18-19°C</td><td></td></tr>
+  <tr><td>純氧充氧時間</td><td>60-90s</td><td></td></tr>
+  <tr><td>營養劑(Fermaid-O / K 用量)</td><td>Fermaid-O 5g(投酵母 2.5 + 24h 2.5)</td><td></td></tr>
+  <tr><td>ALDC 用量</td><td>0.2-0.3ml</td><td></td></tr>
+</table>
+</div>
+
+<div class="log-table">
+<table>
+  <tr><th width="34%">發酵期</th><th width="33%">SOP 目標</th><th width="33%">本批實測</th></tr>
+  <tr><td>Day 1 比重</td><td>~1.045(Pomona 快)</td><td></td></tr>
+  <tr><td>Day 2 比重</td><td>~1.035 或更低</td><td></td></tr>
+  <tr><td>DH1 投放日 / 當時比重</td><td>Day 1-2 / OG 降一半 ~1.037</td><td></td></tr>
+  <tr><td><b>DH1 撈出日(泡幾天)</b></td><td>3-5 天</td><td></td></tr>
+  <tr><td><b>DH2 投放日(綠燈後)</b></td><td>Day 16-18</td><td></td></tr>
+  <tr><td><b>DH2 後 hop creep 是否再降</b></td><td>需連兩次不動才轉桶</td><td></td></tr>
+  <tr><td>主發酵溫度</td><td>19-20°C</td><td></td></tr>
+  <tr><td>D-rest 起始日 / 溫度</td><td>Day 10 / 22°C</td><td></td></tr>
+  <tr><td>穩定比重 #1(日期 / 讀數)</td><td>—</td><td></td></tr>
+  <tr><td>穩定比重 #2(日期 / 讀數)</td><td>間隔 2 天不動</td><td></td></tr>
+  <tr><td>強迫雙乙醯測試(日期 / 結果)</td><td>無奶油味</td><td></td></tr>
+  <tr><td>最終 FG / 達成日</td><td>1.015-1.017</td><td></td></tr>
+</table>
+</div>
+
+<div class="log-table">
+<table>
+  <tr><th width="34%">封裝 / 碳酸 / 品飲</th><th width="33%">SOP 目標</th><th width="33%">本批實測</th></tr>
+  <tr><td>虹吸轉桶日</td><td>Day 18-20</td><td></td></tr>
+  <tr><td><b class="updated">抗氧化劑用量(VC / KMS)</b></td><td>0.3g / 0.25g</td><td></td></tr>
+  <tr><td><b class="updated">Keg CO₂ purge 次數</b></td><td>3 次</td><td></td></tr>
+  <tr><td>Keg 碳酸壓力 / 溫度</td><td>10-12 PSI / 2-4°C</td><td></td></tr>
+  <tr><td>碳酸起始日</td><td>—</td><td></td></tr>
+  <tr><td>初次出酒日</td><td>—</td><td></td></tr>
+  <tr><td>賞味期實測(氧化味第幾週)</td><td>2-3 週</td><td></td></tr>
+  <tr><td>整體備註</td><td>—</td><td></td></tr>
+</table>
+</div>
+
+<h2>📝 跨批次追蹤摘要表</h2>
+
+<table style="background:#fafafa;">
+  <tr><th>批次</th><th>Starter 狀態</th><th>OG</th><th>Day 3 比重</th><th>Dry Hop 投放日</th><th>最終 FG</th><th>ALDC 用量</th><th>雙乙醯測試</th><th>賞味期實測</th></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+</table>
+
+<div class="no-print">
+<h2>🔮 未來升級路徑(可選)</h2>
+
+<table>
+  <tr><th width="35%">想改善什麼</th><th>需要投資</th></tr>
+  <tr><td>果香酯類再放大</td><td>發酵頭 3 天嚴格控溫 ≤20°C 促酯(Fermaid-O 分兩次已列入標準 SOP)</td></tr>
+  <tr><td>Starter 繁殖速度更快</td><td>磁力攪拌器(淘寶 1500-2500 元)+ Teflon 攪拌子</td></tr>
+  <tr><td>不想做 Starter</td><td>OG 降到 1.068-1.070(改 Session NEIPA,1 包就夠)</td></tr>
+  <tr><td>香氣再強烈一點</td><td>把 Galaxy 換成 Cryo 顆粒(同克數香氣強 1.3-1.5 倍)</td></tr>
+  <tr><td>瓶間/桶間更乾淨</td><td>不鏽鋼 dry hop 濾筒</td></tr>
+  <tr><td>真正的 closed transfer</td><td>壓力發酵桶(Fermzilla 等)</td></tr>
+  <tr><td>避免測比重浪費酒</td><td>折射儀(便宜)或懸浮式電子比重計</td></tr>
+</table>
+</div>
+
+<div class="footer">
+  Orange Glow v2.6 · 統整版 — 回歸橘金 juicy(GP + Munich)· 雙段乾投 · pH 雙向 · 煮前 OG 檢查 · 苦味源頭治 · 低氧全套 · 見 shared/獨門製程
+</div>
+
+</div>
+
+</body>
+</html>

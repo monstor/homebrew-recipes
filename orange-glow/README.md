@@ -6,20 +6,22 @@
 
 | 項目 | 規格 |
 |---|---|
-| **目前最新版本** | [v2.5](./v2.5-clean-neipa.html)(清爽版) |
-| 風格 | Clean NEIPA(清爽版;v2.4 為厚實 DDH) |
+| **目前最新版本** | [v2.6](./v2.6-consolidated.html)(統整版・回歸橘金) |
+| 風格 | DDH NEIPA(橘金 juicy;統整所有優勢) |
 | 容量 | 10 L |
-| OG | 1.062-1.068 |
+| OG | 1.064-1.068 |
 | FG | 1.014-1.016 |
-| ABV | ~6.5-7.0% |
+| ABV | ~7.0-7.3% |
 | IBU | ~25-30 |
-| EBC | 5-7(淺金,無 Munich) |
-| 基麥 | **Extra Pale Ale Malt 3.0kg**(+ 小麥 1.0 + 燕麥 0.5,**無 Munich**)= 4.5kg |
+| EBC | 13-15(橘金) |
+| 基麥 | **Golden Promise 2.5kg**(+ Munich 1.0 + 小麥 1.0,**橘金回歸**)= 4.5kg |
 | 酒花 | **202g** · Magnum 6(苦)+ Whirlpool 84 + **雙段乾投 112**(DH1 56 + DH2 56) |
 | 酵母 | LalBrew Pomona 1 包 → 高壓純氧直投(免 starter;保險可 2 包 / 養 2L starter) |
 | 可發酵糖 | 無(不加 DME/Maltodextrin) |
 | 添加物 | Fermaid-O 5g（投酵母 2.5g + 投後 24h 2.5g;備選 Fermaid-K 3g 煮沸末）+ Maturex L (ALDC) 0.2-0.3ml |
 | 抗氧化劑 | **轉桶時進 keg:L-抗壞血酸 0.3g + 焦亞硫酸鉀 KMS 0.25g（必須成對，VC 不可單用）** |
+| pH | **雙向調整**（水批次間會變:#0008 酸/#0009 鹼 → 低加小蘇打、高加酸,兩樣都備) |
+| 獨門製程 | [shared/signature-process.html](../shared/signature-process.html)（跨酒譜通用) |
 
 ## 🍻 版本歷史
 
@@ -113,7 +115,19 @@
 - **數據**:OG 1.075-1.078、FG 1.015-1.017、ABV 7.7-8.1%、EBC 14-16(GP 略深)
 - 微調方向:想更厚更綿密/泡沫更持久 → 燕麥加回 1kg;想更乾淨的酒花清晰度 → GP 與 Extra Pale 各半
 
-### v2.5 - Clean NEIPA([檔案](./v2.5-clean-neipa.html)) ★ 當前版本
+### v2.6 - 統整版・回歸橘金([檔案](./v2.6-consolidated.html)) ★ 當前版本
+**核心:把 #0009 意外飄移的淺金 5.8% 拉回「橘金 juicy」主題 + 統整這一路所有優勢**
+
+- **回主題**:基麥回 Golden Promise(英系綿密)、**Munich 1.0kg 回歸橘金 EBC 13-15**、OG 回到 ~1.066 / ABV ~7%(比 v2.4 少灼熱、比 #0009 有體)。GP 2.5 / Munich 1.0 / 小麥 1.0 = 4.5kg
+- **統整優勢**(見 [獨門製程](../shared/signature-process.html)):
+  - **雙段乾投**(DH1 生轉化 + DH2 綠燈後純香、零 CO₂ 沖刷)
+  - **pH 雙向調整** ★#0009 新教訓——水批次間會變(#0008 酸 4.76 / #0009 鹼 5.81),量了才調、小蘇打+酸兩樣都備、pH 計每次校正
+  - **煮前 OG 檢查 + 秤鍋控體積** ★#0009 新教訓——防盲煮暴衝(#0009 煮過頭 OG 衝 1.11)
+  - **苦味從源頭治不砍酒花**(pH/趁鮮,IBU 25-30)、Whirlpool 疊口中果汁感、VC+KMS 抗氧化、Pomona/純氧/ALDC/低氧轉桶/綠燈/趁鮮
+- **數據**:OG 1.064-1.068 / FG 1.014-1.016 / ABV ~7.0-7.3% / IBU 25-30 / EBC 13-15、酒花 202g(Citra84/Galaxy56/Mosaic56/Magnum6)
+- 微調:想更濃霧 → 加燕麥 0.5kg;想更烈 → 加穀物;想顏色更深 → Munich 1.2-1.5kg;想更香 → DH2 加到 84g
+
+### v2.5 - Clean NEIPA([檔案](./v2.5-clean-neipa.html))(#0009 首釀,意外變淺金 5.8%)
 **核心:清爽版 NEIPA + 全面修正 #0007 過苦**
 
 從 v2.4「高 OG 厚實 DDH」轉向**乾淨清爽而且夠香**:苦味靠**流程**控(不靠砍酒花),香氣靠 **Whirlpool(口中果汁感)+ 雙段 Dry hop(鼻子的香)**疊出來。

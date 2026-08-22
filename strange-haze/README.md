@@ -43,7 +43,8 @@
 - 穀物 5kg:Extra Pale 3kg + Château Wheat Blanc 1kg + 燕麥 1kg
 - 煮沸加:Maltodextrin 150g + 乳糖 20g
 - 酒花(整包 28g):Magnum 6g + Citra 56g + Galaxy 56g + Mosaic 28g（**Mosaic 賣完 → 改 Galaxy 或 El Dorado 28g;藍莓味來自果泥,乾投只要熱帶 juicy**)
-- 藍莓 600g(淡雅)+ 香草莢 1 根
+- 藍莓 **800g**(冷凍打泥、無糖、70-75°C 殺菌、粗網濾袋;藍莓味弱,600g 只隱約)+ 香草莢 1 根(**獨立小袋**,Day 3 起嚐味、5-7 天足即撈)
+- 顏色預期:紫紅/粉紫濃霧(酒 pH 4.3 花青素偏紅紫),想貼星雲深紫 → 1000g 或混少量黑醋栗/蝶豆花
 
 ## 📝 實戰追蹤
 

@@ -7,16 +7,16 @@
 | 項目 | 規格 |
 |---|---|
 | **目前最新版本** | [v2.6](./v2.6-consolidated.html)(統整版・回歸橘金) |
-| 風格 | DDH NEIPA(橘金 juicy;統整所有優勢) |
+| 風格 | DDH NEIPA(橘色 juicy;Pomona+Verdant 混投 × Hoppy Mix 酒花) |
 | 容量 | 10 L |
 | OG | 1.064-1.068 |
-| FG | 1.014-1.016 |
-| ABV | ~7.0-7.3% |
+| FG | 1.012-1.015 |
+| ABV | ~7.0-7.4% |
 | IBU | ~25-30 |
-| EBC | 13-15(橘金) |
-| 基麥 | **Golden Promise 2.5kg**(+ Munich 1.0 + 小麥 1.0,**橘金回歸**)= 4.5kg |
-| 酒花 | **202g** · Magnum 6(苦)+ Whirlpool 84 + **雙段乾投 112**(DH1 56 + DH2 56) |
-| 酵母 | LalBrew Pomona 1 包 → 高壓純氧直投(免 starter;保險可 2 包 / 養 2L starter) |
+| EBC | 15-17(橘) |
+| 基麥 | **Golden Promise 2.3kg**(+ Munich **1.2** 偏橘 + 小麥 1.0)= 4.5kg |
+| 酒花 | **202g・Hoppy Mix 陣容**:Strata 56 / Mosaic 56 / Nelson 28 / Peacharine 28 / The Bruce 28 / Magnum 6 · Whirlpool 84 + DH1 56 + DH2 56 |
+| 酵母 | **混投 Pomona 1 包 + Verdant 1 包** → 高壓純氧直投(桃+杏桃雙果香;Pomona 主導→DH1 從 Day 1 量) |
 | 可發酵糖 | 無(不加 DME/Maltodextrin) |
 | 添加物 | Fermaid-O 5g（投酵母 2.5g + 投後 24h 2.5g;備選 Fermaid-K 3g 煮沸末）+ Maturex L (ALDC) 0.2-0.3ml |
 | 抗氧化劑 | **轉桶時進 keg:L-抗壞血酸 0.3g + 焦亞硫酸鉀 KMS 0.25g（必須成對，VC 不可單用）** |
@@ -118,14 +118,16 @@
 ### v2.6 - 統整版・回歸橘金([檔案](./v2.6-consolidated.html)) ★ 當前版本
 **核心:把 #0009 意外飄移的淺金 5.8% 拉回「橘金 juicy」主題 + 統整這一路所有優勢**
 
-- **回主題**:基麥回 Golden Promise(英系綿密)、**Munich 1.0kg 回歸橘金 EBC 13-15**、OG 回到 ~1.066 / ABV ~7%(比 v2.4 少灼熱、比 #0009 有體)。GP 2.5 / Munich 1.0 / 小麥 1.0 = 4.5kg
+- **回主題**:基麥回 Golden Promise(英系綿密)、**Munich 1.2kg 偏橘 EBC 15-17**、OG 回到 ~1.066 / ABV ~7%(比 v2.4 少灼熱、比 #0009 有體)。GP 2.3 / Munich 1.2 / 小麥 1.0 = 4.5kg
+- **★ 雙酵母混投 Pomona + Verdant**(參考商業款哈啤米克斯 Hoppy Mix):Pomona 桃/熱帶+生物轉化、Verdant 杏桃/核果酯+留體;Pomona 主導 → FG 略低 1.012-1.015、**DH1 窗口 Day 1-3 從 Day 1 量**
+- **★ 酒花改 Hoppy Mix 陣容**:Whirlpool Strata+Mosaic+The Bruce / DH1 Nelson+Strata(硫醇高→生物轉化)/ DH2 Peacharine+Mosaic(白桃純香)。缺料:The Bruce→Citra、Peacharine→Nectaron/El Dorado、Nelson→Motueka/Galaxy、Strata→Galaxy+Citra
 - **統整優勢**(見 [獨門製程](../shared/signature-process.html)):
   - **雙段乾投**(DH1 生轉化 + DH2 綠燈後純香、零 CO₂ 沖刷)
   - **pH 雙向調整** ★#0009 新教訓——水批次間會變(#0008 酸 4.76 / #0009 鹼 5.81),量了才調、小蘇打+酸兩樣都備、pH 計每次校正
   - **煮前 OG 檢查 + 秤鍋控體積** ★#0009 新教訓——防盲煮暴衝(#0009 煮過頭 OG 衝 1.11)
   - **苦味從源頭治不砍酒花**(pH/趁鮮,IBU 25-30)、Whirlpool 疊口中果汁感、VC+KMS 抗氧化、Pomona/純氧/ALDC/低氧轉桶/綠燈/趁鮮
-- **數據**:OG 1.064-1.068 / FG 1.014-1.016 / ABV ~7.0-7.3% / IBU 25-30 / EBC 13-15、酒花 202g(Citra84/Galaxy56/Mosaic56/Magnum6)
-- 微調:想更濃霧 → 加燕麥 0.5kg;想更烈 → 加穀物;想顏色更深 → Munich 1.2-1.5kg;想更香 → DH2 加到 84g
+- **數據**:OG 1.064-1.068 / FG 1.012-1.015 / ABV ~7.0-7.4% / IBU 25-30 / EBC 15-17、酒花 202g(Strata56/Mosaic56/Nelson28/Peacharine28/TheBruce28/Magnum6)
+- 微調:想更濃霧 → 加燕麥 0.5kg;想更烈 → 加穀物;想顏色更深 → Munich 1.4-1.5kg;想更香 → DH2 加到 84g
 
 ### v2.5 - Clean NEIPA([檔案](./v2.5-clean-neipa.html))(#0009 首釀,意外變淺金 5.8%)
 **核心:清爽版 NEIPA + 全面修正 #0007 過苦**
@@ -144,8 +146,8 @@
 - **酒花處理(修 #0007 太苦)**:苦花 Magnum 6g 準時 60min 加、裝濾袋、**煮完撈出**(#0007 忘加→補煮一小時 + 沒撈是過苦主因);**Whirlpool** 78°C(71-82)香花 84g(濾袋)靜置 20-30min 後撈出;**dry hop 限時撈出**(#0007 泡到發酵完→冷側粗糙苦 humulinone/多酚)
   - **📌 更正:#0007 有確實做 Whirlpool**(早期曾誤判為「疑似漏做」)。加上 dry hop 也投滿 112g、酒花真空冷凍保存良好 → **香氣不足不是漏做步驟,是結構性問題** → 解法是 **DH2**,不是「補做 whirlpool」
 - **★ 雙段乾投(共 112g,修 #0007/#0008「不夠香」)**:
-  - **DH1 56g**(Galaxy 28 + Citra 28)—— 活躍發酵期投(OG 降一半 ~1.037,看比重不看天數),做 **Pomona 生物轉化**;泡 3-5 天撈出
-  - **DH2 56g**(Citra 28 + **Mosaic 28**)—— **綠燈確認後才投**,18-20°C 泡 2-3 天
+  - **DH1 56g**(Nelson 28 + Strata 28)—— 活躍發酵期投(OG 降一半 ~1.037,**混投 Pomona 主導→Day 1 起量**),做生物轉化;泡 3-5 天撈出
+  - **DH2 56g**(Peacharine 28 + Mosaic 28)—— **綠燈確認後才投**,18-20°C 泡 2-3 天
   - **為什麼要 DH2**:活躍發酵的 CO₂ 會把揮發性酒花香氣沖走(**CO₂ scrubbing**),這是 #0007/#0008 香氣不足的結構性原因。DH2 在發酵停止後投 → **零沖刷 → 「鼻子的香」完整留住**。這是頂級 NEIPA 廠的標準做法
   - **⚠️ DH2 後必須再確認連兩次比重不動才轉桶**(DH2 會帶來第二波 hop creep);前提是走 **KEG 強制碳酸**(keg 不會炸瓶)
 - **IBU 回到 ~25-30(不再壓到 ~20)**:#0007 熟成 3 週後**苦度自行收斂到「剛好」、燒喉感消失**,證明「過苦」大半是**新酒問題 + 流程失誤**,不是配方問題 → **降苦交給流程,不犧牲香氣**
@@ -160,7 +162,7 @@
   - 走**強制碳酸無影響**;若改瓶內二發要小心亞硫酸會壓制疲勞酵母
 - **沿用不變**:Pomona 1 包 + 純氧直投、ALDC、低氧虹吸轉桶、控溫 18-20°C、綠燈確認、趁鮮喝(碳酸完成後 1-2 週內)
 - **數據**:OG **1.062-1.068**(4.5kg 穀物,清爽區)、FG **1.014-1.016**、ABV **~6.5-7.0%**、IBU ~25-30(成酒 pH 拉回後**感知苦度明顯下降**)、EBC **5-7(淺金,無 Munich)**、酒花總量 **202g**(Citra 84 / Galaxy 56 / **Mosaic 56** / Magnum 6)
-- 微調:想更清爽/少絲滑 → 燕麥降到 0.3kg 或拿掉;想更濃霧 → 燕麥加到 0.8kg(同#0008,更絲滑);想更烈 → 加穀物拉 OG;想更苦 → whirlpool 往 82°C 或苦花加到 8-10g;**想更香 → DH2 加到 84g**;想顏色更深 → Munich 加到 1.2-1.5kg
+- 微調:想更清爽/少絲滑 → 燕麥降到 0.3kg 或拿掉;想更濃霧 → 燕麥加到 0.8kg(同#0008,更絲滑);想更烈 → 加穀物拉 OG;想更苦 → whirlpool 往 82°C 或苦花加到 8-10g;**想更香 → DH2 加到 84g**;想顏色更深 → Munich 加到 1.4-1.5kg
 
 ## 📝 實戰追蹤(尚未釀造)
 
@@ -179,14 +181,15 @@
   - KMS 也可用 **Campden 錠(10L 半錠、壓碎溶開)**；**各廠劑量不同，依包裝標示重算**
   - ⚠️ **VC 必須配 KMS，不可單用**——抗壞血酸抓氧會產生 H₂O₂，遇酒中微量鐵/銅走 Fenton 反應生成羥自由基，**比不加更糟**。KMS 負責收掉 H₂O₂
   - 需 **0.01g 精度電子秤**；沒有就用 Campden 錠
-- [ ] LalBrew Pomona 1 包(乾酵母;省 starter 則備 2 包)
+- [ ] **LalBrew Pomona 1 包 + Verdant IPA 1 包**(混投)
 - [ ] 麥芽(**總 4.5kg,無 Munich、無 DME**):**Extra Pale Ale Malt 3.0kg** + Château Wheat Blanc **1.0kg** + **燕麥片 0.5kg**(撐霧)
   - ⚠️ **下批想恢復橘金色 → 補 Munich Light ~1.0kg**
-- [ ] 酒花(**總 202g**,全部 28g 整包):**Citra 84g(3包)** + **Galaxy 56g(2包)** + **Mosaic 56g(2包)** + Magnum 6g　※ v2.5 修訂:**Amarillo → Mosaic**
+- [ ] 酒花(**總 202g**,全部 28g 整包,**Hoppy Mix 陣容**):**Strata 56g(2包)** + **Mosaic 56g(2包)** + **Nelson Sauvin 28g** + **Peacharine 28g** + **The Bruce 28g** + Magnum 6g
+  - 缺料替代:The Bruce→Citra / Peacharine→Nectaron(最貼)或 El Dorado / Nelson→Motueka 或 Galaxy / Strata→Galaxy+Citra 各半 / Mosaic→Galaxy、El Dorado。**釀前先確認庫存**
   - 苦花 Magnum 6g(60min・濾袋・煮完撈出)
-  - Whirlpool 78°C **84g**(Citra 28 + Galaxy 28 + **Mosaic 28**,濾袋、撈出)
-  - **DH1 56g**(Galaxy 28 + Citra 28)—— OG 降一半投,泡 3-5 天撈出
-  - **DH2 56g**(Citra 28 + **Mosaic 28**)—— **綠燈後才投**,泡 2-3 天
+  - Whirlpool 78°C **84g**(Strata 28 + Mosaic 28 + The Bruce 28,濾袋、撈出)
+  - **DH1 56g**(Nelson 28 + Strata 28)—— OG 降一半投(Day 1 起量),泡 3-5 天撈出
+  - **DH2 56g**(Peacharine 28 + Mosaic 28)—— **綠燈後才投**,泡 2-3 天
 - [ ] 礦物鹽:**氯化鈣 1.5g、石膏 0g（v2.5 歸零——硫酸鹽放大苦味、又是酸性鹽）**；**小蘇打 NaHCO₃**（mash pH <5.2 才加，先 1g、攪勻再測、上限 3g）；**❌ 絕不買磷酸/乳酸**（這支水太軟低鹼 KH40，加酸只會更酸——#0008 就是踩這雷）
 - [ ] 水質假設：新北市淡水區自來水 + 櫻花 SAKURA 淨水（F0271 礦纖除菌 + F0231 活性碳除氯，**不軟化水**）→ pH 6.35 / KH 40 / GH 25 / 無餘氯（軟水低鹼微酸，為淡水區原水）。鈣偏低故 CaCl₂ 上修到 1.5g；低鹼故 mash pH 多半自落 5.3-5.5、輕調或免調。**換水源要重量 KH/GH 再算**
 

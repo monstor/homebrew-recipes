@@ -52,7 +52,7 @@ homebrew-recipes/
 
 ## 📓 釀造紀錄(Brew Log)
 
-- **可讀版:[brew-log/index.html](./brew-log/index.html)** —— 批次索引 → 每批一頁(數據卡、比重曲線、分組摺疊欄位、心得)
+- **可讀版:`brew-log/index.html`(本機開,不發佈到公開網站)** —— 批次索引 → 每批一頁(數據卡、比重曲線、分組摺疊欄位、心得)。`_config.yml` 把 `brew-log/` 與 `.ods` 排除在 GitHub Pages 之外
 - 資料來源:`tommy_home_brewing.ods`(用 LibreOffice 編輯)。改完執行 `python3 tools/build_brewlog.py` 重新產生 `brew-log/`,一起 commit
 - 比重請用固定格式記進「重力時間軸」欄:`8/28 12:00 SG 1.020`(有時間就能畫準曲線;`(38h)` 投後小時數也認得)
 

@@ -1,0 +1,9 @@
+# GitHub Pages(Jekyll)排除清單:這些檔案留在 repo,但「不」發佈到公開網站
+# 本機開 brew-log/index.html 即可;要重新公開就把該行刪掉
+exclude:
+  - brew-log/
+  - tommy_home_brewing.ods
+  - tools/
+  - batch-notes/
+  - log.log
+  - skills-lock.json

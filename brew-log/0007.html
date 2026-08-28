@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>#0007 Orange Glow v2.3 — Brew Log</title><style>
+:root{color-scheme:light;--surface:#fcfcfb;--page:#f9f9f7;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--base:#c3c2b7;--border:rgba(11,11,11,.10);--s1:#2a78d6;--accent:#b45309;--tile:#f3f2ee}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--surface:#1a1a19;--page:#0d0d0d;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--base:#383835;--border:rgba(255,255,255,.10);--s1:#3987e5;--accent:#f59e0b;--tile:#232322}}
+:root[data-theme=dark]{color-scheme:dark;--surface:#1a1a19;--page:#0d0d0d;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--base:#383835;--border:rgba(255,255,255,.10);--s1:#3987e5;--accent:#f59e0b;--tile:#232322}
+*{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--ink);font:14px/1.6 system-ui,-apple-system,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:24px 20px 48px}
+a{color:var(--s1);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:15px;margin:22px 0 8px;color:var(--ink2);text-transform:none;letter-spacing:.3px}
+.sub{color:var(--ink2);margin-bottom:16px}.muted{color:var(--muted);font-size:12px}
+.nav{display:flex;justify-content:space-between;gap:12px;margin:8px 0 18px;font-size:13px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:14px 0}
+.tile{background:var(--tile);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+.tile .k{font-size:11px;color:var(--muted)}.tile .v{font-size:22px;font-weight:600;margin-top:2px}.tile .v small{font-size:12px;color:var(--ink2);font-weight:400}
+.chart{margin:16px 0;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 12px 6px}
+.chart figcaption{font-size:13px;color:var(--ink2);margin-bottom:6px}
+.chart-wrap{position:relative}.chart svg{width:100%;height:auto;display:block}
+.grid{stroke:var(--grid);stroke-width:1}.base{stroke:var(--base);stroke-width:1}.tick{fill:var(--muted);font-size:10px;font-variant-numeric:tabular-nums}.axis-label{fill:var(--muted);font-size:11px}
+.series{fill:none;stroke:var(--s1);stroke-width:2;stroke-linejoin:round}.pt{fill:var(--s1);stroke:var(--surface);stroke-width:2;cursor:pointer}.pt:hover{r:6}
+.dl{fill:var(--ink2);font-size:11px;font-variant-numeric:tabular-nums}.fgline{stroke:var(--muted);stroke-width:1;stroke-dasharray:4 4}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--page);font-size:12px;padding:4px 8px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-130%)}
+details{border:1px solid var(--border);border-radius:8px;background:var(--surface);margin:8px 0;padding:0 12px}
+summary{cursor:pointer;padding:9px 0;font-weight:600;font-size:14px}details[open] summary{border-bottom:1px solid var(--grid)}
+dl{display:grid;grid-template-columns:130px 1fr;gap:6px 12px;margin:10px 0;font-size:13px}dt{color:var(--muted)}dd{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.tbl table,table.idx{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}.tbl th,.tbl td,table.idx th,table.idx td{padding:6px 8px;border-bottom:1px solid var(--grid);text-align:left;vertical-align:top}table.idx th{color:var(--muted);font-weight:500;font-size:12px}
+table.idx tr:hover td{background:var(--tile)}.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.badge{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;background:var(--tile);border:1px solid var(--border);color:var(--ink2)}
+.notes{white-space:pre-wrap;font-size:13.5px;line-height:1.7}
+@media(max-width:600px){dl{grid-template-columns:1fr}.wrap{padding:16px 12px 40px}}
+</style></head><body><div class="wrap">
+<div class="nav"><a href="index.html">← 批次索引</a><a href="../">酒譜首頁</a></div>
+<h1>#0007 · Orange Glow v2.3</h1>
+<div class="sub">DDH NEIPA <span class="badge">2026-06-12</span> </div>
+<div class="tiles"><div class="tile"><div class="k">OG</div><div class="v">1.08</div></div><div class="tile"><div class="k">FG</div><div class="v">1.015</div></div><div class="tile"><div class="k">ABV</div><div class="v">8.5%</div></div><div class="tile"><div class="k">發酵度</div><div class="v">81.3%</div></div><div class="tile"><div class="k">批量</div><div class="v">10 L</div></div></div>
+<figure class="chart">
+<figcaption>比重曲線 <span class="muted">(SG vs 投酵母後天數;虛線 = FG 目標)</span></figcaption>
+<div class="chart-wrap"><svg viewBox="0 0 640 260" role="img" aria-label="比重曲線"><line x1="52" y1="226.0" x2="624" y2="226.0" class="grid"/><text x="46" y="230.0" class="tick" text-anchor="end">1.010</text><line x1="52" y1="198.3" x2="624" y2="198.3" class="grid"/><text x="46" y="202.3" class="tick" text-anchor="end">1.020</text><line x1="52" y1="170.5" x2="624" y2="170.5" class="grid"/><text x="46" y="174.5" class="tick" text-anchor="end">1.030</text><line x1="52" y1="142.8" x2="624" y2="142.8" class="grid"/><text x="46" y="146.8" class="tick" text-anchor="end">1.040</text><line x1="52" y1="115.1" x2="624" y2="115.1" class="grid"/><text x="46" y="119.1" class="tick" text-anchor="end">1.050</text><line x1="52" y1="87.3" x2="624" y2="87.3" class="grid"/><text x="46" y="91.3" class="tick" text-anchor="end">1.060</text><line x1="52" y1="59.6" x2="624" y2="59.6" class="grid"/><text x="46" y="63.6" class="tick" text-anchor="end">1.070</text><line x1="52" y1="31.9" x2="624" y2="31.9" class="grid"/><text x="46" y="35.9" class="tick" text-anchor="end">1.080</text><text x="52.0" y="242" class="tick" text-anchor="middle">0</text><text x="102.4" y="242" class="tick" text-anchor="middle">1</text><text x="152.9" y="242" class="tick" text-anchor="middle">2</text><text x="203.3" y="242" class="tick" text-anchor="middle">3</text><text x="253.8" y="242" class="tick" text-anchor="middle">4</text><text x="304.2" y="242" class="tick" text-anchor="middle">5</text><text x="354.6" y="242" class="tick" text-anchor="middle">6</text><text x="405.1" y="242" class="tick" text-anchor="middle">7</text><text x="455.5" y="242" class="tick" text-anchor="middle">8</text><text x="506.0" y="242" class="tick" text-anchor="middle">9</text><text x="556.4" y="242" class="tick" text-anchor="middle">10</text><text x="606.9" y="242" class="tick" text-anchor="middle">11</text><text x="338" y="256" class="axis-label" text-anchor="middle">投酵母後天數</text><line x1="52" y1="226.0" x2="624" y2="226.0" class="base"/><line x1="52" y1="212.1" x2="624" y2="212.1" class="fgline"/><text x="624" y="208.1" class="tick" text-anchor="end">FG 1.015</text><path d="M52.0,31.9 L480.7,209.4 L581.6,212.1" class="series"/><circle cx="52.0" cy="31.9" r="4" class="pt" data-d="0.00" data-sg="1.080" data-lab="OG"/><text x="60.0" y="22.9" class="dl" text-anchor="start">1.080</text><circle cx="480.7" cy="209.4" r="4" class="pt" data-d="8.50" data-sg="1.016" data-lab="Day 8"/><circle cx="581.6" cy="212.1" r="4" class="pt" data-d="10.50" data-sg="1.015" data-lab="Day 10"/><text x="573.6" y="203.1" class="dl" text-anchor="end">1.015</text></svg><div class="tip" hidden></div></div>
+<details class="tbl"><summary>資料表</summary><table><tr><th>時點</th><th>天數</th><th>SG</th></tr><tr><td>OG</td><td>0.0</td><td>1.080</td></tr><tr><td>Day 8</td><td>8.5</td><td>1.016</td></tr><tr><td>Day 10</td><td>10.5</td><td>1.015</td></tr></table></details>
+</figure>
+<details><summary>水與糖化</summary><dl><dt>水源</dt><dd>自來水 + 降酸劑</dd><dt>糖化醪 pH</dt><dd>4.76 (?偏低待確認)</dd></dl></details><details><summary>酵母投放</summary><dl><dt>酵母</dt><dd>Verdant IPA (LalBrew)</dd><dt>投法</dt><dd>1包(無starter)</dd></dl></details><details open><summary>發酵</summary><dl><dt>OG</dt><dd>1.08</dd><dt>發酵溫°C</dt><dd>19-20</dd><dt>乾投@比重/日</dt><dd>Day3-4</dd><dt>乾投酒花</dt><dd>Galaxy 56g + Citra 28g + Amarillo 28g</dd><dt>重力時間軸</dt><dd>d8:1.016 (pH4.03), d10:1.015 (pH4.12)</dd><dt>FG</dt><dd>1.015</dd><dt>ABV%</dt><dd>8.5</dd><dt>發酵度%</dt><dd>81.3</dd></dl></details><details><summary>QA / 封裝</summary><dl><dt>碳酸 PSI/°C</dt><dd>強制碳酸 + 裝瓶</dd><dt>封裝/2發日</dt><dd>2026-06-22</dd><dt>賞味期</dt><dd>2026-07-06</dd></dl></details><details open><summary>評價</summary><div class="muted" style="margin-top:8px">心得/教訓</div><div class="notes">8小時後水封動作。基準批:OG高(1.080)、發酵度81%、ABV 8.5%
+7/19品飲 苦味較不強烈 是不適該再多放一週? 但只剩最後一瓶....</div></details>
+<div class="nav"><span><a href="0006.html">← #0006</a></span><span><a href="0008.html">#0008 →</a></span></div>
+</div><script>
+document.querySelectorAll('.chart-wrap').forEach(w=>{const tip=w.querySelector('.tip');w.querySelectorAll('.pt').forEach(p=>{p.addEventListener('mouseenter',()=>{const r=p.getBoundingClientRect(),b=w.getBoundingClientRect();tip.textContent=p.dataset.lab+' · Day '+p.dataset.d+' · SG '+p.dataset.sg;tip.hidden=false;tip.style.left=(r.left-b.left+r.width/2)+'px';tip.style.top=(r.top-b.top)+'px';});p.addEventListener('mouseleave',()=>tip.hidden=true);});});
+</script></body></html>

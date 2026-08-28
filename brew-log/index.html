@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Brew Log — 批次索引</title><style>
+:root{color-scheme:light;--surface:#fcfcfb;--page:#f9f9f7;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--base:#c3c2b7;--border:rgba(11,11,11,.10);--s1:#2a78d6;--accent:#b45309;--tile:#f3f2ee}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--surface:#1a1a19;--page:#0d0d0d;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--base:#383835;--border:rgba(255,255,255,.10);--s1:#3987e5;--accent:#f59e0b;--tile:#232322}}
+:root[data-theme=dark]{color-scheme:dark;--surface:#1a1a19;--page:#0d0d0d;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--base:#383835;--border:rgba(255,255,255,.10);--s1:#3987e5;--accent:#f59e0b;--tile:#232322}
+*{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--ink);font:14px/1.6 system-ui,-apple-system,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:24px 20px 48px}
+a{color:var(--s1);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:15px;margin:22px 0 8px;color:var(--ink2);text-transform:none;letter-spacing:.3px}
+.sub{color:var(--ink2);margin-bottom:16px}.muted{color:var(--muted);font-size:12px}
+.nav{display:flex;justify-content:space-between;gap:12px;margin:8px 0 18px;font-size:13px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:14px 0}
+.tile{background:var(--tile);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+.tile .k{font-size:11px;color:var(--muted)}.tile .v{font-size:22px;font-weight:600;margin-top:2px}.tile .v small{font-size:12px;color:var(--ink2);font-weight:400}
+.chart{margin:16px 0;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 12px 6px}
+.chart figcaption{font-size:13px;color:var(--ink2);margin-bottom:6px}
+.chart-wrap{position:relative}.chart svg{width:100%;height:auto;display:block}
+.grid{stroke:var(--grid);stroke-width:1}.base{stroke:var(--base);stroke-width:1}.tick{fill:var(--muted);font-size:10px;font-variant-numeric:tabular-nums}.axis-label{fill:var(--muted);font-size:11px}
+.series{fill:none;stroke:var(--s1);stroke-width:2;stroke-linejoin:round}.pt{fill:var(--s1);stroke:var(--surface);stroke-width:2;cursor:pointer}.pt:hover{r:6}
+.dl{fill:var(--ink2);font-size:11px;font-variant-numeric:tabular-nums}.fgline{stroke:var(--muted);stroke-width:1;stroke-dasharray:4 4}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--page);font-size:12px;padding:4px 8px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-130%)}
+details{border:1px solid var(--border);border-radius:8px;background:var(--surface);margin:8px 0;padding:0 12px}
+summary{cursor:pointer;padding:9px 0;font-weight:600;font-size:14px}details[open] summary{border-bottom:1px solid var(--grid)}
+dl{display:grid;grid-template-columns:130px 1fr;gap:6px 12px;margin:10px 0;font-size:13px}dt{color:var(--muted)}dd{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.tbl table,table.idx{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}.tbl th,.tbl td,table.idx th,table.idx td{padding:6px 8px;border-bottom:1px solid var(--grid);text-align:left;vertical-align:top}table.idx th{color:var(--muted);font-weight:500;font-size:12px}
+table.idx tr:hover td{background:var(--tile)}.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.badge{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;background:var(--tile);border:1px solid var(--border);color:var(--ink2)}
+.notes{white-space:pre-wrap;font-size:13.5px;line-height:1.7}
+@media(max-width:600px){dl{grid-template-columns:1fr}.wrap{padding:16px 12px 40px}}
+</style></head><body><div class="wrap">
+
+<h1>🍺 Brew Log</h1><div class="sub">每批一頁 · 比重曲線 · 資料來源 <code>tommy_home_brewing.ods</code>(改完重跑 <code>tools/build_brewlog.py</code>)</div>
+<table class="idx"><tr><th>批次</th><th>釀造日</th><th>配方 / 風格</th><th>OG → FG</th><th>ABV%</th><th>評分</th></tr><tr><td><a href="0010.html"><b>#0010</b></a></td><td class="num">2026-08-26</td><td>Strange Haze v1<div class="muted">Imperial Milkshake IPA(藍莓香草)</div></td><td class="num">1.070 → —</td><td class="num">—</td><td>—</td></tr><tr><td><a href="0009.html"><b>#0009</b></a></td><td class="num">2026-07-29</td><td>Orange Glow v2.5<div class="muted">Clean NEIPA(淺金濃霧)</div></td><td class="num">1.050 → 1.006</td><td class="num">5.8</td><td>及格</td></tr><tr><td><a href="0008.html"><b>#0008</b></a></td><td class="num">2026-06-25</td><td>Orange Glow v2.4<div class="muted">DDH NEIPA</div></td><td class="num">1.090 → 1.015</td><td class="num">9.8</td><td>—</td></tr><tr><td><a href="0007.html"><b>#0007</b></a></td><td class="num">2026-06-12</td><td>Orange Glow v2.3<div class="muted">DDH NEIPA</div></td><td class="num">1.080 → 1.015</td><td class="num">8.5</td><td>—</td></tr><tr><td><a href="0006.html"><b>#0006</b></a></td><td class="num">2026-05-09</td><td>—<div class="muted">Hazy IPA</div></td><td class="num">1.062 → 1.008</td><td class="num">7.1</td><td>—</td></tr><tr><td><a href="0005.html"><b>#0005</b></a></td><td class="num">2026-04-23</td><td>—<div class="muted">Milkshake IPA (light)</div></td><td class="num">1.102 → 1.030</td><td class="num">≈9.5(待確認)</td><td>—</td></tr><tr><td><a href="0004.html"><b>#0004</b></a></td><td class="num">2026-03-15</td><td>—<div class="muted">Milkshake IPA</div></td><td class="num">1.110 → 1.030</td><td class="num">10.5</td><td>—</td></tr><tr><td><a href="0003-2.html"><b>#0003-2</b></a></td><td class="num">2026-02-28</td><td>—<div class="muted">IPA</div></td><td class="num">1.056 → 1.016</td><td class="num">5.3</td><td>—</td></tr><tr><td><a href="0003-1.html"><b>#0003-1</b></a></td><td class="num">2026-02-26</td><td>—<div class="muted">IPA</div></td><td class="num">1.050 → 1.010</td><td class="num">5.3</td><td>—</td></tr><tr><td><a href="0002.html"><b>#0002</b></a></td><td class="num">2025-12-28</td><td>—<div class="muted">Hazy IPA</div></td><td class="num">1.040 → —</td><td class="num">—</td><td>—</td></tr><tr><td><a href="0001.html"><b>#0001</b></a></td><td class="num">2025-12-03</td><td>—<div class="muted">DDH Hazy IPA</div></td><td class="num">1.062 → 1.018</td><td class="num">5.8</td><td>—</td></tr></table>
+<div class="muted" style="margin-top:14px">產生時間 2026-08-28 09:57</div>
+</div><script>
+document.querySelectorAll('.chart-wrap').forEach(w=>{const tip=w.querySelector('.tip');w.querySelectorAll('.pt').forEach(p=>{p.addEventListener('mouseenter',()=>{const r=p.getBoundingClientRect(),b=w.getBoundingClientRect();tip.textContent=p.dataset.lab+' · Day '+p.dataset.d+' · SG '+p.dataset.sg;tip.hidden=false;tip.style.left=(r.left-b.left+r.width/2)+'px';tip.style.top=(r.top-b.top)+'px';});p.addEventListener('mouseleave',()=>tip.hidden=true);});});
+</script></body></html>

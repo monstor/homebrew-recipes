@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>#0003-2 — — Brew Log</title><style>
+:root{color-scheme:light;--surface:#fcfcfb;--page:#f9f9f7;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--base:#c3c2b7;--border:rgba(11,11,11,.10);--s1:#2a78d6;--accent:#b45309;--tile:#f3f2ee}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--surface:#1a1a19;--page:#0d0d0d;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--base:#383835;--border:rgba(255,255,255,.10);--s1:#3987e5;--accent:#f59e0b;--tile:#232322}}
+:root[data-theme=dark]{color-scheme:dark;--surface:#1a1a19;--page:#0d0d0d;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--base:#383835;--border:rgba(255,255,255,.10);--s1:#3987e5;--accent:#f59e0b;--tile:#232322}
+*{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--ink);font:14px/1.6 system-ui,-apple-system,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:24px 20px 48px}
+a{color:var(--s1);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:15px;margin:22px 0 8px;color:var(--ink2);text-transform:none;letter-spacing:.3px}
+.sub{color:var(--ink2);margin-bottom:16px}.muted{color:var(--muted);font-size:12px}
+.nav{display:flex;justify-content:space-between;gap:12px;margin:8px 0 18px;font-size:13px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:14px 0}
+.tile{background:var(--tile);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+.tile .k{font-size:11px;color:var(--muted)}.tile .v{font-size:22px;font-weight:600;margin-top:2px}.tile .v small{font-size:12px;color:var(--ink2);font-weight:400}
+.chart{margin:16px 0;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 12px 6px}
+.chart figcaption{font-size:13px;color:var(--ink2);margin-bottom:6px}
+.chart-wrap{position:relative}.chart svg{width:100%;height:auto;display:block}
+.grid{stroke:var(--grid);stroke-width:1}.base{stroke:var(--base);stroke-width:1}.tick{fill:var(--muted);font-size:10px;font-variant-numeric:tabular-nums}.axis-label{fill:var(--muted);font-size:11px}
+.series{fill:none;stroke:var(--s1);stroke-width:2;stroke-linejoin:round}.pt{fill:var(--s1);stroke:var(--surface);stroke-width:2;cursor:pointer}.pt:hover{r:6}
+.dl{fill:var(--ink2);font-size:11px;font-variant-numeric:tabular-nums}.fgline{stroke:var(--muted);stroke-width:1;stroke-dasharray:4 4}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--page);font-size:12px;padding:4px 8px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-130%)}
+details{border:1px solid var(--border);border-radius:8px;background:var(--surface);margin:8px 0;padding:0 12px}
+summary{cursor:pointer;padding:9px 0;font-weight:600;font-size:14px}details[open] summary{border-bottom:1px solid var(--grid)}
+dl{display:grid;grid-template-columns:130px 1fr;gap:6px 12px;margin:10px 0;font-size:13px}dt{color:var(--muted)}dd{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.tbl table,table.idx{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}.tbl th,.tbl td,table.idx th,table.idx td{padding:6px 8px;border-bottom:1px solid var(--grid);text-align:left;vertical-align:top}table.idx th{color:var(--muted);font-weight:500;font-size:12px}
+table.idx tr:hover td{background:var(--tile)}.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.badge{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;background:var(--tile);border:1px solid var(--border);color:var(--ink2)}
+.notes{white-space:pre-wrap;font-size:13.5px;line-height:1.7}
+@media(max-width:600px){dl{grid-template-columns:1fr}.wrap{padding:16px 12px 40px}}
+</style></head><body><div class="wrap">
+<div class="nav"><a href="index.html">← 批次索引</a><a href="../">酒譜首頁</a></div>
+<h1>#0003-2 · —</h1>
+<div class="sub">IPA <span class="badge">2026-02-28</span> </div>
+<div class="tiles"><div class="tile"><div class="k">OG</div><div class="v">1.056</div></div><div class="tile"><div class="k">FG</div><div class="v">1.016</div></div><div class="tile"><div class="k">ABV</div><div class="v">5.3%</div></div><div class="tile"><div class="k">發酵度</div><div class="v">71.4%</div></div><div class="tile"><div class="k">批量</div><div class="v">—</div></div></div>
+
+<details><summary>水與糖化</summary><dl><dt>水源</dt><dd>自來水</dd></dl></details><details><summary>酵母投放</summary><dl><dt>酵母</dt><dd>ALE514 (Mauribrew)</dd></dl></details><details open><summary>發酵</summary><dl><dt>OG</dt><dd>1.056</dd><dt>發酵溫°C</dt><dd>~23</dd><dt>乾投酒花</dt><dd>Bravo 14g &amp; El Dorado 14g</dd><dt>二次添加</dt><dd>Cashmere 14g &amp; UK Fuggle 14g</dd><dt>FG</dt><dd>1.016</dd><dt>ABV%</dt><dd>5.3</dd><dt>發酵度%</dt><dd>71.4</dd></dl></details><details><summary>QA / 封裝</summary><dl><dt>Cold crash/熟成</dt><dd>2026-03-21</dd><dt>封裝/2發日</dt><dd>2026-03-10 (2發)</dd><dt>賞味期</dt><dd>2026-04-24</dd></dl></details><details open><summary>評價</summary><div class="muted" style="margin-top:8px">心得/教訓</div><div class="notes">#0003 + 900g 燕麥;酵母比例偏少;第10天水封仍輕微動作,2發延後一天;3/27近底部抽取,開瓶大量泡泡溢出(壓力過大?)</div></details>
+<div class="nav"><span><a href="0003-1.html">← #0003-1</a></span><span><a href="0004.html">#0004 →</a></span></div>
+</div><script>
+document.querySelectorAll('.chart-wrap').forEach(w=>{const tip=w.querySelector('.tip');w.querySelectorAll('.pt').forEach(p=>{p.addEventListener('mouseenter',()=>{const r=p.getBoundingClientRect(),b=w.getBoundingClientRect();tip.textContent=p.dataset.lab+' · Day '+p.dataset.d+' · SG '+p.dataset.sg;tip.hidden=false;tip.style.left=(r.left-b.left+r.width/2)+'px';tip.style.top=(r.top-b.top)+'px';});p.addEventListener('mouseleave',()=>tip.hidden=true);});});
+</script></body></html>

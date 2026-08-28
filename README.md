@@ -34,8 +34,11 @@ homebrew-recipes/
 │   ├── README.md
 │   ├── v1-low-residual-sugar.html     # 低殘糖芒果百香(★ 目前最新,完整版)
 │   └── brew-sheet.html                # 精簡列印版(實釀用)
-└── shared/                            # 跨酒譜共通 SOP
-    └── filtering-trub-sop.html        # 完整濾渣流程(hot/cold side)
+├── shared/                            # 跨酒譜共通 SOP
+│   └── filtering-trub-sop.html        # 完整濾渣流程(hot/cold side)
+├── tommy_home_brewing.ods             # 釀造紀錄(單一事實來源,LibreOffice 編輯)
+├── brew-log/                          # ↑ 產生的可讀版:index + 每批一頁 + 比重曲線
+└── tools/build_brewlog.py             # 產生 brew-log/ 的腳本(改完 .ods 重跑)
 ```
 
 ## 🍻 酒譜清單
@@ -46,6 +49,12 @@ homebrew-recipes/
 | [Orange Glow](./orange-glow/) | DDH NEIPA | 1.075-1.078 | 7.7-8.1% | v2.4 |
 | [Strange Haze](./strange-haze/) | Imperial Milkshake IPA | 1.072-1.076 | 7.5-8%（標 9%） | v1 |
 | [Milkshake IPA](./milkshake-ipa/) | Milkshake IPA（低殘糖） | 1.058-1.062 | 5.5-6% | v1 |
+
+## 📓 釀造紀錄(Brew Log)
+
+- **可讀版:[brew-log/index.html](./brew-log/index.html)** —— 批次索引 → 每批一頁(數據卡、比重曲線、分組摺疊欄位、心得)
+- 資料來源:`tommy_home_brewing.ods`(用 LibreOffice 編輯)。改完執行 `python3 tools/build_brewlog.py` 重新產生 `brew-log/`,一起 commit
+- 比重請用固定格式記進「重力時間軸」欄:`8/28 12:00 SG 1.020`(有時間就能畫準曲線;`(38h)` 投後小時數也認得)
 
 ## 🔑 共通核心 SOP(兩支酒都套用)
 

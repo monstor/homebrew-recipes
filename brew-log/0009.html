@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>#0009 Orange Glow v2.5 — Brew Log</title><style>
+:root{color-scheme:light;--surface:#fcfcfb;--page:#f9f9f7;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--base:#c3c2b7;--border:rgba(11,11,11,.10);--s1:#2a78d6;--accent:#b45309;--tile:#f3f2ee}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--surface:#1a1a19;--page:#0d0d0d;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--base:#383835;--border:rgba(255,255,255,.10);--s1:#3987e5;--accent:#f59e0b;--tile:#232322}}
+:root[data-theme=dark]{color-scheme:dark;--surface:#1a1a19;--page:#0d0d0d;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--base:#383835;--border:rgba(255,255,255,.10);--s1:#3987e5;--accent:#f59e0b;--tile:#232322}
+*{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--ink);font:14px/1.6 system-ui,-apple-system,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:24px 20px 48px}
+a{color:var(--s1);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:15px;margin:22px 0 8px;color:var(--ink2);text-transform:none;letter-spacing:.3px}
+.sub{color:var(--ink2);margin-bottom:16px}.muted{color:var(--muted);font-size:12px}
+.nav{display:flex;justify-content:space-between;gap:12px;margin:8px 0 18px;font-size:13px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:14px 0}
+.tile{background:var(--tile);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+.tile .k{font-size:11px;color:var(--muted)}.tile .v{font-size:22px;font-weight:600;margin-top:2px}.tile .v small{font-size:12px;color:var(--ink2);font-weight:400}
+.chart{margin:16px 0;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 12px 6px}
+.chart figcaption{font-size:13px;color:var(--ink2);margin-bottom:6px}
+.chart-wrap{position:relative}.chart svg{width:100%;height:auto;display:block}
+.grid{stroke:var(--grid);stroke-width:1}.base{stroke:var(--base);stroke-width:1}.tick{fill:var(--muted);font-size:10px;font-variant-numeric:tabular-nums}.axis-label{fill:var(--muted);font-size:11px}
+.series{fill:none;stroke:var(--s1);stroke-width:2;stroke-linejoin:round}.pt{fill:var(--s1);stroke:var(--surface);stroke-width:2;cursor:pointer}.pt:hover{r:6}
+.dl{fill:var(--ink2);font-size:11px;font-variant-numeric:tabular-nums}.fgline{stroke:var(--muted);stroke-width:1;stroke-dasharray:4 4}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--page);font-size:12px;padding:4px 8px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-130%)}
+details{border:1px solid var(--border);border-radius:8px;background:var(--surface);margin:8px 0;padding:0 12px}
+summary{cursor:pointer;padding:9px 0;font-weight:600;font-size:14px}details[open] summary{border-bottom:1px solid var(--grid)}
+dl{display:grid;grid-template-columns:130px 1fr;gap:6px 12px;margin:10px 0;font-size:13px}dt{color:var(--muted)}dd{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.tbl table,table.idx{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}.tbl th,.tbl td,table.idx th,table.idx td{padding:6px 8px;border-bottom:1px solid var(--grid);text-align:left;vertical-align:top}table.idx th{color:var(--muted);font-weight:500;font-size:12px}
+table.idx tr:hover td{background:var(--tile)}.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.badge{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;background:var(--tile);border:1px solid var(--border);color:var(--ink2)}
+.notes{white-space:pre-wrap;font-size:13.5px;line-height:1.7}
+@media(max-width:600px){dl{grid-template-columns:1fr}.wrap{padding:16px 12px 40px}}
+</style></head><body><div class="wrap">
+<div class="nav"><a href="index.html">← 批次索引</a><a href="../">酒譜首頁</a></div>
+<h1>#0009 · Orange Glow v2.5</h1>
+<div class="sub">Clean NEIPA(淺金濃霧) <span class="badge">2026-07-29</span> <span class="badge">及格(可喝光;苦/pH✓ 香氣淡待複評)</span></div>
+<div class="tiles"><div class="tile"><div class="k">OG</div><div class="v">1.050</div></div><div class="tile"><div class="k">FG</div><div class="v">1.006</div></div><div class="tile"><div class="k">ABV</div><div class="v">5.8%</div></div><div class="tile"><div class="k">發酵度</div><div class="v">88%</div></div><div class="tile"><div class="k">批量</div><div class="v">10 L</div></div></div>
+<figure class="chart">
+<figcaption>比重曲線 <span class="muted">(SG vs 投酵母後天數;虛線 = FG 目標)</span></figcaption>
+<div class="chart-wrap"><svg viewBox="0 0 640 260" role="img" aria-label="比重曲線"><line x1="52" y1="226.0" x2="624" y2="226.0" class="grid"/><text x="46" y="230.0" class="tick" text-anchor="end">1.000</text><line x1="52" y1="188.2" x2="624" y2="188.2" class="grid"/><text x="46" y="192.2" class="tick" text-anchor="end">1.010</text><line x1="52" y1="150.4" x2="624" y2="150.4" class="grid"/><text x="46" y="154.4" class="tick" text-anchor="end">1.020</text><line x1="52" y1="112.5" x2="624" y2="112.5" class="grid"/><text x="46" y="116.5" class="tick" text-anchor="end">1.030</text><line x1="52" y1="74.7" x2="624" y2="74.7" class="grid"/><text x="46" y="78.7" class="tick" text-anchor="end">1.040</text><line x1="52" y1="36.9" x2="624" y2="36.9" class="grid"/><text x="46" y="40.9" class="tick" text-anchor="end">1.050</text><text x="52.0" y="242" class="tick" text-anchor="middle">0</text><text x="133.5" y="242" class="tick" text-anchor="middle">1</text><text x="215.0" y="242" class="tick" text-anchor="middle">2</text><text x="296.4" y="242" class="tick" text-anchor="middle">3</text><text x="377.9" y="242" class="tick" text-anchor="middle">4</text><text x="459.4" y="242" class="tick" text-anchor="middle">5</text><text x="540.9" y="242" class="tick" text-anchor="middle">6</text><text x="622.4" y="242" class="tick" text-anchor="middle">7</text><text x="338" y="256" class="axis-label" text-anchor="middle">投酵母後天數</text><line x1="52" y1="226.0" x2="624" y2="226.0" class="base"/><line x1="52" y1="203.3" x2="624" y2="203.3" class="fgline"/><text x="624" y="199.3" class="tick" text-anchor="end">FG 1.006</text><path d="M52.0,36.9 L92.7,52.0 L135.2,82.3 L199.7,188.2 L337.2,195.7 L581.6,203.3" class="series"/><circle cx="52.0" cy="36.9" r="4" class="pt" data-d="0.00" data-sg="1.050" data-lab="Day 0"/><text x="60.0" y="27.9" class="dl" text-anchor="start">1.050</text><circle cx="92.7" cy="52.0" r="4" class="pt" data-d="0.50" data-sg="1.046" data-lab="7/30"/><circle cx="135.2" cy="82.3" r="4" class="pt" data-d="1.02" data-sg="1.038" data-lab="7/31"/><circle cx="199.7" cy="188.2" r="4" class="pt" data-d="1.81" data-sg="1.010" data-lab="+19h"/><circle cx="337.2" cy="195.7" r="4" class="pt" data-d="3.50" data-sg="1.008" data-lab="8/2"/><circle cx="581.6" cy="203.3" r="4" class="pt" data-d="6.50" data-sg="1.006" data-lab="8/5"/><text x="573.6" y="194.3" class="dl" text-anchor="end">1.006</text></svg><div class="tip" hidden></div></div>
+<details class="tbl"><summary>資料表</summary><table><tr><th>時點</th><th>天數</th><th>SG</th></tr><tr><td>Day 0</td><td>0.0</td><td>1.050</td></tr><tr><td>7/30</td><td>0.5</td><td>1.046</td></tr><tr><td>7/31</td><td>1.0</td><td>1.038</td></tr><tr><td>+19h</td><td>1.8</td><td>1.010</td></tr><tr><td>8/2</td><td>3.5</td><td>1.008</td></tr><tr><td>8/5</td><td>6.5</td><td>1.006</td></tr></table></details>
+</figure>
+<details><summary>水與糖化</summary><dl><dt>水源</dt><dd>過濾自來水(淡水區+櫻花F0271+F0231)</dd><dt>鹽類 CaCl₂/石膏</dt><dd>CaCl₂ 1.5g,石膏 0(歸零)</dd><dt>糖化溫°C</dt><dd>67</dd><dt>糖化醪 pH</dt><dd>5.81(洗槽後麥汁·冷卻/校正;糖化醪未單獨量)</dd><dt>發酵前 pH</dt><dd>控制不佳(見備註)</dd></dl></details><details><summary>熱端酒花</summary><dl><dt>苦花 0min</dt><dd>Magnum 6g (0min·濾袋·煮完撈)</dd><dt>旋渦 75°C</dt><dd>Citra 28+Galaxy 28+Mosaic 28 (78°C·84g)</dd></dl></details><details><summary>酵母投放</summary><dl><dt>酵母</dt><dd>Pomona (LalBrew)</dd><dt>投法</dt><dd>1包 + 純氧直投</dd><dt>充氧 O₂</dt><dd>純氧 60-90s</dd><dt>營養劑 Fermaid</dt><dd>Fermaid-O 2.5g + 24h 2.5g</dd><dt>ALDC</dt><dd>0.2-0.3ml</dd></dl></details><details open><summary>發酵</summary><dl><dt>OG</dt><dd>1.050(蒸發過度→濃縮1.11→補水拉回)</dd><dt>發酵溫°C</dt><dd>18-19→20→22(D-rest)</dd><dt>乾投@比重/日</dt><dd>DH1 7/31 00:30 @1.038;DH2 8/2 @1.008(綠燈)</dd><dt>乾投酒花</dt><dd>DH1 Galaxy28+Citra28 / DH2 Galaxy28+Amarillo28（原計Citra+Mosaic,用完改投）= 112g</dd><dt>重力時間軸</dt><dd>Day0 OG 1.050(補水後)。投酵母 7/29 24:00;7/30 上午 水封起泡。
+【比重】7/30 1.046 → 7/31 00:30 1.038(投DH1)→ +19h 1.010 → 8/2 1.008(撈DH1・投DH2)→ 8/5 FG 1.006(轉桶)。
+DH1 7/31 00:30 @1.038(Galaxy28+Citra28)撈8/2;DH2 8/2 @1.008(Galaxy28+Amarillo28)泡3天。
+最終 OG1.050→FG1.006、發酵度88%、ABV~5.8%。8/5 轉桶入keg(VC0.3g+Campden・purge×3・底部入酒)→強制碳酸。</dd><dt>FG</dt><dd>1.006</dd><dt>ABV%</dt><dd>5.8</dd><dt>發酵度%</dt><dd>88</dd></dl></details><details><summary>QA / 封裝</summary><dl><dt>綠燈/雙乙醯</dt><dd>連兩讀穩(1.008→1.006)+ALDC → 綠燈;8/5轉桶</dd><dt>碳酸 PSI/°C</dt><dd>KEG 強制碳酸 2-4°C・10-12 PSI・5-7天;轉桶加 VC 0.3g+Campden</dd><dt>封裝/2發日</dt><dd>2026-08-05 轉桶入 keg</dd></dl></details><details open><summary>評價</summary><div class="muted" style="margin-top:8px">評分</div><div class="notes">及格(可喝光;苦/pH✓ 香氣淡待複評)</div><div class="muted" style="margin-top:8px">心得/教訓</div><div class="notes">首釀 v2.5(淺金濃霧版)。實際穀物 Extra Pale 3.0 + 小麥 1.0 + 燕麥 0.5 = 4.5kg(無 Munich→顏色淺稻草金 EBC 5-7;無 DME)。
+⚠️ pH 控制不佳:pH 筆漂 1.2 點、重新校正後淨水 6.94;洗槽後麥汁 5.81 偏高(鹼性洗槽水拉高);雖有降酸劑但整體 pH 沒調到位。
+⚠️ OG 事故:煮沸蒸發 4-5L 過度 → 濃縮衝到 1.11 → 補消毒水拉回,又過頭到 1.050(偏低,決定接受)。預估 FG~1.012、ABV~5%,淺色濃霧 daily pale。
+香氣主力=雙段乾投 112g(Mosaic 取代 Amarillo),尚未投。
+教訓:①火別太猛(蒸發 4-5L 太多,正常 1-2L);②pH 筆每次校正+濕存(電極別乾放);③下批備乳酸/磷酸——水批次間會變(#0008 偏酸 4.76 / #0009 偏鹼 5.81),要能雙向調。
+【8/8 初嚐(碳酸未足・僅立著輕晃)】嗅覺香氣非常淡;味覺順、不難入喉不咬喉(苦/pH 過關,偏鹼→順但略鈍);酒體薄、氣泡不夠強、不夠扎實——根因=補水降 OG 過頭(1.050)+ 碳酸不足。⚠️ 香氣淡可能被「碳酸不足+稀釋」蓋住,待碳酸足 + 8-10°C 複評才能判雙段乾投是否有效。→ v2.6 已修酒體(OG~7%+煮前OG檢查);雙段乾投評價 HOLD 待複評。
+【8/8 成酒 pH 4.3】正中目標 4.2-4.5(#0008 是 3.83 太酸)→ 苦味剛好不咬喉,pH 這關驗收成功。麥汁偏鹼 5.81 未調 → 發酵後酵母產酸自然落到 4.3(剛好)。但糖化醪 5.81 偏高可能柔化酒花亮度(香氣淡的小貢獻;碳酸不足仍主因)→ v2.6 pH 雙向拉回 5.2-5.4 修此。整體結論:不難喝、可喝光的 daily hazy,及格有餘;香氣待碳酸足複評。
+【實證】燕麥 0.5kg(+小麥1.0)的混濁感已足夠——視覺濃霧達標,haze 不必加到 0.8kg。</div></details>
+<div class="nav"><span><a href="0008.html">← #0008</a></span><span><a href="0010.html">#0010 →</a></span></div>
+</div><script>
+document.querySelectorAll('.chart-wrap').forEach(w=>{const tip=w.querySelector('.tip');w.querySelectorAll('.pt').forEach(p=>{p.addEventListener('mouseenter',()=>{const r=p.getBoundingClientRect(),b=w.getBoundingClientRect();tip.textContent=p.dataset.lab+' · Day '+p.dataset.d+' · SG '+p.dataset.sg;tip.hidden=false;tip.style.left=(r.left-b.left+r.width/2)+'px';tip.style.top=(r.top-b.top)+'px';});p.addEventListener('mouseleave',()=>tip.hidden=true);});});
+</script></body></html>

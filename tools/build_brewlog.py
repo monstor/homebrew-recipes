@@ -121,19 +121,105 @@ def extract_points(b):
         out.append((d, sg, lab))
     return out
 
+
+# ── 2b. event extraction (vertical markers) ───────────────────────────────────
+EVENT_KEYS = [("投酵母","投酵母"),("Fermaid","Fermaid-O"),("撈","撈袋"),("DH2","DH2"),("DH1","DH1"),("乾投","乾投"),
+              ("藍莓","藍莓"),("香草","香草"),("果泥","果泥"),("綠燈","綠燈"),("轉桶","轉桶"),("水封","起泡"),
+              ("D-rest","D-rest"),("升溫","升溫"),("cold crash","冷崩"),("Cold crash","冷崩")]
+
+def _anchors(seg, pitch, prev_day):
+    """All time anchors in a segment → list of (pos, day)."""
+    out = []
+    for m in re.finditer(r"[(（]~?(\d{1,3})h[)）]", seg):
+        out.append((m.start(), int(m.group(1)) / 24.0))
+    for m in re.finditer(r"\+(\d{1,3})h", seg):
+        if prev_day is not None: out.append((m.start(), prev_day + int(m.group(1)) / 24.0))
+    if pitch:
+        for m in re.finditer(r"(\d{1,2})/(\d{1,2})(?:\s*~?(\d{1,2}):(\d{2}))?", seg):
+            mo, d = int(m.group(1)), int(m.group(2))
+            yr = pitch.year + (1 if mo < pitch.month - 6 else 0)
+            try:
+                dt = datetime(yr, mo, d, int(m.group(3) or 0) % 24, int(m.group(4) or 0))
+                day = (dt - pitch).total_seconds() / 86400
+                if m.group(3) is None: day = round(day) + 0.5
+                if -0.5 <= day <= 60: out.append((m.start(), day))
+            except ValueError: pass
+    for m in re.finditer(r"[Dd](?:ay)?\s?(\d{1,2})\b", seg):
+        out.append((m.start(), float(m.group(1)) + (0 if m.group(1) == "0" else 0.5)))
+    return out
+
+def _pitch_dt(b):
+    pitch = parse_pitch_date(b.get("釀造日", ""))
+    text = b.get("重力時間軸", "") or ""
+    if pitch:
+        pm = re.search(r"投酵母\s*(\d{1,2})/(\d{1,2})\s*(\d{1,2}):(\d{2})", text)
+        if pm:
+            mo, d, hh, mm = map(int, pm.groups())
+            try:
+                from datetime import timedelta
+                pitch = datetime(pitch.year, mo, d) + timedelta(hours=hh, minutes=mm)
+            except ValueError: pass
+    return pitch
+
+def extract_events(b):
+    """Return sorted list of (day, label): each keyword binds to its nearest time anchor; same-day merged."""
+    pitch = _pitch_dt(b)
+    text = "\n".join(b.get(c, "") or "" for c in ("重力時間軸", "乾投@比重/日", "綠燈/雙乙醯", "封裝/2發日", "Cold crash/熟成"))
+    raw, prev_day = [], None
+    for seg in re.split(r"[。;\n|]|→", text):
+        if not seg.strip() or any(k in seg for k in BAD_CONTEXT + ("預計", "尚未", "待")): continue
+        anchors = _anchors(seg, pitch, prev_day)
+        if not anchors: continue
+        prev_day = anchors[-1][1]
+        for k, lab in EVENT_KEYS:
+            for m in re.finditer(re.escape(k), seg):
+                pos, day = min(anchors, key=lambda a: abs(a[0] - m.start()))
+                raw.append((day, lab))
+    raw.sort()
+    out = []
+    for day, lab in raw:
+        if out and abs(day - out[-1][0]) < 0.2:
+            labs = out[-1][1]
+            if lab not in labs: labs.append(lab)
+        else:
+            out.append([day, [lab]])
+    res = []
+    for day, labs in out:
+        if "DH1" in labs or "DH2" in labs: labs = [l for l in labs if l != "乾投"]
+        if "藍莓" in labs: labs = [l for l in labs if l != "果泥"]
+        if "投酵母" in labs: labs = [l for l in labs if l != "起泡"]
+        res.append((day, "+".join(labs)))
+    return res
+
+def expected_bands(b):
+    """(dh_lo, dh_hi) DH1 window from 乾投@比重/日; expected FG (lo,hi) from notes."""
+    dh = None
+    m = re.search(r"(1\.\d{3})\s*[-~–]\s*(1\.\d{3})", b.get("乾投@比重/日", "") or "")
+    if m: dh = tuple(sorted((float(m.group(1)), float(m.group(2)))))
+    exp = None
+    notes = (b.get("心得/教訓", "") or "") + " " + (b.get("重力時間軸", "") or "")
+    m = re.search(r"預[估期]\s*FG\s*~?\s*(1\.\d{3})(?:\s*[-~–]\s*(1\.\d{3}))?", notes)
+    if m: exp = (float(m.group(1)), float(m.group(2) or m.group(1)))
+    return dh, exp
+
 # ── 3. SVG chart ──────────────────────────────────────────────────────────────
-def gravity_chart(pts, fg_target=None):
+def gravity_chart(pts, fg_actual=None, events=(), dh_band=None, exp_fg=None):
     if len(pts) < 2: return ""
-    W, H, L, R, T, B = 640, 260, 52, 16, 18, 34
-    days = [p[0] for p in pts]; sgs = [p[1] for p in pts]
+    W, H, L, R, T, B = 640, 300, 52, 16, 52, 34
+    days = [p[0] for p in pts] + [e[0] for e in events]
+    sgs = [p[1] for p in pts]
+    refs = [v for v in ([fg_actual] if fg_actual else []) + list(exp_fg or []) + list(dh_band or [])]
     xmax = max(2.0, max(days) * 1.08)
-    lo = min(sgs + ([fg_target] if fg_target else [])) - 0.004
-    hi = max(sgs) + 0.004
-    lo = int(lo * 200) / 200; hi = (int(hi * 200) + 1) / 200   # snap to 0.005
+    lo = min(sgs + refs) - 0.004; hi = max(sgs + refs) + 0.004
+    lo = int(lo * 200) / 200; hi = (int(hi * 200) + 1) / 200
     def X(d): return L + (d / xmax) * (W - L - R)
     def Y(v): return T + (hi - v) / (hi - lo) * (H - T - B)
     g = []
-    # gridlines
+    # expected bands first (background)
+    if dh_band:
+        y1, y2 = Y(dh_band[1]), Y(dh_band[0])
+        g.append(f'<rect x="{L}" y="{y1:.1f}" width="{W-L-R}" height="{y2-y1:.1f}" class="band"/>'
+                 f'<text x="{L+6}" y="{y1+11:.1f}" class="bandlab">DH1 窗口 {dh_band[1]:.3f}–{dh_band[0]:.3f}</text>')
     step = 0.010 if hi - lo > 0.03 else 0.005
     v = lo
     while v <= hi + 1e-9:
@@ -143,24 +229,42 @@ def gravity_chart(pts, fg_target=None):
     xt = 1 if xmax <= 12 else 2 if xmax <= 24 else 5
     d = 0
     while d <= xmax:
-        x = X(d); g.append(f'<text x="{x:.1f}" y="{H-B+16}" class="tick" text-anchor="middle">{d}</text>')
-        d += xt
+        g.append(f'<text x="{X(d):.1f}" y="{H-B+16}" class="tick" text-anchor="middle">{d}</text>'); d += xt
     g.append(f'<text x="{(L+W-R)/2:.0f}" y="{H-4}" class="axis-label" text-anchor="middle">投酵母後天數</text>')
     g.append(f'<line x1="{L}" y1="{Y(lo):.1f}" x2="{W-R}" y2="{Y(lo):.1f}" class="base"/>')
-    if fg_target:
-        y = Y(fg_target); g.append(f'<line x1="{L}" y1="{y:.1f}" x2="{W-R}" y2="{y:.1f}" class="fgline"/>'
-                                    f'<text x="{W-R}" y="{y-4:.1f}" class="tick" text-anchor="end">FG {fg_target:.3f}</text>')
+    if exp_fg:
+        y1, y2 = Y(exp_fg[1]), Y(exp_fg[0])
+        if abs(y2 - y1) < 1:
+            g.append(f'<line x1="{L}" y1="{y1:.1f}" x2="{W-R}" y2="{y1:.1f}" class="expline"/>')
+        else:
+            g.append(f'<rect x="{L}" y="{y1:.1f}" width="{W-L-R}" height="{y2-y1:.1f}" class="expband"/>')
+        g.append(f'<text x="{W-R}" y="{y1-4:.1f}" class="tick" text-anchor="end">預期 FG {exp_fg[0]:.3f}{"" if exp_fg[0]==exp_fg[1] else f"–{exp_fg[1]:.3f}"}</text>')
+    if fg_actual:
+        y = Y(fg_actual); g.append(f'<line x1="{L}" y1="{y:.1f}" x2="{W-R}" y2="{y:.1f}" class="fgline"/>'
+                                    f'<text x="{L+6}" y="{y-4:.1f}" class="tick">FG {fg_actual:.3f}</text>')
+    # events: vertical hairlines + staggered labels in the top margin
+    for i, (d, lab) in enumerate(events):
+        x = X(d); yl = 14 + (i % 3) * 12
+        g.append(f'<line x1="{x:.1f}" y1="{yl+3}" x2="{x:.1f}" y2="{Y(lo):.1f}" class="evline"/>'
+                 f'<text x="{x+3:.1f}" y="{yl}" class="evlab">{html.escape(lab)}</text>')
     path = " ".join(f'{"M" if i==0 else "L"}{X(d):.1f},{Y(s):.1f}' for i, (d, s, _) in enumerate(pts))
     g.append(f'<path d="{path}" class="series"/>')
     for i, (d, s, lab) in enumerate(pts):
         g.append(f'<circle cx="{X(d):.1f}" cy="{Y(s):.1f}" r="4" class="pt" data-d="{d:.2f}" data-sg="{s:.3f}" data-lab="{html.escape(lab)}"/>')
         if i == 0 or i == len(pts) - 1:
             anchor = "start" if i == 0 else "end"; dx = 8 if i == 0 else -8
-            g.append(f'<text x="{X(d)+dx:.1f}" y="{Y(s)-9:.1f}" class="dl" text-anchor="{anchor}">{s:.3f}</text>')
+            g.append(f'<text x="{X(d)+dx:.1f}" y="{Y(s)+14:.1f}" class="dl" text-anchor="{anchor}">{s:.3f}</text>')
+    legend = '<span class="lg"><i class="lg-pt"></i>實測比重</span>'
+    if dh_band: legend += '<span class="lg"><i class="lg-band"></i>DH1 窗口(預期)</span>'
+    if exp_fg: legend += '<span class="lg"><i class="lg-exp"></i>預期 FG</span>'
+    if fg_actual: legend += '<span class="lg"><i class="lg-fg"></i>實際 FG</span>'
+    if events: legend += '<span class="lg"><i class="lg-ev"></i>事件</span>'
+    ev_rows = "".join(f"<tr><td>{d:.1f}</td><td>{html.escape(l)}</td></tr>" for d, l in events)
     return f'''<figure class="chart">
-<figcaption>比重曲線 <span class="muted">(SG vs 投酵母後天數;虛線 = FG 目標)</span></figcaption>
+<figcaption>比重曲線 <span class="muted">(SG vs 投酵母後天數)</span><div class="legend">{legend}</div></figcaption>
 <div class="chart-wrap"><svg viewBox="0 0 {W} {H}" role="img" aria-label="比重曲線">{''.join(g)}</svg><div class="tip" hidden></div></div>
-<details class="tbl"><summary>資料表</summary><table><tr><th>時點</th><th>天數</th><th>SG</th></tr>{''.join(f"<tr><td>{html.escape(l)}</td><td>{d:.1f}</td><td>{s:.3f}</td></tr>" for d,s,l in pts)}</table></details>
+<details class="tbl"><summary>資料表</summary><table><tr><th>時點</th><th>天數</th><th>SG</th></tr>{''.join(f"<tr><td>{html.escape(l)}</td><td>{d:.1f}</td><td>{s:.3f}</td></tr>" for d,s,l in pts)}</table>
+{f'<table><tr><th>天數</th><th>事件</th></tr>{ev_rows}</table>' if events else ''}</details>
 </figure>'''
 
 # ── 4. HTML ───────────────────────────────────────────────────────────────────
@@ -182,7 +286,7 @@ h1{font-size:24px;margin:0 0 4px}h2{font-size:15px;margin:22px 0 8px;color:var(-
 .chart-wrap{position:relative}.chart svg{width:100%;height:auto;display:block}
 .grid{stroke:var(--grid);stroke-width:1}.base{stroke:var(--base);stroke-width:1}.tick{fill:var(--muted);font-size:10px;font-variant-numeric:tabular-nums}.axis-label{fill:var(--muted);font-size:11px}
 .series{fill:none;stroke:var(--s1);stroke-width:2;stroke-linejoin:round}.pt{fill:var(--s1);stroke:var(--surface);stroke-width:2;cursor:pointer}.pt:hover{r:6}
-.dl{fill:var(--ink2);font-size:11px;font-variant-numeric:tabular-nums}.fgline{stroke:var(--muted);stroke-width:1;stroke-dasharray:4 4}
+.dl{fill:var(--ink2);font-size:11px;font-variant-numeric:tabular-nums}.fgline{stroke:var(--ink2);stroke-width:1.5;stroke-dasharray:6 4}.expline{stroke:var(--muted);stroke-width:1;stroke-dasharray:2 3}.expband{fill:var(--muted);fill-opacity:.10}.band{fill:var(--s1);fill-opacity:.09}.bandlab{fill:var(--s1);font-size:10px;opacity:.85}.evline{stroke:var(--accent);stroke-width:1;stroke-dasharray:2 3;opacity:.7}.evlab{fill:var(--accent);font-size:10px;font-weight:600}.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px;font-size:11px;color:var(--ink2)}.lg i{display:inline-block;width:14px;height:8px;margin-right:4px;vertical-align:middle}.lg-pt{background:var(--s1);border-radius:4px;height:4px!important}.lg-band{background:var(--s1);opacity:.15}.lg-exp{border-top:1px dashed var(--muted);height:0!important}.lg-fg{border-top:1.5px dashed var(--ink2);height:0!important}.lg-ev{border-left:1px dashed var(--accent);width:0!important;height:10px!important}
 .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--page);font-size:12px;padding:4px 8px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-130%)}
 details{border:1px solid var(--border);border-radius:8px;background:var(--surface);margin:8px 0;padding:0 12px}
 summary{cursor:pointer;padding:9px 0;font-weight:600;font-size:14px}details[open] summary{border-bottom:1px solid var(--grid)}
@@ -235,7 +339,7 @@ def batch_page(b, prev_b, next_b):
     body = f'''<h1>{esc(b["批次"])} · {esc(b["配方·版本"])}</h1>
 <div class="sub">{esc(b["風格"])} <span class="badge">{esc(b["釀造日"])}</span> {f'<span class="badge">{esc(b["評分"])}</span>' if b["評分"].strip() else ""}</div>
 <div class="tiles">{''.join(tiles)}</div>
-{gravity_chart(pts, fg)}
+{gravity_chart(pts, fg, extract_events(b), *expected_bands(b))}
 {''.join(secs)}
 {nav}'''
     return page(f'{b["批次"]} {b["配方·版本"]} — Brew Log', body)
@@ -262,7 +366,8 @@ def main():
         with open(os.path.join(OUT, f"{batch_id(b)}.html"), "w", encoding="utf-8") as f:
             f.write(batch_page(b, prev_b, next_b))
         pts = extract_points(b)
-        print(f'{b["批次"]:9s} points={len(pts):2d}  ' + ", ".join(f"{l}:{s:.3f}@{d:.1f}" for d, s, l in pts))
+        ev = extract_events(b)
+        print(f'{b["批次"]:9s} points={len(pts):2d}  ' + ", ".join(f"{l}:{s:.3f}@{d:.1f}" for d, s, l in pts) + (f"\n{'':10s}events: " + ", ".join(f"{l}@{d:.1f}" for d, l in ev) if ev else ""))
     with open(os.path.join(OUT, "index.html"), "w", encoding="utf-8") as f:
         f.write(index_page(batches))
     print(f"→ {OUT}/index.html + {len(batches)} pages")

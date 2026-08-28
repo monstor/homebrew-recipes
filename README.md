@@ -55,6 +55,7 @@ homebrew-recipes/
 - **可讀版:`brew-log/index.html`(本機開,不發佈到公開網站)** —— 批次索引 → 每批一頁(數據卡、比重曲線、分組摺疊欄位、心得)。`_config.yml` 把 `brew-log/` 與 `.ods` 排除在 GitHub Pages 之外
 - 資料來源:`tommy_home_brewing.ods`(用 LibreOffice 編輯)。改完執行 `python3 tools/build_brewlog.py` 重新產生 `brew-log/`,一起 commit
 - 比重請用固定格式記進「重力時間軸」欄:`8/28 12:00 SG 1.020`(有時間就能畫準曲線;`(38h)` 投後小時數也認得)
+- 曲線會自動標**事件**(同一句裡有日期/時間 + 關鍵字:投酵母、Fermaid、DH1/DH2、撈、藍莓、香草、綠燈、轉桶、升溫)與**預期比重**(「乾投@比重/日」的 `1.040-1.030` 畫成 DH1 窗口帶;心得裡的 `預估 FG 1.014-1.016` 畫成預期 FG;FG 欄畫實際 FG)。寫預測時帶「預估/預計/計畫」字樣就不會被當實測
 
 ## 🔑 共通核心 SOP(兩支酒都套用)
 

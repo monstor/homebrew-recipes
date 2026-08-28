@@ -60,7 +60,7 @@ BAD_CONTEXT = ("預估", "目標", "窗口", "觸發", "計畫", "預期", "應�
 def extract_points(b):
     """Return sorted list of (day_float, sg, label)."""
     pitch = parse_pitch_date(b.get("釀造日", ""))
-    text = b.get("重力時間軸", "") or ""
+    text = re.sub(r"【預期】[^\n]*", " ", b.get("重力時間軸", "") or "")
     # refine pitch datetime if the log says e.g. "投酵母 8/26 21:55" (24:00 → next day 00:00)
     if pitch:
         pm = re.search(r"投酵母\s*(\d{1,2})/(\d{1,2})\s*(\d{1,2}):(\d{2})", text)
@@ -165,6 +165,7 @@ def extract_events(b):
     """Return sorted list of (day, label): each keyword binds to its nearest time anchor; same-day merged."""
     pitch = _pitch_dt(b)
     text = "\n".join(b.get(c, "") or "" for c in ("重力時間軸", "乾投@比重/日", "綠燈/雙乙醯", "封裝/2發日", "Cold crash/熟成"))
+    text = re.sub(r"【預期】[^\n]*", " ", text)
     raw, prev_day = [], None
     for seg in re.split(r"[。;\n|]|→", text):
         if not seg.strip() or any(k in seg for k in BAD_CONTEXT + ("預計", "尚未", "待")): continue
@@ -193,20 +194,79 @@ def extract_events(b):
 
 def expected_bands(b):
     """(dh_lo, dh_hi) DH1 window from 乾投@比重/日; expected FG (lo,hi) from notes."""
-    dh = None
+    dh, exp = None, None
+    for it in parse_plan(b):                      # 【預期】 wins
+        if _norm(it["label"].split("+")[0]) == "DH1" and it.get("sg"): dh = it["sg"]
+        if it["label"] == "FG": exp = it["sg"]
     m = re.search(r"(1\.\d{3})\s*[-~–]\s*(1\.\d{3})", b.get("乾投@比重/日", "") or "")
-    if m: dh = tuple(sorted((float(m.group(1)), float(m.group(2)))))
-    exp = None
+    if m and not dh: dh = tuple(sorted((float(m.group(1)), float(m.group(2)))))
     notes = (b.get("心得/教訓", "") or "") + " " + (b.get("重力時間軸", "") or "")
     m = re.search(r"預[估期]\s*FG\s*~?\s*(1\.\d{3})(?:\s*[-~–]\s*(1\.\d{3}))?", notes)
-    if m: exp = (float(m.group(1)), float(m.group(2) or m.group(1)))
+    if m and not exp: exp = (float(m.group(1)), float(m.group(2) or m.group(1)))
     return dh, exp
 
+
+# ── 2c. plan (【預期】) parsing & plan-vs-actual comparison ───────────────────
+SYN = {"撈袋":"加料","藍莓":"加料","香草":"加料","果泥":"加料","乾投":"DH1"}
+def _norm(lab): return SYN.get(lab, lab)
+
+def parse_plan(b):
+    """【預期】DH1 Day 2-4 @1.040-1.030 | 撈袋+藍莓 Day 7-8 | FG 1.016-1.018 Day 12-16  → list of dicts."""
+    text = (b.get("重力時間軸", "") or "") + "\n" + (b.get("心得/教訓", "") or "")
+    m = re.search(r"【預期】(?:（[^）]*）|\([^)]*\))?\s*([^\n]*)", text)
+    if not m: return []
+    items = []
+    for it in re.split(r"\s*[|;；]\s*", m.group(1)):
+        it = it.strip()
+        if not it: continue
+        f = re.match(r"FG\s*(1\.\d{3})(?:\s*[-~–]\s*(1\.\d{3}))?(?:\s*Day\s*(\d+(?:\.\d)?)(?:\s*[-~–]\s*(\d+(?:\.\d)?))?)?", it)
+        if f:
+            items.append({"label":"FG","sg":(float(f.group(1)), float(f.group(2) or f.group(1))),
+                          "day":(float(f.group(3)), float(f.group(4) or f.group(3))) if f.group(3) else None}); continue
+        g = re.match(r"([^\s@]+)\s*Day\s*(\d+(?:\.\d)?)(?:\s*[-~–]\s*(\d+(?:\.\d)?))?(?:\s*@\s*(1\.\d{3})(?:\s*[-~–]\s*(1\.\d{3}))?)?", it)
+        if g:
+            items.append({"label":g.group(1), "day":(float(g.group(2)), float(g.group(3) or g.group(2))),
+                          "sg":(tuple(sorted((float(g.group(4)), float(g.group(5) or g.group(4))))) if g.group(4) else None)})
+    return items
+
+def _dist_to_range(v, rng):
+    lo, hi = min(rng), max(rng)
+    return 0.0 if lo <= v <= hi else (v - hi if v > hi else v - lo)
+
+def compare_plan(plan, events, pts, fg_actual):
+    """rows: label, plan_day, actual_day, d_day, plan_sg, actual_sg, d_sg"""
+    rows = []
+    for it in plan:
+        lab = it["label"]; parts = {_norm(x) for x in lab.split("+")}
+        actual_day = actual_sg = None
+        if lab == "FG":
+            if fg_actual and pts:
+                hi = max(it["sg"]); cands = [d for d, sg, _ in pts if sg <= hi + 0.0005]
+                actual_day = min(cands) if cands else None
+                actual_sg = fg_actual
+        else:
+            hits = [d for d, l in events if parts & {_norm(x) for x in l.split("+")}]
+            if hits:
+                actual_day = min(hits, key=lambda d: abs(d - sum(it["day"]) / 2))
+                near = [(abs(d - actual_day), sg) for d, sg, _ in pts if abs(d - actual_day) <= 0.35]
+                actual_sg = min(near)[1] if near else None
+        d_day = _dist_to_range(actual_day, it["day"]) if (actual_day is not None and it.get("day")) else None
+        d_sg = _dist_to_range(actual_sg, it["sg"]) if (actual_sg is not None and it.get("sg")) else None
+        rows.append({"label":lab, "plan_day":it.get("day"), "actual_day":actual_day, "d_day":d_day,
+                     "plan_sg":it.get("sg"), "actual_sg":actual_sg, "d_sg":d_sg})
+    return rows
+
+def fmt_rng(r, nd=0):
+    if not r: return "—"
+    a, b = r
+    f = (lambda v: f"{v:.{nd}f}")
+    return f(a) if abs(a - b) < 1e-9 else f"{f(a)}–{f(b)}"
+
 # ── 3. SVG chart ──────────────────────────────────────────────────────────────
-def gravity_chart(pts, fg_actual=None, events=(), dh_band=None, exp_fg=None):
+def gravity_chart(pts, fg_actual=None, events=(), dh_band=None, exp_fg=None, plan=()):
     if len(pts) < 2: return ""
-    W, H, L, R, T, B = 640, 300, 52, 16, 52, 34
-    days = [p[0] for p in pts] + [e[0] for e in events]
+    W, H, L, R, T, B = 640, 330, 52, 16, 78, 34
+    days = [p[0] for p in pts] + [e[0] for e in events] + [max(it["day"]) for it in plan if it.get("day")]
     sgs = [p[1] for p in pts]
     refs = [v for v in ([fg_actual] if fg_actual else []) + list(exp_fg or []) + list(dh_band or [])]
     xmax = max(2.0, max(days) * 1.08)
@@ -247,6 +307,11 @@ def gravity_chart(pts, fg_actual=None, events=(), dh_band=None, exp_fg=None):
         x = X(d); yl = 14 + (i % 3) * 12
         g.append(f'<line x1="{x:.1f}" y1="{yl+3}" x2="{x:.1f}" y2="{Y(lo):.1f}" class="evline"/>'
                  f'<text x="{x+3:.1f}" y="{yl}" class="evlab">{html.escape(lab)}</text>')
+    # plan lane (grey brackets) in the strip just above the plot
+    for i, it in enumerate([p for p in plan if p.get("day")]):
+        a, bb = it["day"]; x1, x2 = X(a), X(bb); yl = 54 + (i % 2) * 12
+        g.append(f'<rect x="{x1:.1f}" y="{yl}" width="{max(3, x2-x1):.1f}" height="7" class="plan"/>'
+                 f'<text x="{x2+3:.1f}" y="{yl+7}" class="planlab">預期 {html.escape(it["label"])}</text>')
     path = " ".join(f'{"M" if i==0 else "L"}{X(d):.1f},{Y(s):.1f}' for i, (d, s, _) in enumerate(pts))
     g.append(f'<path d="{path}" class="series"/>')
     for i, (d, s, lab) in enumerate(pts):
@@ -258,14 +323,31 @@ def gravity_chart(pts, fg_actual=None, events=(), dh_band=None, exp_fg=None):
     if dh_band: legend += '<span class="lg"><i class="lg-band"></i>DH1 窗口(預期)</span>'
     if exp_fg: legend += '<span class="lg"><i class="lg-exp"></i>預期 FG</span>'
     if fg_actual: legend += '<span class="lg"><i class="lg-fg"></i>實際 FG</span>'
-    if events: legend += '<span class="lg"><i class="lg-ev"></i>事件</span>'
+    if events: legend += '<span class="lg"><i class="lg-ev"></i>實際事件</span>'
+    if plan: legend += '<span class="lg"><i class="lg-plan"></i>預期時程</span>'
     ev_rows = "".join(f"<tr><td>{d:.1f}</td><td>{html.escape(l)}</td></tr>" for d, l in events)
     return f'''<figure class="chart">
 <figcaption>比重曲線 <span class="muted">(SG vs 投酵母後天數)</span><div class="legend">{legend}</div></figcaption>
 <div class="chart-wrap"><svg viewBox="0 0 {W} {H}" role="img" aria-label="比重曲線">{''.join(g)}</svg><div class="tip" hidden></div></div>
 <details class="tbl"><summary>資料表</summary><table><tr><th>時點</th><th>天數</th><th>SG</th></tr>{''.join(f"<tr><td>{html.escape(l)}</td><td>{d:.1f}</td><td>{s:.3f}</td></tr>" for d,s,l in pts)}</table>
 {f'<table><tr><th>天數</th><th>事件</th></tr>{ev_rows}</table>' if events else ''}</details>
-</figure>'''
+</figure>
+{plan_table(plan, events, pts, fg_actual)}'''
+
+def plan_table(plan, events, pts, fg_actual):
+    if not plan: return ""
+    rows = compare_plan(plan, events, pts, fg_actual)
+    def dd(v, nd=1, unit=""):
+        if v is None: return '<td class="num">—</td>'
+        if abs(v) < 1e-9: return '<td class="num ok">✓ 在區間內</td>'
+        return f'<td class="num {"late" if v>0 else "early"}">{v:+.{nd}f}{unit}</td>'
+    tr = "".join(f'<tr><td>{html.escape(r["label"])}</td><td class="num">{fmt_rng(r["plan_day"])}</td>'
+                 f'<td class="num">{"—" if r["actual_day"] is None else "%.1f" % r["actual_day"]}</td>{dd(r["d_day"],1," 天")}'
+                 f'<td class="num">{fmt_rng(r["plan_sg"],3)}</td><td class="num">{"—" if r["actual_sg"] is None else "%.3f" % r["actual_sg"]}</td>{dd(r["d_sg"],3)}</tr>'
+                 for r in rows)
+    return f'''<details open class="cmp"><summary>預期 vs 實際(誤差)</summary>
+<table><tr><th>事件</th><th>預期 Day</th><th>實際 Day</th><th>Δ天</th><th>預期 SG</th><th>實際 SG</th><th>ΔSG</th></tr>{tr}</table>
+<div class="muted">Δ = 實際 − 預期區間最近邊(區間內 = 0)。正 = 比預期晚/高,負 = 早/低。每批修正 【預期】 讓誤差收斂。</div></details>'''
 
 # ── 4. HTML ───────────────────────────────────────────────────────────────────
 CSS = """
@@ -286,7 +368,9 @@ h1{font-size:24px;margin:0 0 4px}h2{font-size:15px;margin:22px 0 8px;color:var(-
 .chart-wrap{position:relative}.chart svg{width:100%;height:auto;display:block}
 .grid{stroke:var(--grid);stroke-width:1}.base{stroke:var(--base);stroke-width:1}.tick{fill:var(--muted);font-size:10px;font-variant-numeric:tabular-nums}.axis-label{fill:var(--muted);font-size:11px}
 .series{fill:none;stroke:var(--s1);stroke-width:2;stroke-linejoin:round}.pt{fill:var(--s1);stroke:var(--surface);stroke-width:2;cursor:pointer}.pt:hover{r:6}
-.dl{fill:var(--ink2);font-size:11px;font-variant-numeric:tabular-nums}.fgline{stroke:var(--ink2);stroke-width:1.5;stroke-dasharray:6 4}.expline{stroke:var(--muted);stroke-width:1;stroke-dasharray:2 3}.expband{fill:var(--muted);fill-opacity:.10}.band{fill:var(--s1);fill-opacity:.09}.bandlab{fill:var(--s1);font-size:10px;opacity:.85}.evline{stroke:var(--accent);stroke-width:1;stroke-dasharray:2 3;opacity:.7}.evlab{fill:var(--accent);font-size:10px;font-weight:600}.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px;font-size:11px;color:var(--ink2)}.lg i{display:inline-block;width:14px;height:8px;margin-right:4px;vertical-align:middle}.lg-pt{background:var(--s1);border-radius:4px;height:4px!important}.lg-band{background:var(--s1);opacity:.15}.lg-exp{border-top:1px dashed var(--muted);height:0!important}.lg-fg{border-top:1.5px dashed var(--ink2);height:0!important}.lg-ev{border-left:1px dashed var(--accent);width:0!important;height:10px!important}
+.dl{fill:var(--ink2);font-size:11px;font-variant-numeric:tabular-nums}.fgline{stroke:var(--ink2);stroke-width:1.5;stroke-dasharray:6 4}.expline{stroke:var(--muted);stroke-width:1;stroke-dasharray:2 3}.expband{fill:var(--muted);fill-opacity:.10}.band{fill:var(--s1);fill-opacity:.09}.bandlab{fill:var(--s1);font-size:10px;opacity:.85}.evline{stroke:var(--accent);stroke-width:1;stroke-dasharray:2 3;opacity:.7}.evlab{fill:var(--accent);font-size:10px;font-weight:600}.plan{fill:var(--muted);fill-opacity:.35}.planlab{fill:var(--muted);font-size:9.5px}.lg-plan{background:var(--muted);opacity:.4;height:6px!important}.cmp td.ok{color:#006300}.cmp td.late{color:#b45309}.cmp td.early{color:#1c5cab}@media(prefers-color-scheme:dark){.cmp td.ok{color:#0ca30c}}
+.grp{padding:0 12px 6px}.grp summary{font-size:16px}.grp table.idx{margin:6px 0 4px}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px;font-size:11px;color:var(--ink2)}.lg i{display:inline-block;width:14px;height:8px;margin-right:4px;vertical-align:middle}.lg-pt{background:var(--s1);border-radius:4px;height:4px!important}.lg-band{background:var(--s1);opacity:.15}.lg-exp{border-top:1px dashed var(--muted);height:0!important}.lg-fg{border-top:1.5px dashed var(--ink2);height:0!important}.lg-ev{border-left:1px dashed var(--accent);width:0!important;height:10px!important}
 .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--page);font-size:12px;padding:4px 8px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-130%)}
 details{border:1px solid var(--border);border-radius:8px;background:var(--surface);margin:8px 0;padding:0 12px}
 summary{cursor:pointer;padding:9px 0;font-weight:600;font-size:14px}details[open] summary{border-bottom:1px solid var(--grid)}
@@ -339,22 +423,52 @@ def batch_page(b, prev_b, next_b):
     body = f'''<h1>{esc(b["批次"])} · {esc(b["配方·版本"])}</h1>
 <div class="sub">{esc(b["風格"])} <span class="badge">{esc(b["釀造日"])}</span> {f'<span class="badge">{esc(b["評分"])}</span>' if b["評分"].strip() else ""}</div>
 <div class="tiles">{''.join(tiles)}</div>
-{gravity_chart(pts, fg, extract_events(b), *expected_bands(b))}
+{gravity_chart(pts, fg, extract_events(b), *expected_bands(b), plan=parse_plan(b))}
 {''.join(secs)}
 {nav}'''
     return page(f'{b["批次"]} {b["配方·版本"]} — Brew Log', body)
 
+def delta_cell(b, label):
+    plan = parse_plan(b)
+    if not plan: return "—"
+    rows = compare_plan(plan, extract_events(b), extract_points(b), first_sg(b["FG"]))
+    for r in rows:
+        if _norm(r["label"].split("+")[0]) == label and r["d_day"] is not None:
+            return "✓" if abs(r["d_day"]) < 1e-9 else f'{r["d_day"]:+.1f}'
+    return "—"
+
+def recipe_group(b):
+    """Strip version suffix → group key; unnamed early batches group by style."""
+    name = (b.get("配方·版本", "") or "").strip()
+    if name and name != "—":
+        return re.sub(r"\s*v\d[\d.]*.*$", "", name).strip()
+    return "早期(無酒譜)"
+
+FOLDER = {"Orange Glow": "orange-glow", "Strange Haze": "strange-haze", "Milkshake IPA": "milkshake-ipa", "妃子起笑": "crazy-concubine", "Crazy Concubine": "crazy-concubine"}
+
 def index_page(batches):
-    rows = []
-    for b in reversed(batches):
-        og, fg = first_sg(b["OG"]), first_sg(b["FG"])
-        rows.append(f'<tr><td><a href="{batch_id(b)}.html"><b>{esc(b["批次"])}</b></a></td><td class="num">{esc(b["釀造日"])}</td>'
-                    f'<td>{esc(b["配方·版本"])}<div class="muted">{esc(b["風格"])}</div></td>'
-                    f'<td class="num">{og and f"{og:.3f}" or "—"} → {fg and f"{fg:.3f}" or "—"}</td>'
-                    f'<td class="num">{esc(b["ABV%"]) or "—"}</td><td>{esc(b["評分"]).split("(")[0] or "—"}</td></tr>')
-    body = f'''<h1>🍺 Brew Log</h1><div class="sub">每批一頁 · 比重曲線 · 資料來源 <code>tommy_home_brewing.ods</code>(改完重跑 <code>tools/build_brewlog.py</code>)</div>
-<table class="idx"><tr><th>批次</th><th>釀造日</th><th>配方 / 風格</th><th>OG → FG</th><th>ABV%</th><th>評分</th></tr>{''.join(rows)}</table>
-<div class="muted" style="margin-top:14px">產生時間 {datetime.now().strftime("%Y-%m-%d %H:%M")}</div>'''
+    groups = {}
+    for b in batches: groups.setdefault(recipe_group(b), []).append(b)
+    # newest group first (by latest brew date inside)
+    order = sorted(groups, key=lambda k: max(x["釀造日"] for x in groups[k]), reverse=True)
+    sections = []
+    for k in order:
+        bs = sorted(groups[k], key=lambda x: (x["釀造日"], x["批次"]), reverse=True)
+        folder = FOLDER.get(k)
+        title = f'<a href="../{folder}/">{esc(k)}</a>' if folder and os.path.isdir(os.path.join(ROOT, folder)) else esc(k)
+        rows = []
+        for b in bs:
+            og, fg = first_sg(b["OG"]), first_sg(b["FG"])
+            ver = re.sub(r"^.*?(v\d[\d.]*)", r"\1", b["配方·版本"]) if re.search(r"v\d", b["配方·版本"]) else ""
+            rows.append(f'<tr><td><a href="{batch_id(b)}.html"><b>{esc(b["批次"])}</b></a></td><td class="num">{esc(b["釀造日"])}</td>'
+                        f'<td>{f"<span class=badge>{esc(ver)}</span> " if ver else ""}{esc(b["風格"])}</td>'
+                        f'<td class="num">{og and f"{og:.3f}" or "—"} → {fg and f"{fg:.3f}" or "—"}</td>'
+                        f'<td class="num">{esc(b["ABV%"]) or "—"}</td><td class="num">{delta_cell(b,"DH1")}</td><td class="num">{delta_cell(b,"轉桶")}</td><td>{esc(b["評分"]).split("(")[0] or "—"}</td></tr>')
+        sections.append(f'<details open class="grp"><summary>{title} <span class="muted">· {len(bs)} 批</span></summary>'
+                        f'<table class="idx"><tr><th>批次</th><th>釀造日</th><th>版本 / 風格</th><th>OG → FG</th><th>ABV%</th><th>DH1 Δ天</th><th>轉桶 Δ天</th><th>評分</th></tr>{"".join(rows)}</table></details>')
+    body = f'''<h1>🍺 Brew Log</h1><div class="sub">依酒譜分類(不分版本)→ 批次。每批一頁:數據卡 · 比重曲線(實測 / 事件 / 預期)· 預期 vs 實際誤差 · 分組欄位 · 心得。資料來源 <code>tommy_home_brewing.ods</code>,改完重跑 <code>tools/build_brewlog.py</code></div>
+{''.join(sections)}
+<div class="muted" style="margin-top:14px">Δ天 = 實際事件 − 【預期】區間(✓ = 落在區間內;負 = 提早)。產生時間 {datetime.now().strftime("%Y-%m-%d %H:%M")}</div>'''
     return page("Brew Log — 批次索引", body, back=False)
 
 def main():

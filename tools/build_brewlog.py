@@ -229,8 +229,9 @@ def parse_plan(b):
                           "sg":(tuple(sorted((float(g.group(4)), float(g.group(5) or g.group(4))))) if g.group(4) else None)})
     return items
 
-def _dist_to_range(v, rng):
+def _dist_to_range(v, rng, tol=0.25):
     lo, hi = min(rng), max(rng)
+    if abs(hi - lo) < 1e-9: lo, hi = lo - tol, hi + tol   # single-point plan → ±tol (days: 6h; SG: use tol=0)
     return 0.0 if lo <= v <= hi else (v - hi if v > hi else v - lo)
 
 def compare_plan(plan, events, pts, fg_actual):
@@ -251,7 +252,7 @@ def compare_plan(plan, events, pts, fg_actual):
                 near = [(abs(d - actual_day), sg) for d, sg, _ in pts if abs(d - actual_day) <= 0.35]
                 actual_sg = min(near)[1] if near else None
         d_day = _dist_to_range(actual_day, it["day"]) if (actual_day is not None and it.get("day")) else None
-        d_sg = _dist_to_range(actual_sg, it["sg"]) if (actual_sg is not None and it.get("sg")) else None
+        d_sg = _dist_to_range(actual_sg, it["sg"], tol=0.0) if (actual_sg is not None and it.get("sg")) else None
         rows.append({"label":lab, "plan_day":it.get("day"), "actual_day":actual_day, "d_day":d_day,
                      "plan_sg":it.get("sg"), "actual_sg":actual_sg, "d_sg":d_sg})
     return rows
@@ -302,11 +303,21 @@ def gravity_chart(pts, fg_actual=None, events=(), dh_band=None, exp_fg=None, pla
     if fg_actual:
         y = Y(fg_actual); g.append(f'<line x1="{L}" y1="{y:.1f}" x2="{W-R}" y2="{y:.1f}" class="fgline"/>'
                                     f'<text x="{L+6}" y="{y-4:.1f}" class="tick">FG {fg_actual:.3f}</text>')
-    # events: vertical hairlines + staggered labels in the top margin
+    # events: colour by plan status (ok = inside expected range, off = outside, none = no plan)
+    status = {}
+    if plan:
+        for r in compare_plan(plan, events, pts, fg_actual):
+            if r["actual_day"] is None or r["d_day"] is None or r["label"] == "FG": continue
+            k = round(r["actual_day"], 2)
+            cur = status.get(k)
+            if cur is None or abs(r["d_day"]) > abs(cur): status[k] = r["d_day"]
     for i, (d, lab) in enumerate(events):
         x = X(d); yl = 14 + (i % 3) * 12
-        g.append(f'<line x1="{x:.1f}" y1="{yl+3}" x2="{x:.1f}" y2="{Y(lo):.1f}" class="evline"/>'
-                 f'<text x="{x+3:.1f}" y="{yl}" class="evlab">{html.escape(lab)}</text>')
+        dd = status.get(round(d, 2))
+        cls = "none" if dd is None else ("ok" if abs(dd) < 1e-9 else "off")
+        tag = "" if dd is None else (" ✓" if cls == "ok" else f" {dd:+.1f}d")
+        g.append(f'<line x1="{x:.1f}" y1="{yl+3}" x2="{x:.1f}" y2="{Y(lo):.1f}" class="evline {cls}"/>'
+                 f'<text x="{x+3:.1f}" y="{yl}" class="evlab {cls}">{html.escape(lab)}{tag}</text>')
     # plan lane (grey brackets) in the strip just above the plot
     for i, it in enumerate([p for p in plan if p.get("day")]):
         a, bb = it["day"]; x1, x2 = X(a), X(bb); yl = 54 + (i % 2) * 12
@@ -323,7 +334,7 @@ def gravity_chart(pts, fg_actual=None, events=(), dh_band=None, exp_fg=None, pla
     if dh_band: legend += '<span class="lg"><i class="lg-band"></i>DH1 窗口(預期)</span>'
     if exp_fg: legend += '<span class="lg"><i class="lg-exp"></i>預期 FG</span>'
     if fg_actual: legend += '<span class="lg"><i class="lg-fg"></i>實際 FG</span>'
-    if events: legend += '<span class="lg"><i class="lg-ev"></i>實際事件</span>'
+    if events: legend += ('<span class="lg"><i class="lg-ev ok"></i>事件·落在預期</span><span class="lg"><i class="lg-ev off"></i>事件·偏離預期(標 Δ天)</span>' if plan else '<span class="lg"><i class="lg-ev"></i>實際事件</span>')
     if plan: legend += '<span class="lg"><i class="lg-plan"></i>預期時程</span>'
     ev_rows = "".join(f"<tr><td>{d:.1f}</td><td>{html.escape(l)}</td></tr>" for d, l in events)
     return f'''<figure class="chart">
@@ -351,9 +362,9 @@ def plan_table(plan, events, pts, fg_actual):
 
 # ── 4. HTML ───────────────────────────────────────────────────────────────────
 CSS = """
-:root{color-scheme:light;--surface:#fcfcfb;--page:#f9f9f7;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--base:#c3c2b7;--border:rgba(11,11,11,.10);--s1:#2a78d6;--accent:#b45309;--tile:#f3f2ee}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--surface:#1a1a19;--page:#0d0d0d;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--base:#383835;--border:rgba(255,255,255,.10);--s1:#3987e5;--accent:#f59e0b;--tile:#232322}}
-:root[data-theme=dark]{color-scheme:dark;--surface:#1a1a19;--page:#0d0d0d;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--base:#383835;--border:rgba(255,255,255,.10);--s1:#3987e5;--accent:#f59e0b;--tile:#232322}
+:root{color-scheme:light;--surface:#fcfcfb;--page:#f9f9f7;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--base:#c3c2b7;--border:rgba(11,11,11,.10);--s1:#2a78d6;--accent:#b45309;--tile:#f3f2ee;--good:#006300;--bad:#c2410c}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--surface:#1a1a19;--page:#0d0d0d;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--base:#383835;--border:rgba(255,255,255,.10);--s1:#3987e5;--accent:#f59e0b;--tile:#232322;--good:#0ca30c;--bad:#ec835a}}
+:root[data-theme=dark]{color-scheme:dark;--surface:#1a1a19;--page:#0d0d0d;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--base:#383835;--border:rgba(255,255,255,.10);--s1:#3987e5;--accent:#f59e0b;--tile:#232322;--good:#0ca30c;--bad:#ec835a}
 *{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--ink);font:14px/1.6 system-ui,-apple-system,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif}
 .wrap{max-width:900px;margin:0 auto;padding:24px 20px 48px}
 a{color:var(--s1);text-decoration:none}a:hover{text-decoration:underline}
@@ -368,7 +379,7 @@ h1{font-size:24px;margin:0 0 4px}h2{font-size:15px;margin:22px 0 8px;color:var(-
 .chart-wrap{position:relative}.chart svg{width:100%;height:auto;display:block}
 .grid{stroke:var(--grid);stroke-width:1}.base{stroke:var(--base);stroke-width:1}.tick{fill:var(--muted);font-size:10px;font-variant-numeric:tabular-nums}.axis-label{fill:var(--muted);font-size:11px}
 .series{fill:none;stroke:var(--s1);stroke-width:2;stroke-linejoin:round}.pt{fill:var(--s1);stroke:var(--surface);stroke-width:2;cursor:pointer}.pt:hover{r:6}
-.dl{fill:var(--ink2);font-size:11px;font-variant-numeric:tabular-nums}.fgline{stroke:var(--ink2);stroke-width:1.5;stroke-dasharray:6 4}.expline{stroke:var(--muted);stroke-width:1;stroke-dasharray:2 3}.expband{fill:var(--muted);fill-opacity:.10}.band{fill:var(--s1);fill-opacity:.09}.bandlab{fill:var(--s1);font-size:10px;opacity:.85}.evline{stroke:var(--accent);stroke-width:1;stroke-dasharray:2 3;opacity:.7}.evlab{fill:var(--accent);font-size:10px;font-weight:600}.plan{fill:var(--muted);fill-opacity:.35}.planlab{fill:var(--muted);font-size:9.5px}.lg-plan{background:var(--muted);opacity:.4;height:6px!important}.cmp td.ok{color:#006300}.cmp td.late{color:#b45309}.cmp td.early{color:#1c5cab}@media(prefers-color-scheme:dark){.cmp td.ok{color:#0ca30c}}
+.dl{fill:var(--ink2);font-size:11px;font-variant-numeric:tabular-nums}.fgline{stroke:var(--ink2);stroke-width:1.5;stroke-dasharray:6 4}.expline{stroke:var(--muted);stroke-width:1;stroke-dasharray:2 3}.expband{fill:var(--muted);fill-opacity:.10}.band{fill:var(--s1);fill-opacity:.09}.bandlab{fill:var(--s1);font-size:10px;opacity:.85}.evline{stroke:var(--accent);stroke-width:1;stroke-dasharray:2 3;opacity:.75}.evlab{fill:var(--accent);font-size:10px;font-weight:600}.evline.ok{stroke:var(--good);stroke-width:1.5;stroke-dasharray:none}.evlab.ok{fill:var(--good)}.evline.off{stroke:var(--bad);stroke-width:1.5}.evlab.off{fill:var(--bad)}.lg-ev.ok{border-left-color:var(--good)!important;border-left-style:solid!important}.lg-ev.off{border-left-color:var(--bad)!important;border-left-style:solid!important}.plan{fill:var(--muted);fill-opacity:.35}.planlab{fill:var(--muted);font-size:9.5px}.lg-plan{background:var(--muted);opacity:.4;height:6px!important}.cmp td.ok{color:var(--good);font-weight:600}.cmp td.late,.cmp td.early{color:var(--bad);font-weight:600}
 .grp{padding:0 12px 6px}.grp summary{font-size:16px}.grp table.idx{margin:6px 0 4px}
 .legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px;font-size:11px;color:var(--ink2)}.lg i{display:inline-block;width:14px;height:8px;margin-right:4px;vertical-align:middle}.lg-pt{background:var(--s1);border-radius:4px;height:4px!important}.lg-band{background:var(--s1);opacity:.15}.lg-exp{border-top:1px dashed var(--muted);height:0!important}.lg-fg{border-top:1.5px dashed var(--ink2);height:0!important}.lg-ev{border-left:1px dashed var(--accent);width:0!important;height:10px!important}
 .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--page);font-size:12px;padding:4px 8px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-130%)}

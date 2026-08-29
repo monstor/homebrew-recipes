@@ -166,14 +166,15 @@ def extract_events(b):
     pitch = _pitch_dt(b)
     text = "\n".join(b.get(c, "") or "" for c in ("重力時間軸", "乾投@比重/日", "綠燈/雙乙醯", "封裝/2發日", "Cold crash/熟成"))
     text = re.sub(r"【預期】[^\n]*", " ", text)
+    # blank out elapsed-time references like "(DH1 後 1.4 天;…)" before splitting, so their keywords don't fire
+    text = re.sub(r"[(（][^()（）]*[後前][^()（）]*[)）]", lambda m: " " * len(m.group()), text)
     raw, prev_day = [], None
     for seg in re.split(r"[。;\n|]|→", text):
         if not seg.strip() or any(k in seg for k in BAD_CONTEXT + ("預計", "尚未", "待")): continue
         anchors = _anchors(seg, pitch, prev_day)
         if not anchors: continue
         prev_day = anchors[-1][1]
-        # blank out elapsed-time references like "(DH1 後 1.4 天)" so their keywords don't fire
-        seg_k = re.sub(r"[(（][^()（）]*[後前][^()（）]*[)）]", lambda m: " " * len(m.group()), seg)
+        seg_k = seg
         for k, lab in EVENT_KEYS:
             for m in re.finditer(re.escape(k), seg_k):
                 if k == "水封" and re.match(r"水封.{0,4}(不動|沒動|無動|停)", seg_k[m.start():]): lab = "水封停"

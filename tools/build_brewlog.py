@@ -172,8 +172,11 @@ def extract_events(b):
         anchors = _anchors(seg, pitch, prev_day)
         if not anchors: continue
         prev_day = anchors[-1][1]
+        # blank out elapsed-time references like "(DH1 後 1.4 天)" so their keywords don't fire
+        seg_k = re.sub(r"[(（][^()（）]*[後前][^()（）]*[)）]", lambda m: " " * len(m.group()), seg)
         for k, lab in EVENT_KEYS:
-            for m in re.finditer(re.escape(k), seg):
+            for m in re.finditer(re.escape(k), seg_k):
+                if k == "水封" and re.match(r"水封.{0,4}(不動|沒動|無動|停)", seg_k[m.start():]): lab = "水封停"
                 pos, day = min(anchors, key=lambda a: abs(a[0] - m.start()))
                 raw.append((day, lab))
     raw.sort()

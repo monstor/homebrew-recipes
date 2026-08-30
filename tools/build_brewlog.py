@@ -169,15 +169,20 @@ def extract_events(b):
     # blank out elapsed-time references like "(DH1 後 1.4 天;…)" before splitting, so their keywords don't fire
     text = re.sub(r"[(（][^()（）]*[後前][^()（）]*[)）]", lambda m: " " * len(m.group()), text)
     raw, prev_day = [], None
-    for seg in re.split(r"[。;\n|]|→", text):
+    parts = re.split(r"([。;\n|]|→)", text)
+    for i in range(0, len(parts), 2):
+        seg, delim = parts[i], parts[i - 1] if i else ""
         if not seg.strip() or any(k in seg for k in BAD_CONTEXT + ("預計", "尚未", "待")): continue
         anchors = _anchors(seg, pitch, prev_day)
+        # "…1.016 →撈袋+藍莓": text after an arrow with no anchor of its own inherits the preceding time
+        if not anchors and delim == "→" and prev_day is not None: anchors = [(0, prev_day)]
         if not anchors: continue
         prev_day = anchors[-1][1]
         seg_k = seg
         for k, lab in EVENT_KEYS:
             for m in re.finditer(re.escape(k), seg_k):
                 if k == "水封" and re.match(r"水封.{0,4}(不動|沒動|無動|停)", seg_k[m.start():]): lab = "水封停"
+                if k in ("DH1", "DH2") and "撈" in seg_k[max(0, m.start() - 4):m.start()]: continue   # "撈 DH1 袋" = removal, not addition
                 pos, day = min(anchors, key=lambda a: abs(a[0] - m.start()))
                 raw.append((day, lab))
     raw.sort()

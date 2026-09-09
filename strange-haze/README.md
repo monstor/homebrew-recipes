@@ -6,7 +6,7 @@
 
 | 項目 | 規格 |
 |---|---|
-| **目前最新版本** | [v1 藍莓香草](./v1-blueberry-vanilla.html) |
+| **目前最新版本** | **v1.1 藍莓香草 juicy fix**([brew-sheet](./brew-sheet.html) 已就地更新;設計邏輯見 [v1](./v1-blueberry-vanilla.html)) |
 | 風格 | Imperial Milkshake IPA |
 | 容量 | 10 L |
 | OG | 1.072-1.076 |

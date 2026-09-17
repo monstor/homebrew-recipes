@@ -182,7 +182,8 @@ def extract_events(b):
         for k, lab in EVENT_KEYS:
             for m in re.finditer(re.escape(k), seg_k):
                 if k == "水封" and re.match(r"水封.{0,4}(不動|沒動|無動|停)", seg_k[m.start():]): lab = "水封停"
-                if k in ("DH1", "DH2") and "撈" in seg_k[max(0, m.start() - 4):m.start()]: continue   # "撈 DH1 袋" = removal, not addition
+                if k in ("DH1", "DH2") and "撈" in seg_k[max(0, m.start() - 4):m.start()]: continue
+                if k in ("香草", "藍莓", "果泥") and re.match(r".{0,2}(聞|嚐|味|淡|糖漿)", seg_k[m.end():]): continue   # tasting note, not an addition   # "撈 DH1 袋" = removal, not addition
                 pos, day = min(anchors, key=lambda a: abs(a[0] - m.start()))
                 raw.append((day, lab))
     raw.sort()
@@ -255,9 +256,11 @@ def compare_plan(plan, events, pts, fg_actual):
                 actual_day = min(cands) if cands else None
                 actual_sg = fg_actual
         else:
-            hits = [d for d, l in events if parts & {_norm(x) for x in l.split("+")}]
+            raw = set(lab.split("+"))
+            hits = [(d, len(raw & set(l.split("+")))) for d, l in events if parts & {_norm(x) for x in l.split("+")}]
             if hits:
-                actual_day = min(hits, key=lambda d: abs(d - sum(it["day"]) / 2))
+                # most label words in common wins (撈袋+藍莓+香草 beats a lone 撈袋 at transfer); then nearest to plan
+                actual_day = min(hits, key=lambda h: (-h[1], abs(h[0] - sum(it["day"]) / 2)))[0]
                 near = [(abs(d - actual_day), sg) for d, sg, _ in pts if abs(d - actual_day) <= 0.35]
                 actual_sg = min(near)[1] if near else None
         d_day = _dist_to_range(actual_day, it["day"]) if (actual_day is not None and it.get("day")) else None

@@ -119,7 +119,7 @@
 **核心:把 #0009 意外飄移的淺金 5.8% 拉回「橘金 juicy」主題 + 統整這一路所有優勢**
 
 - **回主題**:基麥回 Golden Promise(英系綿密)、**Munich 1.2kg 偏橘 EBC 15-17**、OG 回到 ~1.066 / ABV ~7%(比 v2.4 少灼熱、比 #0009 有體)。GP 2.3 / Munich 1.2 / 小麥 1.0 = 4.5kg
-- **★ 雙酵母混投 Pomona + Verdant**(參考商業款哈啤米克斯 Hoppy Mix):Pomona 桃/熱帶+生物轉化、Verdant 杏桃/核果酯+留體;Pomona 主導 → FG 略低 1.012-1.015、**DH1 窗口 Day 1-3 從 Day 1 量**
+- **~~雙酵母混投 Pomona + Verdant~~(2026-09-17 取消:酵母一律單包 → Pomona 1 包)**(原參考商業款哈啤米克斯 Hoppy Mix):Pomona 桃/熱帶+生物轉化、Verdant 杏桃/核果酯+留體;Pomona 主導 → FG 略低 1.012-1.015、**DH1 窗口 Day 1-3 從 Day 1 量**
 - **★ 酒花改 Hoppy Mix 陣容**:Whirlpool Strata+Mosaic+The Bruce / DH1 Nelson+Strata(硫醇高→生物轉化)/ DH2 Peacharine+Mosaic(白桃純香)。缺料:The Bruce→Citra、Peacharine→Nectaron/El Dorado、Nelson→Motueka/Galaxy、Strata→Galaxy+Citra
 - **統整優勢**(見 [獨門製程](../shared/signature-process.html)):
   - **雙段乾投**(DH1 生轉化 + DH2 綠燈後純香、零 CO₂ 沖刷)

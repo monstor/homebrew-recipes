@@ -172,7 +172,7 @@ def extract_events(b):
     parts = re.split(r"([。;\n|]|→)", text)
     for i in range(0, len(parts), 2):
         seg, delim = parts[i], parts[i - 1] if i else ""
-        if not seg.strip() or any(k in seg for k in BAD_CONTEXT + ("預計", "尚未", "待")): continue
+        if not seg.strip() or any(k in seg for k in BAD_CONTEXT + ("預計", "尚未", "待", "下批", "下次", "補救")): continue
         anchors = _anchors(seg, pitch, prev_day)
         # "…1.016 →撈袋+藍莓": text after an arrow with no anchor of its own inherits the preceding time
         if not anchors and delim == "→" and prev_day is not None: anchors = [(0, prev_day)]

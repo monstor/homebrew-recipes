@@ -6,17 +6,17 @@
 
 | 項目 | 規格 |
 |---|---|
-| **目前最新版本** | [v2.6](./v2.6-consolidated.html)(統整版・回歸橘金) |
-| 風格 | DDH NEIPA(橘色 juicy;Pomona+Verdant 混投 × Hoppy Mix 酒花) |
+| **目前最新版本** | [v2.6](./v2.6-consolidated.html)(統整版・回歸橘金)— **實釀以 [brew-sheet](./brew-sheet.html) 為準** |
+| 風格 | DDH NEIPA(橘色 juicy;Pomona 單包 × Hoppy Mix 酒花) |
 | 容量 | 10 L |
 | OG | 1.064-1.068 |
-| FG | 1.012-1.015 |
-| ABV | ~7.0-7.4% |
+| FG | 1.011-1.014(糖化 68°C) |
+| ABV | ~6.6-7.5% |
 | IBU | ~25-30 |
-| EBC | 15-17(橘) |
-| 基麥 | **Golden Promise 2.3kg**(+ Munich **1.2** 偏橘 + 小麥 1.0)= 4.5kg |
-| 酒花 | **202g・Hoppy Mix 陣容**:Strata 56 / Mosaic 56 / Nelson 28 / Peacharine 28 / The Bruce 28 / Magnum 6 · Whirlpool 84 + DH1 56 + DH2 56 |
-| 酵母 | **混投 Pomona 1 包 + Verdant 1 包** → 高壓純氧直投(桃+杏桃雙果香;Pomona 主導→DH1 從 Day 1 量) |
+| EBC | 14-16(橘金) |
+| 麥芽 | **整公斤**:Golden Promise 2 + Munich 1 + 小麥 1 + 燕麥麥芽 0.5(1kg 包分兩批)= 4.5kg |
+| 酒花 | **258g・Hoppy Mix 陣容**:Strata 56 / Mosaic 56 / Citra 56 / Nelson 28 / Peacharine 28 / The Bruce 28 / Magnum 6 · Whirlpool 84 + DH1 56 + DH2 98 散投 + keg hop 14 |
+| 酵母 | **Pomona 1 包**(一律單包)→ 高壓純氧直投;發酵快 → 投後 12h 起量 |
 | 可發酵糖 | 無(不加 DME/Maltodextrin) |
 | 添加物 | Fermaid-O 5g（投酵母 2.5g + 投後 24h 2.5g;備選 Fermaid-K 3g 煮沸末）+ Maturex L (ALDC) 0.2-0.3ml |
 | 抗氧化劑 | **轉桶時進 keg:L-抗壞血酸 0.3g + 焦亞硫酸鉀 KMS 0.25g（必須成對，VC 不可單用）** |
@@ -181,10 +181,9 @@
   - KMS 也可用 **Campden 錠(10L 半錠、壓碎溶開)**；**各廠劑量不同，依包裝標示重算**
   - ⚠️ **VC 必須配 KMS，不可單用**——抗壞血酸抓氧會產生 H₂O₂，遇酒中微量鐵/銅走 Fenton 反應生成羥自由基，**比不加更糟**。KMS 負責收掉 H₂O₂
   - 需 **0.01g 精度電子秤**；沒有就用 Campden 錠
-- [ ] **LalBrew Pomona 1 包 + Verdant IPA 1 包**(混投)
-- [ ] 麥芽(**總 4.5kg,無 Munich、無 DME**):**Extra Pale Ale Malt 3.0kg** + Château Wheat Blanc **1.0kg** + **燕麥片 0.5kg**(撐霧)
-  - ⚠️ **下批想恢復橘金色 → 補 Munich Light ~1.0kg**
-- [ ] 酒花(**總 202g**,全部 28g 整包,**Hoppy Mix 陣容**):**Strata 56g(2包)** + **Mosaic 56g(2包)** + **Nelson Sauvin 28g** + **Peacharine 28g** + **The Bruce 28g** + Magnum 6g
+- [ ] **LalBrew Pomona 1 包**(一律單包)
+- [ ] 麥芽(**整公斤,總 4.5kg,無 DME**):**Golden Promise 2kg** + **Munich Light 1kg** + Château Wheat Blanc **1kg** + **燕麥麥芽 1kg 包**(本批用 0.5)
+- [ ] 酒花(**總 258g**,28g 整包,**Hoppy Mix 陣容**):**Strata 56g(2包)** + **Mosaic 56g(2包)** + **Citra 56g(2包:DH2 42 + keg 14)** + **Nelson Sauvin 28g** + **Peacharine 28g** + **The Bruce 28g** + Magnum 6g
   - 缺料替代:The Bruce→Citra / Peacharine→Nectaron(最貼)或 El Dorado / Nelson→Motueka 或 Galaxy / Strata→Galaxy+Citra 各半 / Mosaic→Galaxy、El Dorado。**釀前先確認庫存**
   - 苦花 Magnum 6g(60min・濾袋・煮完撈出)
   - Whirlpool 78°C **84g**(Strata 28 + Mosaic 28 + The Bruce 28,濾袋、撈出)

@@ -6,7 +6,7 @@
 
 | 項目 | 規格 |
 |---|---|
-| **目前最新版本** | **v4.1 現行標準版**([brew-sheet](./brew-sheet.html) 就地更新;設計邏輯見 [v4](./v4-whirlpool-aroma.html))|
+| **目前最新版本** | **v4.2**(不加乳糖・糖化 67°C・酵母 1 包)([brew-sheet](./brew-sheet.html) 就地更新;設計邏輯見 [v4](./v4-whirlpool-aroma.html))|
 | 風格 | Hazy Pale Ale |
 | 容量 | 8-10 L |
 | OG | 1.052 |

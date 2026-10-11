@@ -31,6 +31,7 @@ homebrew-recipes/
 │   ├── v1-blueberry-vanilla.html      # 藍莓香草版(★ 目前最新,完整版)
 │   └── brew-sheet.html                # 精簡列印版(實釀用)
 ├── milkshake-ipa/                     # Milkshake IPA · 低殘糖版
+├── superdelic-solo/                   # Superdelic Solo · 單一酒花 NEIPA(新)
 │   ├── README.md
 │   ├── v1-low-residual-sugar.html     # 低殘糖芒果百香(★ 目前最新,完整版)
 │   └── brew-sheet.html                # 精簡列印版(實釀用)
@@ -49,6 +50,7 @@ homebrew-recipes/
 | [Orange Glow](./orange-glow/) | DDH NEIPA | 1.075-1.078 | 7.7-8.1% | v2.4 |
 | [Strange Haze](./strange-haze/) | Imperial Milkshake IPA | 1.072-1.076 | 7.5-8%（標 9%） | v1 |
 | [Milkshake IPA](./milkshake-ipa/) | Milkshake IPA（低殘糖） | 1.058-1.062 | 5.5-6% | v1 |
+| [Superdelic Solo](./superdelic-solo/) | 單一酒花 NEIPA（Superdelic × Pomona） | 1.058-1.062 | 6.1-6.5% | v1 |
 
 ## 📓 釀造紀錄(Brew Log)
 

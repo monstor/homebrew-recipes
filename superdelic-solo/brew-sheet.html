@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superdelic Solo v1 — 精簡列印版(Brew Sheet)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans CJK TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    font-size: 11px; color: #111; background: #eee; line-height: 1.3;
+  }
+  .sheet { max-width: 760px; margin: 0 auto; background: #fff; padding: 14px 18px; }
+  .top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 2px solid #D35400; padding-bottom: 5px; margin-bottom: 7px;
+  }
+  .top h1 { font-size: 16px; color: #D35400; }
+  .top .stats { font-size: 10.5px; color: #333; }
+  .top .stats b { color: #111; }
+
+  h2 {
+    font-size: 11.5px; font-weight: 800; color: #fff; background: #E67E22;
+    padding: 2px 7px; margin: 8px 0 4px; break-after: avoid;
+  }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 2px 0 4px; }
+  th, td { border: 1px solid #bbb; padding: 2px 5px; text-align: left; vertical-align: top; font-size: 10px; }
+  th { background: #E67E22; color: #fff; font-weight: bold; }
+  .k td:first-child { background: #FDF2E9; font-weight: bold; width: 32%; }
+
+  ol, ul { margin: 2px 0 4px 16px; }
+  li { margin-bottom: 1px; font-size: 10px; }
+
+  .flow { font-size: 10px; }
+  .flow > div { margin: 0 0 3px; padding-left: 16px; text-indent: -16px; }
+  .flow b { color: #D35400; }
+
+  .note { font-size: 9.5px; color: #555; }
+  .hl { background: #fff3c4; padding: 0 2px; font-weight: bold; }
+  .now td { background: #fff3c4 !important; }
+
+  .rec td { height: 17px; }
+  .rec td:first-child { background: #f7f7f7; font-weight: bold; width: 34%; }
+  .rec td:nth-child(2) { color: #888; width: 30%; }
+  .tl td { height: 18px; }
+  .tl td:first-child { font-weight: bold; }
+  .tl td:nth-child(3) { color: #888; }
+
+  @media print {
+    @page { margin: 8mm; }
+    body { background: #fff; font-size: 9.5px; }
+    .sheet { max-width: none; padding: 0; }
+    table, tr, ol, ul, .grid2 > div { break-inside: avoid; }
+    th, td { font-size: 8.8px; padding: 2px 4px; }
+    li { font-size: 8.8px; }
+    h2 { break-after: avoid; }
+    .rec td { height: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<div class="top">
+  <h1>🍍 Superdelic Solo v1 · Brew Sheet</h1>
+  <div class="stats">OG <b>1.058-1.062</b> · FG <b>1.012-1.014</b> · ABV <b>~6.1-6.5%</b> · IBU <b>~22</b> · EBC <b>10-12</b> · <b>10 L</b> · 單一酒花 Superdelic · Pomona 1 包</div>
+</div>
+
+<div class="grid2">
+  <div>
+    <div class="note" style="background:#e8f6f0;border-left:4px solid #0f766e;padding:7px 11px;margin:6px 0;">
+    <b>設計主軸:單一酒花 × 高生物轉化</b>——Superdelic(NZ,鳳梨+甜橘+葡萄軟糖、硫醇前驅物高)全程獨挑,配 <b>Pomona</b>(高生物轉化)把硫醇轉成更外放的熱帶果香。單一品種才學得到這支酒花的真面目:旋渦、DH1、DH2 都只有它。<br>
+    <b>酒體對策</b>:Pomona 發酵度高(#0009 在 67°C 達 88%)→ 糖化拉到 <b>68°C</b> + <b>Maris Otter</b> 餅乾麥香 + <b>燕麥麥芽</b> 撐綿密,避免乾瘦。
+    </div>
+
+    <h2>🌾 麥芽(整公斤・總 4.0kg)</h2>
+    <table class="k">
+      <tr><td><b>Maris Otter</b>(基麥・英系餅乾麥香,首次嘗試)</td><td>2 kg</td></tr>
+      <tr><td>Château Wheat Blanc(haze + 泡持)</td><td>1 kg</td></tr>
+      <tr><td><b>燕麥麥芽 Malted Oats</b>(綿密、無生穀味)</td><td>1 kg</td></tr>
+      <tr><td class="note">DME / Maltodextrin / 乳糖 — 不加</td><td>0</td></tr>
+    </table>
+
+    <h2>🧫 酵母 + 添加</h2>
+    <table class="k">
+      <tr><td><b>LalBrew Pomona</b> → 高壓純氧 60-90s 直投(發酵快 → 投後 12h 起量)</td><td><b>1 包</b></td></tr>
+      <tr><td>Fermaid-O(投酵母 2.5g + 投後 ~24h 2.5g)</td><td>5g</td></tr>
+      <tr><td>ALDC / Maturex L(投酵母當下;事後補無效)</td><td>0.2-0.3ml</td></tr>
+      <tr><td>轉桶預調液:Campden 半錠 + VC 0.3g + 冷開水 40ml(不煮)→ <b>每公升酒 4 ml</b></td><td>—</td></tr>
+    </table>
+  </div>
+
+  <div>
+    <h2>🌿 酒花(苦5 + 旋渦56 + 乾投112 = <b>173g</b>・DH ~11g/L)</h2>
+    <table class="k">
+      <tr><td>Magnum(60min 苦花・濾袋・煮完撈出)<br><small>唯一的非 Superdelic:只為乾淨苦底,IBU ~22</small></td><td>5g</td></tr>
+      <tr><td colspan="2"><b>旋渦 78°C 20-30min(濾袋・撈出)</b></td></tr>
+      <tr><td>　<b>Superdelic</b>(口中的果汁感)</td><td>56g</td></tr>
+      <tr><td colspan="2"><b>DH1 乾投①(OG 降一半・泡 2.5-3 天撈出)</b></td></tr>
+      <tr><td>　<b>Superdelic</b>(活躍發酵期 → 生物轉化)</td><td>56g</td></tr>
+      <tr><td colspan="2"><b class="hl">DH2 乾投②(綠燈後投・散投不裝袋・泡 2-3 天)</b></td></tr>
+      <tr><td>　<b>Superdelic</b>(零 CO₂ 沖刷 → 鼻子的香)</td><td>56g</td></tr>
+    </table>
+    <div class="note" style="margin-top:4px;">採購:<b>Superdelic 168g(6 包)</b> + Magnum 5g(庫存)。<b>Superdelic 貴又常缺貨,訂到再排釀造日</b>;真的湊不到 6 包就砍旋渦那 56g(保 DH1/DH2),別砍乾投。</div>
+
+    <h2>💧 水與鹽</h2>
+    <div class="flow"><b>CaCl₂ 1.5g + 石膏 0-0.5g</b>(氯化物主導、硫酸鹽放大苦 → 少量或不加)。水源=淡水區自來水 + 櫻花 F0271+F0231(KH40/GH25/無氯);換水源要重量 KH/GH。</div>
+  </div>
+</div>
+
+<h2>🔥 釀造當天流程</h2>
+<div class="flow">
+<div><b>1 糖化水</b> 10L 加熱 <b>75°C</b> + 鹽類(只下鹽、<b>不在此調 pH</b>)<br>
+　<span class="note"><b class="hl">⚠️ pH 量了才調、雙向都備</b>(水批次間會變:#0008 酸 4.76 / #0009 鹼 5.81)<br>
+　① pH 計每次<b>換電池 + 4.01/7.00 校正</b> ② 投麥芽後 10-15min 取樣<b>冷到 20-25°C 再量</b>(熱讀低 ~0.3) ③ 目標 <b>5.2-5.4</b>:低→<b>小蘇打 0.5-1.5g/次</b>、高→<b>磷酸 0.25-0.5ml/次</b>,每次攪勻冷卻再量(#0011 教訓:預混麥芽緩衝強,0.5g 常無感,起手可直接 1.5g) ④ 成酒目標 pH 4.2-4.5</span></div>
+<div><b>2 糖化</b> <span class="hl">68°C</span> 60min(留糊精撐酒體,對抗 Pomona 高發酵度)</div>
+<div><b>3 升溫滅酵</b> 76°C 10min → <b>回流(vorlauf)</b>:接 1-2L 濁麥汁輕倒回麥床,到流出無顆粒才正式收;篩網只在入煮鍋時過<b>一次</b></div>
+<div><b>4 洗槽</b> 5L 76-78°C,收集 11-12L</div>
+<div style="background:#fff3c4;padding:5px 9px;border-left:3px solid #b45309;"><b>★ 4.5 煮前 OG(先量再煮,別盲煮!#0009 教訓)</b><br>　<b>秤鍋算體積</b>(總重 − 空鍋 大1.70/小1.45kg)+ <b>折射儀量煮前 OG</b> → 煮後目標體積 =(煮前 OG 點數 × 升數)÷ <b>60</b> → <b>邊煮邊秤,到目標升數關火</b>(OG 必落 ~1.060)<br>　<span class="note">⚠️ #0011 教訓:洗槽麥汁沒混勻就取樣會讀錯,取樣前先攪一攪</span></div>
+<div><b>5 煮沸 60min</b>(<b class="hl">開蓋、滾後轉小火</b>——溫和翻滾,蒸發 ~1.5L/hr)<br>
+　<span class="note"><b class="red">⚠️ 大火=討厭苦味的根源</b>(#0007/#0008)。<b>苦花濾袋懸空綁鍋緣,別貼鍋底</b>;體積不夠可在<b>下苦花前</b>大火趕,酒花一下去就轉小火</span><br>
+　• 0min:<span class="red">Magnum 5g(濾袋)</span>　• 45min:放冷卻盤管殺菌　• 60min:關火測 OG</div>
+<div><b>6 旋渦</b> 降到 <b>78°C</b> 投 <b>Superdelic 56g(濾袋)</b>,蓋蓋 20-30min → <b>撈出</b>才開始冷卻</div>
+<div><b>7 冷卻 + Whirlpool</b> 通冷水邊攪 → 18-20°C 抽盤管 → 攪漩渦 → 靜置 10-20min,trub 沉中央</div>
+<div><b>8 入桶</b> 鍋邊抽清澈麥汁(留中央 trub)→ <span class="hl">純氧 60-90s</span> → 投 <b>Pomona 1 包 + ALDC + Fermaid-O 2.5g</b> → 水封,<b>水設 18°C</b></div>
+</div>
+
+<h2>📅 發酵時程(約 10 天・Pomona 1 包+純氧)</h2>
+<div class="note" style="margin:2px 0 4px;">※ Day 0 = 投酵母當天;<b>真正觸發看比重</b>,只有 Fermaid-O 第二劑純看時間(~24h)。<br>
+※ <b>水冷設定</b>:投酵母 18°C → 高峰 0-48h <b>17°C</b> → 乾投/高峰後 19°C → D-rest <b>21.5°C</b> → 冷崩最低。<br>
+※ .ods 抄這行:<code>【預期】(Pomona 1 包+純氧・推估)Fermaid-O Day 1 | DH1 Day 1-1.5 @1.034-1.028 | 撈袋 Day 3.5-4 | 綠燈 Day 5-7 | DH2 Day 5-7 | 轉桶 Day 9-11 | FG 1.012-1.014 Day 4-6</code></div>
+<table>
+  <tr><th width="13%">天</th><th width="27%">動作</th><th>目標 / 備註</th></tr>
+  <tr><td>Day 0</td><td>投酵母 + ALDC + Fermaid-O 2.5g</td><td>水 18°C 投 → 起泡後轉 <b>17°C</b>。Pomona+純氧 ~10h 起泡</td></tr>
+  <tr><td><b>Day 0.5 起</b></td><td><b>每 12h 量比重</b></td><td>只有這段密集量,抓 DH1 的半天窗口</td></tr>
+  <tr><td>Day 1</td><td>Fermaid-O 2.5g(第二劑)</td><td>跟量比重合併同一次開蓋</td></tr>
+  <tr><td><b>Day 1-1.5</b></td><td><b>DH1 乾投① Superdelic 56g(濾袋)</b></td><td>比重 <span class="hl">1.034-1.028</span>(OG 降一半)→ CO₂沖桶→倒→補CO₂,<b>水調 19°C</b>。泡袋期間每天輕搖桶一次;&lt;1.028 仍未投就馬上投</td></tr>
+  <tr><td>Day 2-3</td><td>D-rest 升溫</td><td>比重 ≤1.020 → <b>水設 21.5°C</b>(酒溫 21.5-22°C,清雙乙醯的工作溫度),維持到綠燈、<b>累計 ≥3 天</b></td></tr>
+  <tr><td><b>Day 3.5-4</b></td><td><b>撈 DH1 袋</b> + 量比重</td><td>泡 <b>2.5-3 天即足</b>(香氣前 48h 出八成)。滴乾不擠。此讀數 = 穩定讀數 #1</td></tr>
+  <tr><td><b>Day 5-7</b></td><td><b>綠燈</b> → <b class="hl">DH2 Superdelic 56g(散投不裝袋,同一次開蓋)</b></td><td>比 #1 隔 ~48h 再讀差 <b>≤0.001</b> 且 D-rest 滿 3 天 → 投 DH2。<b>水維持 21.5°C</b>(creep 會再產雙乙醯),泡 2-3 天、每天輕搖</td></tr>
+  <tr><td><b>Day 7-9</b></td><td><b>hop creep 確認 → 冷崩</b></td><td>量一次,跟綠燈讀數比 ≤0.001 且 DH2 後 21.5°C 已滿 48h → 降到 <b>2-4°C 冷崩 24-48h</b>(散投酒花要沉);⚠️ 降溫會吸水封 → 接 CO₂ 1-2 PSI 或換密封塞</td></tr>
+  <tr><td><b>Day 9-11</b></td><td>虹吸轉桶<br><small>keg 底先下<b>預調液 4 ml/L</b> → purge ×3</small></td><td>虹吸口<b>套細網袋</b>(散投渣)、離桶底 2-3cm;底部入酒不濺 → 立刻 <b>15 PSI</b>(冰箱實溫 7-8°C)</td></tr>
+  <tr><td>Day 11+</td><td>強制碳酸 → 開喝</td><td>15 PSI 定壓 5-7 天(滾桶可加速)。<b>評香氣前先把氣打滿</b>;賞味期 2-3 週內</td></tr>
+</table>
+
+<div class="grid2">
+  <div>
+    <h2>✅ 綠燈確認(不做強迫測試 → 用時間保證)</h2>
+    <ul>
+      <li><b>比重穩</b>:既有讀數 + 隔 ~48h 再讀,差 <b>≤0.001</b></li>
+      <li><b>清雙乙醯的工作溫度 = 酒溫 20-22°C</b>(水設 21.5°C)。&lt;18°C 幾乎停擺、冷藏完全不動</li>
+      <li><b>D-rest 累計 ≥3 天</b>;DH2 後的第二波 creep 再給 <b>48h</b></li>
+      <li class="note">⚠️ 沒有當場驗證 → <b>溫度和天數不能偷</b>。喝到奶油味:keg 回室溫 20-22°C 放 3 天再冰</li>
+    </ul>
+  </div>
+  <div>
+    <h2>🛡️ 低氧 + 碳酸</h2>
+    <ul>
+      <li>純氧只在投酵母前(60-90s),之後開蓋一次做完所有事</li>
+      <li>乾投:CO₂沖桶 → 快倒 → 補 CO₂</li>
+      <li>⚠️ VC 必須配 KMS,單用助氧化(Fenton)</li>
+      <li><b>15 PSI 定壓</b>(冰箱 7-8°C),出酒維持同壓;趁鮮喝 2-3 週</li>
+    </ul>
+  </div>
+</div>
+
+<h2>📋 本批記錄單</h2>
+<table class="rec">
+  <tr><td>釀造日期</td><td>—</td><td></td><td>煮前 OG / 升數 / 目標升數</td><td>___ / ___ / ___</td><td></td></tr>
+  <tr><td>糖化溫 / pH(調整後)</td><td>68°C / 5.2-5.4</td><td></td><td>小蘇打或磷酸用量</td><td>___</td><td></td></tr>
+  <tr><td>OG 實測 / 入桶體積</td><td>~1.060 / ___ L</td><td></td><td>投酵母 / 高峰水溫</td><td>水 18 → 17°C</td><td></td></tr>
+  <tr><td>DH1 比重 / 投放日</td><td>1.034-1.028 / Day 1-1.5</td><td></td><td>DH1 撈出日</td><td>泡 2.5-3 天</td><td></td></tr>
+  <tr><td>穩定比重 #1(撈袋日)</td><td>—</td><td></td><td>穩定比重 #2(+48h)</td><td>差 ≤0.001</td><td></td></tr>
+  <tr><td>D-rest 起始 / 水溫</td><td>SG ≤1.020 / 水 21.5°C</td><td></td><td>D-rest 天數</td><td>≥3 天</td><td></td></tr>
+  <tr><td>DH2 投放日 / 泡幾天</td><td>綠燈當次 / 2-3 天</td><td></td><td>冷崩</td><td>2-4°C 24-48h</td><td></td></tr>
+  <tr><td>最終 FG / 達成日</td><td>1.012-1.014</td><td></td><td>ABV(OG→FG 算)</td><td>~6.1-6.5%</td><td></td></tr>
+  <tr><td>成酒 pH ★</td><td>4.2-4.5</td><td></td><td>預調液(轉桶)</td><td>4 ml/L × ___ L</td><td></td></tr>
+  <tr><td>轉桶日 / 碳酸</td><td>Day 9-11 / 15 PSI</td><td></td><td>初次出酒日</td><td>—</td><td></td></tr>
+  <tr><td>品飲 / 香氣評語</td><td>—</td><td></td><td>備註</td><td>—</td><td></td></tr>
+</table>
+
+<h2>🛒 採買清單(10L)</h2>
+<table>
+  <tr><th>類別</th><th>要買</th><th>備註</th></tr>
+  <tr><td>麥芽(整公斤)</td><td><b>Maris Otter 2kg</b>・Wheat Blanc 1kg・燕麥麥芽 1kg</td><td>Maris Otter 首次用;燕麥麥芽先問貨</td></tr>
+  <tr><td>酒花</td><td><b>Superdelic 168g(6 包)</b></td><td>貴且常缺貨,<b>訂到才排釀造日</b>;Magnum 5g 用庫存</td></tr>
+  <tr><td>酵母</td><td><b>LalBrew Pomona 1 包</b></td><td>+Fermaid-O/ALDC(庫存夠免買)</td></tr>
+  <tr><td>器材</td><td>細網袋 ×1(套虹吸口)</td><td>DH2 散投渣</td></tr>
+  <tr><td>✅ 免買</td><td colspan="2">DME/麥芽糊精/乳糖(不加)・CaCl₂/石膏/酸鹼/Campden/VC・CO₂</td></tr>
+</table>
+
+<div class="note">本頁為實釀精簡列印版,<b>永遠對應目前最新版(現為 v1)</b>;改版時就地更新、不另開新檔。共用原則見 <a href="../shared/signature-process.html">獨門製程</a>、<a href="../shared/equipment-reference.html">共用器材(含水溫設定表)</a>。</div>
+
+</div>
+</body>
+</html>

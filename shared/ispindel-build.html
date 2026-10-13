@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iSpindel 浮動比重計 · 製作文件</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans CJK TC','Noto Sans TC','Microsoft JhengHei',sans-serif; font-size: 13.5px; color: #1f2937; background: #f5f5f0; line-height: 1.65; }
+  .container { max-width: 940px; margin: 0 auto; background: #fff; padding: 32px 36px; border-top: 5px solid #0f766e; border-bottom: 5px solid #0f766e; }
+  .header { text-align: center; border-bottom: 2.5px solid #0f766e; padding-bottom: 14px; margin-bottom: 18px; }
+  h1 { font-size: 25px; font-weight: 800; color: #134e4a; margin-bottom: 6px; }
+  .badge { display: inline-block; background: #0f766e; color: #fff; padding: 4px 14px; font-size: 11px; font-weight: bold; letter-spacing: 1.5px; border-radius: 2px; margin-bottom: 8px; }
+  .subtitle { font-size: 13px; color: #6b7280; font-style: italic; }
+  h2 { font-size: 17px; font-weight: 800; color: #fff; background: #0f766e; padding: 9px 16px; margin: 24px 0 12px; letter-spacing: 0.5px; }
+  h3 { color: #134e4a; margin: 14px 0 6px; font-size: 15px; font-weight: bold; border-left: 4px solid #0f766e; padding-left: 10px; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 14px; font-size: 13px; }
+  th, td { padding: 8px 11px; text-align: left; border: 1px solid #d1d5db; vertical-align: top; }
+  th { background: #0f766e; color: #fff; font-weight: bold; }
+  tr:nth-child(even) td { background: #f0fdfa; }
+  .principle { background: #ccfbf1; border-left: 4px solid #0f766e; padding: 11px 15px; margin: 11px 0; font-size: 13px; }
+  .warn { background: #fef3c7; border-left: 4px solid #d97706; padding: 11px 15px; margin: 11px 0; font-size: 12.5px; }
+  .warn b { color: #92400e; }
+  code { background: #ecfdf5; padding: 1px 6px; border-radius: 3px; font-size: 12.5px; }
+  figure { margin: 14px 0; text-align: center; }
+  figcaption { font-size: 12px; color: #6b7280; margin-top: 6px; }
+  .footer { text-align: center; margin-top: 26px; padding-top: 16px; border-top: 2.5px solid #0f766e; color: #6b7280; font-size: 12px; font-style: italic; }
+  @media (max-width: 600px) { body { font-size: 12.5px; } .container { padding: 18px 20px; } h1 { font-size: 21px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <div class="badge">SHARED · 器材製作</div>
+  <h1>🛠️ iSpindel 浮動比重計 · 製作文件</h1>
+  <div class="subtitle">RAPT Pill 的開源同原理版本 · 免開桶、免取樣就能連續記錄比重與溫度</div>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 300" width="100%" style="max-width:900px" role="img" aria-label="iSpindel 內部配置與傾角原理圖">
+  <rect x="0" y="0" width="900" height="300" fill="#ffffff"/>
+  <!-- 左:管內配置 -->
+  <text x="20" y="24" font-size="15" font-weight="bold" fill="#134e4a">① 管內配置(PET 管 外徑 50 × 長 132 公釐)</text>
+  <g transform="translate(30,45)">
+    <rect x="0" y="40" width="360" height="90" rx="26" fill="#f0fdfa" stroke="#0f766e" stroke-width="3"/>
+    <rect x="0" y="40" width="34" height="90" rx="16" fill="#cbd5e1" stroke="#0f766e" stroke-width="3"/>
+    <text x="8" y="150" font-size="11" fill="#374151">螺旋蓋</text>
+    <rect x="48" y="62" width="96" height="46" rx="4" fill="#e0f2fe" stroke="#0369a1" stroke-width="2"/>
+    <text x="52" y="90" font-size="11" fill="#0c4a6e">D1 mini 控制板</text>
+    <rect x="152" y="66" width="56" height="38" rx="4" fill="#fae8ff" stroke="#a21caf" stroke-width="2"/>
+    <text x="156" y="90" font-size="11" fill="#701a75">GY-521</text>
+    <rect x="216" y="58" width="104" height="54" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="2"/>
+    <text x="232" y="90" font-size="11" fill="#7f1d1d">18650 電池</text>
+    <circle cx="340" cy="85" r="12" fill="#fde68a" stroke="#b45309" stroke-width="2"/>
+    <text x="300" y="150" font-size="11" fill="#374151">DS18B20 溫度感測器(管尖)</text>
+    <text x="0" y="22" font-size="11.5" fill="#6b7280">重量集中在電池端 → 尖端朝下漂浮</text>
+  </g>
+  <!-- 右:傾角原理 -->
+  <text x="470" y="24" font-size="15" font-weight="bold" fill="#134e4a">② 傾角 → 比重</text>
+  <g transform="translate(470,40)">
+    <rect x="0" y="120" width="400" height="60" fill="#e0f2fe" stroke="#0369a1" stroke-width="1"/>
+    <text x="4" y="196" font-size="11" fill="#0c4a6e">酒液</text>
+    <g stroke="#0f766e" stroke-width="10" stroke-linecap="round">
+      <line x1="60" y1="170" x2="150" y2="96"/>
+      <line x1="230" y1="170" x2="280" y2="60"/>
+    </g>
+    <text x="40" y="215" font-size="12" fill="#374151">高糖度(密度高)</text>
+    <text x="42" y="232" font-size="12" font-weight="bold" fill="#0f766e">浮得高 → 角度小</text>
+    <text x="215" y="215" font-size="12" fill="#374151">發酵完(密度低)</text>
+    <text x="217" y="232" font-size="12" font-weight="bold" fill="#0f766e">沉得深 → 角度大</text>
+    <path d="M 60 170 A 40 40 0 0 1 95 152" fill="none" stroke="#b45309" stroke-width="2"/>
+    <text x="96" y="152" font-size="11" fill="#b45309">θ</text>
+  </g>
+</svg>
+<figcaption>圖一:管內配置與量測原理。裝置自身重心固定,液體密度越低、浮力越小,管身傾角 θ 越大;韌體把 θ 與溫度回傳,再用校正多項式換算比重。</figcaption>
+</figure>
+
+<h2>📦 零件表</h2>
+<table>
+  <tr><th>項目</th><th>規格</th><th>數量</th><th>用途</th></tr>
+  <tr><td>控制板</td><td>Wemos D1 mini(ESP8266)</td><td>1</td><td>讀感測器、連 Wi-Fi、深度睡眠</td></tr>
+  <tr><td>加速度/陀螺儀模組</td><td>GY-521 breakout(晶片 MPU-6050)</td><td>1</td><td>量傾角(比重的來源)</td></tr>
+  <tr><td>溫度感測器</td><td>DS18B20</td><td>1</td><td>酒液溫度、比重溫度補償</td></tr>
+  <tr><td>鋰電池</td><td>18650,建議 Panasonic NCR18650B</td><td>1</td><td>電源,同時當配重</td></tr>
+  <tr><td>充電模組</td><td>TP4056(建議 6 腳版,含保護)</td><td>1</td><td>充電與過放保護</td></tr>
+  <tr><td>電阻</td><td>4.7 千歐姆、220 千歐姆、330 歐姆</td><td>各 1</td><td>見「接線表」</td></tr>
+  <tr><td>二極體(可替代 330 歐姆)</td><td>BAT43 蕭特基二極體</td><td>1</td><td>深度睡眠喚醒線路</td></tr>
+  <tr><td>開關</td><td>微動滑動開關,或磁簧開關(配合印刷電路板)</td><td>1</td><td>收納時斷電</td></tr>
+  <tr><td>載板</td><td>洞洞板 3×4 公分,或現成 iSpindel 印刷電路板</td><td>1</td><td>固定電子件</td></tr>
+  <tr><td>外殼</td><td>PET 管(Petling / PET preform),外徑 50 × 長 132 公釐</td><td>1</td><td>食品級、耐酸、密封</td></tr>
+  <tr><td>內部滑座</td><td>3D 列印 sled(官方提供圖檔)</td><td>1</td><td>把電子件固定在管軸線上</td></tr>
+</table>
+
+<h2>🔌 接線表(依 iSpindel 官方接線圖)</h2>
+<table>
+  <tr><th>來源</th><th>接到</th><th>備註</th></tr>
+  <tr><td>GY-521 SCL</td><td>D1 mini <code>D4</code></td><td rowspan="4">模組上的電源指示 LED 限流電阻要拆掉,否則待機耗電</td></tr>
+  <tr><td>GY-521 SDA</td><td>D1 mini <code>D3</code></td></tr>
+  <tr><td>GY-521 VCC</td><td>D1 mini <code>5V</code></td></tr>
+  <tr><td>GY-521 GND</td><td>D1 mini <code>GND</code></td></tr>
+  <tr><td>DS18B20 DQ(資料)</td><td>D1 mini <code>D6</code></td><td><b>D6 與 5V 之間要接 4.7 千歐姆上拉電阻</b></td></tr>
+  <tr><td>DS18B20 VCC / GND</td><td><code>5V</code> / <code>GND</code></td><td>—</td></tr>
+  <tr><td><code>A0</code></td><td>經 <b>220 千歐姆</b> 接 <code>5V</code></td><td>量電池電壓的分壓</td></tr>
+  <tr><td><code>D0</code></td><td>經 <b>330 歐姆</b>(或 BAT43,負極朝 D0)接 <code>RST</code></td><td>深度睡眠自我喚醒,缺這條就醒不來</td></tr>
+  <tr><td>TP4056 <code>B+</code> / <code>B−</code></td><td>18650 正 / 負極</td><td>—</td></tr>
+  <tr><td>TP4056 <code>+OUT</code></td><td>經開關接 D1 mini <code>5V</code></td><td>開關斷電用於收納</td></tr>
+  <tr><td>TP4056 <code>+IN</code></td><td>D1 mini USB 的 5V(選用)</td><td>插 USB 即可充電</td></tr>
+  <tr><td colspan="3"><b>D1 mini 板上的輸入二極體要拆除</b>——不拆會與鋰電池模組形成短路路徑</td></tr>
+</table>
+
+<h2>📐 校正流程</h2>
+<table>
+  <tr><th>步驟</th><th>做法</th><th>記錄</th></tr>
+  <tr><td>1 組裝後密封</td><td>裝好電子件、鎖緊管蓋,確認不漏水</td><td>—</td></tr>
+  <tr><td>2 清水點</td><td>放進常溫清水漂浮,靜置 2 分鐘讀傾角</td><td>角度 θ₁ ↔ 比重 1.000</td></tr>
+  <tr><td>3 糖水點(至少 2 點)</td><td>砂糖溶水調出約 1.040 與 1.070,各用玻璃比重計量實際值</td><td>θ₂ ↔ 實測比重、θ₃ ↔ 實測比重</td></tr>
+  <tr><td>4 擬合</td><td>把 3-5 組(θ, 比重)丟進官方校正試算表或線上工具,取<b>二次多項式</b></td><td>係數填回韌體設定頁</td></tr>
+  <tr><td>5 驗證</td><td>下一批釀造時,前兩次與玻璃比重計對照</td><td>誤差應 &lt; 0.002</td></tr>
+</table>
+
+<h2>🧭 組裝與設定順序</h2>
+<div class="principle">
+<b>先測試、後封管。</b>電子件在洞洞板上焊好後,先用 USB 供電確認 Wi-Fi 連線、傾角與溫度都有數值,再放進 PET 管。封管後再修線要全部拆出來。
+</div>
+<h3>步驟</h3>
+<table>
+  <tr><th>順序</th><th>內容</th></tr>
+  <tr><td>1</td><td>拆掉 GY-521 的 LED 限流電阻、拆掉 D1 mini 的輸入二極體</td></tr>
+  <tr><td>2</td><td>依接線表焊接;電池先不接,用 USB 供電測試</td></tr>
+  <tr><td>3</td><td>燒錄 iSpindel 韌體(esptool 或官方燒錄工具)</td></tr>
+  <tr><td>4</td><td>首次開機會開出名為 <code>iSpindel</code> 的 Wi-Fi 熱點 → 手機連上 → 設定家中 Wi-Fi、回傳服務、睡眠間隔(預設 900 秒)</td></tr>
+  <tr><td>5</td><td>做「校正流程」的三點量測,把多項式係數存回設定頁</td></tr>
+  <tr><td>6</td><td>接上 18650、裝進滑座、塞入 PET 管、鎖緊,外部用 StarSan 浸泡消毒後投入發酵桶</td></tr>
+</table>
+
+<h2>⚠️ 使用限制</h2>
+<div class="warn">
+<b>PET 管不耐熱</b>:約 60°C 以上變形,只能冷消毒(StarSan),不可熱水或煮沸消毒。<br>
+<b>乾投酒花會干擾</b>:酒花顆粒或濾袋黏上管身會改變傾角,讀數會跳;乾投期間的數值僅供參考,關鍵判斷仍以玻璃比重計為準。<br>
+<b>需要漂浮空間</b>:桶內液面上方要留得下管子打斜,滿桶或頂空太小會卡住。<br>
+<b>金屬容器擋訊號</b>:不鏽鋼發酵桶或 keg 內部收不到 Wi-Fi;塑膠桶才可用。<br>
+<b>校正會漂移</b>:電池位置、管內配重、黏附殘渣都會影響,每隔幾批重新驗證一次。
+</div>
+
+<h2>📡 資料接收</h2>
+<p>韌體支援多種回傳目標:HTTP POST(自架服務)、MQTT、Ubidots、Brewfather、Fermentrack、InfluxDB。本專案的紀錄流程是把每批資料記進 <code>tommy_home_brewing.ods</code>,再由 <code>tools/build_brewlog.py</code> 產生 <code>brew-log/</code> 的比重曲線;若改用 iSpindel,建議讓它寫入資料庫或 CSV,再把關鍵時點(投酵母、乾投、綠燈)手動填進 .ods,避免曲線被幾百筆雜訊讀數淹沒。</p>
+
+<div class="footer">
+資料來源:iSpindel 官方文件(universam1/iSpindel)的 Schaltplan.md 與 Parts.md · 共用器材資料見 <a href="equipment-reference.html">equipment-reference.html</a>
+</div>
+
+</div>
+</body>
+</html>

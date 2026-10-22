@@ -14,8 +14,8 @@
 | ABV | ~6.6-7.5% |
 | IBU | ~25-30 |
 | EBC | 14-16(橘金) |
-| 麥芽 | **整公斤**:Golden Promise 2 + Munich 1 + 小麥 1 + 燕麥麥芽 0.5(1kg 包分兩批)= 4.5kg |
-| 酒花 | **230g・Hoppy Mix 陣容**:Strata 56 / Mosaic 56 / Citra 28 / Nelson 28 / Peacharine 28 / The Bruce 28 / Magnum 6 · Whirlpool 84 + DH1 56 + DH2 84 散投 |
+| 麥芽 | **整公斤**:**Maris Otter 2**(2026-10-22 由 Golden Promise 改,與 #0013 共用基麥)+ Munich 1 + 小麥 1 + 燕麥麥芽 0.5(1kg 包分兩批)= 4.5kg |
+| 酒花 | **230g・實購陣容(2026-10-22 改為 Tommy 用過的品種)**:Citra 84 / Mosaic 56 / Galaxy 56 / **Superdelic 28(新)** / Magnum 6 · Whirlpool 84 + DH1 56 + DH2 84 散投 |
 | 酵母 | **Pomona 1 包**(一律單包)→ 高壓純氧直投;發酵快 → 投後 12h 起量 |
 | 可發酵糖 | 無(不加 DME/Maltodextrin) |
 | 添加物 | Fermaid-O 5g（投酵母 2.5g + 投後 24h 2.5g;備選 Fermaid-K 3g 煮沸末）+ Maturex L (ALDC) 0.2-0.3ml |
@@ -182,13 +182,14 @@
   - ⚠️ **VC 必須配 KMS，不可單用**——抗壞血酸抓氧會產生 H₂O₂，遇酒中微量鐵/銅走 Fenton 反應生成羥自由基，**比不加更糟**。KMS 負責收掉 H₂O₂
   - 需 **0.01g 精度電子秤**；沒有就用 Campden 錠
 - [ ] **LalBrew Pomona 1 包**(一律單包)
-- [ ] 麥芽(**整公斤,總 4.5kg,無 DME**):**Golden Promise 2kg** + **Munich Light 1kg** + Château Wheat Blanc **1kg** + **燕麥麥芽 1kg 包**(本批用 0.5)
-- [ ] 酒花(**總 230g**,28g 整包,**Hoppy Mix 陣容**):**Strata 56g(2包)** + **Mosaic 56g(2包)** + **Citra 28g** + **Nelson Sauvin 28g** + **Peacharine 28g** + **The Bruce 28g** + Magnum 6g
-  - 缺料替代:The Bruce→Citra / Peacharine→Nectaron(最貼)或 El Dorado / Nelson→Motueka 或 Galaxy / Strata→Galaxy+Citra 各半 / Mosaic→Galaxy、El Dorado。**釀前先確認庫存**
+- [ ] 麥芽(**整公斤,總 4.5kg,無 DME**):**Maris Otter 2kg**(與 #0013 共用,可買 5kg 袋) + **Munich Light 1kg** + Château Wheat Blanc **1kg** + **燕麥麥芽 1kg 包**(本批用 0.5)
+- [ ] 酒花(**總 230g**,28g 整包):**Citra 3 包** + **Mosaic 2 包** + **Galaxy 2 包** + **Superdelic 1 包(新)** + Magnum 6g(庫存)
+  - 2026-10-22 全面換成**你用過的品種**(舊版 Strata/Nelson/Peacharine/The Bruce 台灣難買且從未用過,已撤)
+  - 缺料替代:Superdelic→Amarillo 28g
   - 苦花 Magnum 6g(60min・濾袋・煮完撈出)
-  - Whirlpool 78°C **84g**(Strata 28 + Mosaic 28 + The Bruce 28,濾袋、撈出)
-  - **DH1 56g**(Nelson 28 + Strata 28)—— OG 降一半投(Day 1 起量),泡 3-5 天撈出
-  - **DH2 56g**(Peacharine 28 + Mosaic 28)—— **綠燈後才投**,泡 2-3 天
+  - Whirlpool 78°C **84g**(Citra 28 + Mosaic 28 + Galaxy 28,濾袋、撈出)
+  - **DH1 56g**(Galaxy 28 + Citra 28,**濾袋**)—— OG 降一半投(Day 1 起量),泡 3-5 天撈出
+  - **DH2 84g**(Mosaic 28 + **Superdelic 28** + Citra 28,**散投不裝袋**)—— **綠燈後才投**,泡 2-3 天
 - [ ] 礦物鹽:**氯化鈣 1.5g、石膏 0g（v2.5 歸零——硫酸鹽放大苦味、又是酸性鹽）**；**小蘇打 NaHCO₃**（mash pH <5.2 才加，先 1g、攪勻再測、上限 3g）；**❌ 絕不買磷酸/乳酸**（這支水太軟低鹼 KH40，加酸只會更酸——#0008 就是踩這雷）
 - [ ] 水質假設：新北市淡水區自來水 + 櫻花 SAKURA 淨水（F0271 礦纖除菌 + F0231 活性碳除氯，**不軟化水**）→ pH 6.35 / KH 40 / GH 25 / 無餘氯（軟水低鹼微酸，為淡水區原水）。鈣偏低故 CaCl₂ 上修到 1.5g；低鹼故 mash pH 多半自落 5.3-5.5、輕調或免調。**換水源要重量 KH/GH 再算**
 

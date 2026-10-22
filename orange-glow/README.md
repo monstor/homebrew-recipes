@@ -14,7 +14,7 @@
 | ABV | ~6.6-7.5% |
 | IBU | ~25-30 |
 | EBC | 14-16(橘金) |
-| 麥芽 | **整公斤**:**Maris Otter 2**(2026-10-22 由 Golden Promise 改,與 #0013 共用基麥)+ Munich 1 + 小麥 1 + 燕麥麥芽 0.5(1kg 包分兩批)= 4.5kg |
+| 麥芽 | **整公斤**:**Maris Otter 2**(2026-10-22 由 Golden Promise 改)+ Munich 1 + 小麥 1 + 燕麥麥芽 0.5(1kg 包分兩批)= 4.5kg |
 | 酒花 | **230g・實購陣容(2026-10-22 改為 Tommy 用過的品種)**:Citra 84 / Mosaic 56 / Galaxy 56 / **Superdelic 28(新)** / Magnum 6 · Whirlpool 84 + DH1 56 + DH2 84 散投 |
 | 酵母 | **Pomona 1 包**(一律單包)→ 高壓純氧直投;發酵快 → 投後 12h 起量 |
 | 可發酵糖 | 無(不加 DME/Maltodextrin) |
@@ -182,7 +182,7 @@
   - ⚠️ **VC 必須配 KMS，不可單用**——抗壞血酸抓氧會產生 H₂O₂，遇酒中微量鐵/銅走 Fenton 反應生成羥自由基，**比不加更糟**。KMS 負責收掉 H₂O₂
   - 需 **0.01g 精度電子秤**；沒有就用 Campden 錠
 - [ ] **LalBrew Pomona 1 包**(一律單包)
-- [ ] 麥芽(**整公斤,總 4.5kg,無 DME**):**Maris Otter 2kg**(與 #0013 共用,可買 5kg 袋) + **Munich Light 1kg** + Château Wheat Blanc **1kg** + **燕麥麥芽 1kg 包**(本批用 0.5)
+- [ ] 麥芽(**整公斤,總 4.5kg,無 DME**):**Maris Otter 2kg** + **Munich Light 1kg** + Château Wheat Blanc **1kg** + **燕麥麥芽 1kg 包**(本批用 0.5)
 - [ ] 酒花(**總 230g**,28g 整包):**Citra 3 包** + **Mosaic 2 包** + **Galaxy 2 包** + **Superdelic 1 包(新)** + Magnum 6g(庫存)
   - 2026-10-22 全面換成**你用過的品種**(舊版 Strata/Nelson/Peacharine/The Bruce 台灣難買且從未用過,已撤)
   - 缺料替代:Superdelic→Amarillo 28g

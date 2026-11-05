@@ -15,7 +15,7 @@
 | IBU | ~25-30 |
 | EBC | 14-16(橘金) |
 | 麥芽 | **整公斤**:**Maris Otter 2**(2026-10-22 由 Golden Promise 改)+ Munich 1 + 小麥 1 + 燕麥麥芽 0.5(1kg 包分兩批)= 4.5kg |
-| 酒花 | **230g**(2026-11-05 定案):Citra 84 / Mosaic 56 / **Nectaron 56(新,取代 Galaxy)** / **Superdelic 28(新)** / Magnum 6 · Whirlpool 84 + DH1 56 + DH2 84 散投 |
+| 酒花 | **230g**(2026-11-05 定案):Citra 84 / Mosaic 56 / **Nectaron 56(新,取代 Galaxy)** / Amarillo 28 / Magnum 6 · Whirlpool 84 + DH1 56 + DH2 84 散投。**本批只試 Nectaron 一支新酒花**,Superdelic 留下一批 |
 | 酵母 | **Pomona 1 包**(一律單包)→ 高壓純氧直投;發酵快 → 投後 12h 起量 |
 | 可發酵糖 | 無(不加 DME/Maltodextrin) |
 | 添加物 | Fermaid-O 5g（投酵母 2.5g + 投後 24h 2.5g;備選 Fermaid-K 3g 煮沸末）+ Maturex L (ALDC) 0.2-0.3ml |
@@ -183,13 +183,13 @@
   - 需 **0.01g 精度電子秤**；沒有就用 Campden 錠
 - [ ] **LalBrew Pomona 1 包**(一律單包)
 - [ ] 麥芽(**整公斤,總 4.5kg,無 DME**):**Maris Otter 2kg** + **Munich Light 1kg** + Château Wheat Blanc **1kg** + **燕麥麥芽 1kg 包**(本批用 0.5)
-- [ ] 酒花(**總 230g**,28g 整包):**Citra 3 包** + **Mosaic 2 包** + **Nectaron 2 包(新)** + **Superdelic 2 包(新・店裡全部,用 1 留 1)**＋Magnum 6g(庫存)。**Galaxy 不買**
-  - **2026-11-05:Nectaron 2 包取代 Galaxy 2 包、Superdelic 佔 DH2 的 Amarillo 位子**,兩支新紐西蘭酒花一次上,不另留對照批。兩支都是硫醇前驅物高的品種,配 Pomona 的高生物轉化最對味
-  - 缺料替代:Nectaron→Galaxy / Superdelic→Amarillo 28g
+- [ ] 酒花(**總 230g**,28g 整包):**Citra 3 包** + **Mosaic 2 包** + **Nectaron 4 包(新・本批用 2、下批用 2)** + **Superdelic 2 包(店裡全部・本批不用,留下一批)** + Amarillo 1 包 ＋ Magnum 6g(庫存)。**Galaxy 不買**
+  - **2026-11-05:本批只試 Nectaron 一支新酒花**(2 包取代 Galaxy 2 包)。Nectaron 硫醇前驅物高,配 Pomona 的高生物轉化最對味 → 放旋渦 + DH1。**Superdelic 留下一批單獨放 DH2**,兩批各一個變數。兩支都先買(Nectaron 剩 5 拿 4、Superdelic 剩 2 全拿),真空冷凍放一年
+  - 缺料替代:Nectaron→Galaxy
   - 苦花 Magnum 6g(60min・濾袋・煮完撈出)。⚠️ 苦花完全靠 α 酸,庫存若是舊貨照包裝 α% 重算,必要時加到 7-8g
   - Whirlpool 78°C **84g**(Citra 28 + Mosaic 28 + **Nectaron 28**,濾袋、撈出)
   - **DH1 56g**(**Nectaron 28** + Citra 28,**濾袋**)—— OG 降一半投(Day 1 起量),泡 3-5 天撈出
-  - **DH2 84g**(Mosaic 28 + **Superdelic 28** + Citra 28,**散投不裝袋**)—— **綠燈後才投**,泡 2-3 天
+  - **DH2 84g**(Mosaic 28 + Amarillo 28 + Citra 28,**散投不裝袋**)—— **綠燈後才投**,泡 2-3 天
 - [ ] 礦物鹽:**氯化鈣 1.5g、石膏 0g（v2.5 歸零——硫酸鹽放大苦味、又是酸性鹽）**；**小蘇打 NaHCO₃**（mash pH <5.2 才加，先 1g、攪勻再測、上限 3g）；**❌ 絕不買磷酸/乳酸**（這支水太軟低鹼 KH40，加酸只會更酸——#0008 就是踩這雷）
 - [ ] 水質假設：新北市淡水區自來水 + 櫻花 SAKURA 淨水（F0271 礦纖除菌 + F0231 活性碳除氯，**不軟化水**）→ pH 6.35 / KH 40 / GH 25 / 無餘氯（軟水低鹼微酸，為淡水區原水）。鈣偏低故 CaCl₂ 上修到 1.5g；低鹼故 mash pH 多半自落 5.3-5.5、輕調或免調。**換水源要重量 KH/GH 再算**
 

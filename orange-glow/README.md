@@ -183,8 +183,8 @@
   - 需 **0.01g 精度電子秤**；沒有就用 Campden 錠
 - [ ] **LalBrew Pomona 1 包**(一律單包)
 - [ ] 麥芽(**整公斤,總 4.5kg,無 DME**):**Maris Otter 2kg** + **Munich Light 1kg** + Château Wheat Blanc **1kg** + **燕麥麥芽 1kg 包**(本批用 0.5)
-- [ ] 酒花(**總 230g**,28g 整包):**Citra 3 包** + **Mosaic 2 包** + **Nectaron 4 包(新・本批用 2、下批用 2)** + **Superdelic 2 包(店裡全部・本批不用,留下一批)** + Amarillo 1 包 ＋ Magnum 6g(庫存)。**Galaxy 不買**
-  - **2026-11-05:本批只試 Nectaron 一支新酒花**(2 包取代 Galaxy 2 包)。Nectaron 硫醇前驅物高,配 Pomona 的高生物轉化最對味 → 放旋渦 + DH1。**Superdelic 留下一批單獨放 DH2**,兩批各一個變數。兩支都先買(Nectaron 剩 5 拿 4、Superdelic 剩 2 全拿),真空冷凍放一年
+- [ ] 酒花(**總 230g**,28g 整包):**Citra 3 包** + **Mosaic 2 包** + **Nectaron 2 包(新)** + **Superdelic 2 包(店裡全部・本批不用,#0013 用)** + Amarillo 1 包 ＋ Magnum 6g(庫存)。**Galaxy 不買**
+  - **2026-11-05:本批只試 Nectaron 一支新酒花**(2 包取代 Galaxy 2 包)。Nectaron 硫醇前驅物高,配 Pomona 的高生物轉化最對味 → 放旋渦 + DH1。**新酒花一律換在「Galaxy 的那 2 包」位置(旋渦 28 + DH1 28),一批換一支**:#0009 = Galaxy(已釀,基準線)→ **#0012 = Nectaron** → **#0013 = Superdelic**(剛好 2 包)。同位置、同酒譜 → 三支酒花可直接對比。⚠️ #0013 要等 #0012 喝過才定案。兩支都先買(Superdelic 店裡只剩 2,全拿),真空冷凍放一年
   - 缺料替代:Nectaron→Galaxy
   - 苦花 Magnum 6g(60min・濾袋・煮完撈出)。⚠️ 苦花完全靠 α 酸,庫存若是舊貨照包裝 α% 重算,必要時加到 7-8g
   - Whirlpool 78°C **84g**(Citra 28 + Mosaic 28 + **Nectaron 28**,濾袋、撈出)

@@ -50,3 +50,6 @@ _MG_*
 batch-notes/
 
 __pycache__/
+
+# RAPT Pill 遙測原始資料(15 分鐘一筆,不入版控;結案時摘要寫進 .ods)
+rapt-data/

@@ -120,11 +120,11 @@
       <rect x="240" y="20" width="206" height="150" rx="8" fill="var(--tile)" stroke="var(--accent)" stroke-width="1.5"/>
       <rect x="240" y="20" width="206" height="26" rx="8" fill="var(--accent)"/>
       <text x="343" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--page)">② 開釀日</text>
-      <text x="252" y="66" font-size="11.5" fill="var(--ink2)">· 寫批次號到 CURRENT_BATCH</text>
-      <text x="252" y="86" font-size="11.5" fill="var(--ink2)">· 啟動接收器 service</text>
-      <text x="252" y="106" font-size="11.5" fill="var(--ink2)">· 開 Funnel,抄網址</text>
-      <text x="252" y="126" font-size="11.5" fill="var(--ink2)">· RAPT 後台貼上網址</text>
-      <text x="252" y="150" font-size="10.5" fill="var(--bad)">確認第一筆真的進來</text>
+      <text x="252" y="68" font-size="11.5" fill="var(--ink2)">· rapt-brewday.sh start 0012</text>
+      <text x="264" y="86" font-size="10.5" fill="var(--muted)">↑ 設批次 + 啟動 + 開公網</text>
+      <text x="252" y="108" font-size="11.5" fill="var(--ink2)">· 把它印的網址貼到 RAPT</text>
+      <text x="252" y="128" font-size="11.5" fill="var(--ink2)">· Pill 下桶、投酵母</text>
+      <text x="252" y="152" font-size="10.5" fill="var(--bad)">status 確認第一筆進來</text>
     </g>
     <line x1="450" y1="95" x2="470" y2="95" stroke="var(--accent)" stroke-width="2" marker-end="url(#ar2)"/>
     <g>
@@ -142,8 +142,8 @@
       <rect x="708" y="20" width="206" height="150" rx="8" fill="var(--tile)" stroke="var(--accent)" stroke-width="1.5"/>
       <rect x="708" y="20" width="206" height="26" rx="8" fill="var(--accent)"/>
       <text x="811" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--page)">④ 轉桶之後</text>
-      <text x="720" y="66" font-size="11.5" fill="var(--ink2)">· 關 Funnel(公網歸零)</text>
-      <text x="720" y="86" font-size="11.5" fill="var(--ink2)">· 停掉 service</text>
+      <text x="720" y="68" font-size="11.5" fill="var(--ink2)">· rapt-brewday.sh stop</text>
+      <text x="732" y="86" font-size="10.5" fill="var(--muted)">↑ 關公網 + 停服務</text>
       <text x="720" y="106" font-size="11.5" fill="var(--ink2)">· Pill 取出、洗淨、充電</text>
       <text x="720" y="126" font-size="11.5" fill="var(--ink2)">· 數據寫回 .ods 結案</text>
       <text x="720" y="150" font-size="10.5" fill="var(--bad)">不釀酒就不要開著公網</text>
@@ -153,31 +153,30 @@
 <div class="cap">圖 2:四個階段。只有②和④要碰 white-piz,③全程在手機上看。</div>
 </div>
 
-<h2>表 1 · 照做就好(指令與動作)</h2>
+<h2>表 1 · 照做就好</h2>
 <table>
-  <tr><th width="12%">時機</th><th width="16%">在哪做</th><th>指令 / 動作</th><th width="26%">確認什麼</th></tr>
+  <tr><th width="12%">時機</th><th width="17%">在哪做</th><th>指令 / 動作</th><th width="27%">確認什麼</th></tr>
   <tr><td><b>釀前一週</b></td><td>手機 RAPT Brew App</td><td>藍牙 Smart Mode → <b>Water Calibration</b>(泡在酸性消毒液裡,順便消毒)→ <b>Enter Known Gravity</b>(用 ≥1.020 的糖水)</td><td>校正值會一直留著,除非拆殼或重寫</td></tr>
-  <tr><td rowspan="5"><b>開釀日</b></td><td>white-piz</td><td><code>echo 0012 &gt; ~/rapt/CURRENT_BATCH</code></td><td>批次號,改完立刻生效,<b>不用重啟</b></td></tr>
-  <tr><td>white-piz</td><td><code>systemctl --user enable --now rapt-receiver</code></td><td><code>systemctl --user is-active rapt-receiver</code> 要回 <code>active</code></td></tr>
-  <tr><td>white-piz</td><td><code>sudo tailscale funnel --bg --https=8443 http://127.0.0.1:8787</code></td><td>這一步才把公網入口打開</td></tr>
-  <tr><td>white-piz</td><td><code>tailscale funnel status</code></td><td>抄下它印出來的網址,<b>後面補上 /&lt;密徑&gt;</b></td></tr>
-  <tr><td>brew.rapt.io</td><td>Data Streams → 新增 <b>Custom</b> → 貼上 <code>https://&lt;網域&gt;:8443/&lt;密徑&gt;</code></td><td>間隔最短 15 分鐘</td></tr>
+  <tr><td><b>開釀日</b></td><td>white-piz</td><td><code>~/rapt/rapt-brewday.sh start 0012</code></td><td>一行做完<b>設批次 → 啟動接收器 → 開 Funnel</b>,最後印出兩個網址。<b>會問一次 sudo 密碼</b>(只有開關公網需要)</td></tr>
+  <tr><td><b>接著</b></td><td>brew.rapt.io</td><td>Data Streams → 新增 <b>Custom</b> → 貼上它印的那個 <code>https://…:8443/&lt;密徑&gt;</code></td><td>間隔最短 15 分鐘</td></tr>
   <tr><td><b>下桶</b></td><td>桶邊</td><td>Pill 消毒後放進發酵桶,投酵母</td><td>Pill 要能<b>自由漂浮</b>,不可卡在桶底或貼壁</td></tr>
-  <tr><td><b>第一筆</b></td><td>white-piz</td><td><code>tail -1 ~/rapt/rapt-data/0012/raw.jsonl</code></td><td>有東西就成了;<b>欄位名跟猜的不同要跟我說</b>,我改 FIELDS</td></tr>
-  <tr><td><b>發酵中</b></td><td>手機(Tailscale 要開)</td><td><code>http://white-piz:8787/&lt;密徑&gt;/chart</code></td><td>圖 5 分鐘自動更新;<code>/chart/0009</code> 可看舊批</td></tr>
-  <tr><td rowspan="2"><b>轉桶後</b></td><td>white-piz</td><td><code>sudo tailscale funnel reset</code></td><td><code>tailscale funnel status</code> 應回 <code>No serve config</code></td></tr>
-  <tr><td>white-piz</td><td><code>systemctl --user disable --now rapt-receiver</code></td><td>Pill 不在桶裡就沒必要開著</td></tr>
+  <tr><td><b>第一筆</b></td><td>white-piz</td><td><code>~/rapt/rapt-brewday.sh status</code></td><td>筆數要 &gt; 0。<b>比重欄位是空的就跟我說</b>,原始封包在 raw.jsonl,我改欄位對應</td></tr>
+  <tr><td><b>發酵中</b></td><td>手機(Tailscale 要開)</td><td>打開 start 印出來的曲線圖網址<br><code>http://&lt;機器&gt;:8787/&lt;密徑&gt;/chart</code></td><td>5 分鐘自動更新;網址後面加批次號(<code>/chart/0009</code>)可看舊批</td></tr>
+  <tr><td><b>轉桶後</b></td><td>white-piz</td><td><code>~/rapt/rapt-brewday.sh stop</code></td><td><b>關 Funnel + 停接收器</b>,公網歸零。資料留在 <code>~/rapt/rapt-data/</code></td></tr>
 </table>
+<div class="why" style="font-size:12.5px">
+<b>腳本在哪:</b>版控在 <code>tools/rapt-brewday.sh</code>,white-piz 上放 <code>~/rapt/</code>。密徑是從 systemd unit 的 <code>RAPT_PATH</code> 讀出來的,<b>沒有寫在腳本裡</b>,所以腳本可以進公開 repo。想連 sudo 都不要問,可以一次性設 <code>sudo tailscale set --operator=$USER</code> —— 這是改系統設定,要你自己決定。
+</div>
 
 <h2>表 2 · 出事的時候</h2>
 <table>
   <tr><th width="30%">症狀</th><th width="34%">多半是這個原因</th><th>怎麼處理</th></tr>
-  <tr><td>手機打不開曲線圖</td><td>手機的 Tailscale 沒連上,或 service 沒跑</td><td>先開 Tailscale;再 <code>systemctl --user is-active rapt-receiver</code></td></tr>
+  <tr><td>手機打不開曲線圖</td><td>手機的 Tailscale 沒連上,或 service 沒跑</td><td>先開 Tailscale;再跑 <code>rapt-brewday.sh status</code> 看接收器在不在</td></tr>
   <tr><td>開曲線圖回 <b>403</b></td><td>網址少了密徑,<b>或你用 Funnel 的公網網址開</b></td><td>曲線圖只走 <code>http://white-piz:8787/…</code>;公網網址只給 RAPT 送資料用</td></tr>
   <tr><td>圖上說「資料還不足以畫圖」</td><td>不到兩筆讀數(15 分鐘才一筆)</td><td>等 30 分鐘再看</td></tr>
   <tr><td>比重欄位是空的</td><td>RAPT 的 JSON 欄位名跟腳本猜的不一樣</td><td>raw.jsonl 原始封包都在,<b>把那一行給我,我改欄位對應再重算</b></td></tr>
-  <tr><td>資料跑進 <code>unassigned/</code></td><td>CURRENT_BATCH 是空的或不存在</td><td>寫進批次號即可;已經落錯的資料夾改名搬過去就好</td></tr>
-  <tr><td>完全沒有資料進來</td><td>Funnel 沒開 / RAPT 那邊 stream 沒存檔</td><td>先 <code>tailscale funnel status</code>,再從 RAPT 後台按一次測試送出</td></tr>
+  <tr><td>資料跑進 <code>unassigned/</code></td><td>CURRENT_BATCH 是空的或不存在</td><td>用 <code>rapt-brewday.sh start &lt;批次號&gt;</code> 重設;已經落錯的資料夾改名搬過去就好</td></tr>
+  <tr><td>完全沒有資料進來</td><td>Funnel 沒開 / RAPT 那邊 stream 沒存檔</td><td>先跑 <code>rapt-brewday.sh status</code> 看「公網」那行,再從 RAPT 後台按一次測試送出</td></tr>
   <tr><td>曲線突然斷一段</td><td>white-piz 重開機,或 Wi-Fi 斷線</td><td><b>資料不會不見</b> —— RAPT 雲端有完整歷史,補抓即可</td></tr>
 </table>
 

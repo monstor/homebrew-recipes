@@ -19,7 +19,7 @@ RAPT 的 Custom webhook payload 格式官方沒有文件,所以本腳本:
 import json, csv, os, pathlib, datetime, sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-# 資料目錄:預設放腳本上一層的 rapt-data/,可用 RAPT_OUT 覆寫(白皮機用這個)
+# 資料目錄:預設放腳本上一層的 rapt-data/,可用 RAPT_OUT 覆寫(white-piz 用這個)
 OUT = pathlib.Path(os.environ.get('RAPT_OUT') or
                    pathlib.Path(__file__).resolve().parent.parent / 'rapt-data')
 

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAPT Pill 遙測 — 開釀日操作指南</title>
+<style>
+  @page{size:A4;margin:10mm;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Noto Sans CJK TC','Noto Sans TC','Microsoft JhengHei',sans-serif;font-size:11px;color:#1a1a1a;line-height:1.45;background:#fff;}
+  .wrap{max-width:190mm;margin:0 auto;padding:8px 10px 24px;}
+  h1{font-size:16px;color:#7c2d12;font-weight:800;display:inline;}
+  h2{font-size:12.5px;color:#7c2d12;font-weight:800;margin:14px 0 4px;border-bottom:2px solid #b45309;padding-bottom:2px;}
+  .meta{font-size:10.5px;color:#555;margin:2px 0 8px;}
+  .fig{margin:6px 0 10px;}
+  .fig svg{width:100%;height:auto;display:block;}
+  .cap{font-size:9.5px;color:#777;margin-top:2px;font-style:italic;}
+  .why{background:#ffedd5;border-left:3px solid #b45309;padding:5px 9px;margin:6px 0;font-size:10.5px;}
+  .why b{color:#7c2d12;}
+  table{width:100%;border-collapse:collapse;margin:5px 0;font-size:10px;}
+  th,td{border:1px solid #bbb;padding:3px 6px;text-align:left;vertical-align:top;}
+  th{background:#b45309;color:#fff;font-size:10px;}
+  tr:nth-child(even) td{background:#fdf6ee;}
+  code{background:#f4f4f0;border:1px solid #ddd;border-radius:3px;padding:0 3px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:9.5px;word-break:break-all;}
+  .st{color:#b45309;font-weight:800;}
+  .rem{margin:6px 0 0;padding:6px 9px;background:#f4f4f0;border-left:3px solid #444;font-size:10.5px;}
+  .rem b{color:#b91c1c;}
+  .rem ul{margin:2px 0 0 18px;}.rem li{margin-bottom:2px;}
+  .foot{margin-top:10px;font-size:9px;color:#999;text-align:center;font-style:italic;}
+  .nav{font-size:10px;margin-bottom:6px;}
+  .nav a{color:#b45309;text-decoration:none;margin-right:12px;}
+  @media print{body{font-size:10.5px;}.wrap{padding:0;}.nav{display:none;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../brew-log/index.html">← 批次索引</a><a href="../">酒譜首頁</a></div>
+
+<h1>📡 RAPT Pill 遙測 — 開釀日操作指南</h1>
+<div class="meta">接收器 <code>tools/rapt_receiver.py</code> · 跑在 white-piz(常開 Linux)· 本頁不含密徑與 Tailscale 網域,實際值只在 white-piz 的 systemd unit 裡</div>
+
+<div class="why">
+<b>這套東西在做什麼:</b>Pill 浮在發酵桶裡,每 15 分鐘把<b>比重與酒溫</b>丟到 RAPT 雲端;雲端再 POST 到 white-piz,存成這批的 CSV;手機打開曲線圖,就能看到比重掉到哪、<b>DH1 窗口到了沒</b> —— 不用開蓋、不用抽樣,少一次氧氣接觸。
+</div>
+
+<h2>圖 1 · 資料怎麼流</h2>
+<div class="fig">
+<svg viewBox="0 0 760 480" role="img" aria-label="RAPT Pill 資料流程圖" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b45309"/>
+    </marker>
+    <marker id="arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2f6f8f"/>
+    </marker>
+  </defs>
+  <g font-family="'Noto Sans CJK TC','Noto Sans TC',sans-serif">
+    <!-- 主鏈 5 個方塊 -->
+    <g>
+      <rect x="170" y="10" width="280" height="52" rx="6" fill="#fdf6ee" stroke="#b45309" stroke-width="1.5"/>
+      <text x="310" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="#7c2d12">RAPT Pill</text>
+      <text x="310" y="50" text-anchor="middle" font-size="11" fill="#555">浮在發酵桶裡,量比重與酒溫</text>
+    </g>
+    <g>
+      <rect x="170" y="110" width="280" height="52" rx="6" fill="#fdf6ee" stroke="#b45309" stroke-width="1.5"/>
+      <text x="310" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#7c2d12">RAPT 雲端 brew.rapt.io</text>
+      <text x="310" y="150" text-anchor="middle" font-size="11" fill="#555">完整歷史永遠留在這裡</text>
+    </g>
+    <g>
+      <rect x="170" y="210" width="280" height="52" rx="6" fill="#fdf6ee" stroke="#b45309" stroke-width="1.5"/>
+      <text x="310" y="232" text-anchor="middle" font-size="14" font-weight="700" fill="#7c2d12">Tailscale Funnel :8443</text>
+      <text x="310" y="250" text-anchor="middle" font-size="11" fill="#b91c1c">公網入口 · 只通 POST</text>
+    </g>
+    <g>
+      <rect x="170" y="310" width="280" height="52" rx="6" fill="#ffedd5" stroke="#b45309" stroke-width="2"/>
+      <text x="310" y="332" text-anchor="middle" font-size="14" font-weight="700" fill="#7c2d12">white-piz 接收器 :8787</text>
+      <text x="310" y="350" text-anchor="middle" font-size="11" fill="#555">密徑不符一律 403</text>
+    </g>
+    <g>
+      <rect x="170" y="410" width="280" height="52" rx="6" fill="#fdf6ee" stroke="#b45309" stroke-width="1.5"/>
+      <text x="310" y="430" text-anchor="middle" font-size="12.5" font-weight="700" fill="#7c2d12">rapt-data/&lt;批次&gt;/readings.csv</text>
+      <text x="310" y="448" text-anchor="middle" font-size="11" fill="#555">+ raw.jsonl(原始封包,欄位不漏)</text>
+    </g>
+    <!-- 箭頭與說明 -->
+    <line x1="310" y1="62" x2="310" y2="104" stroke="#b45309" stroke-width="1.6" marker-end="url(#ar)"/>
+    <text x="160" y="90" text-anchor="end" font-size="11" fill="#7c2d12">Wi-Fi,每 15 分鐘一筆</text>
+    <line x1="310" y1="162" x2="310" y2="204" stroke="#b45309" stroke-width="1.6" marker-end="url(#ar)"/>
+    <text x="160" y="190" text-anchor="end" font-size="11" fill="#7c2d12">Custom Data Stream(POST)</text>
+    <line x1="310" y1="262" x2="310" y2="304" stroke="#b45309" stroke-width="1.6" marker-end="url(#ar)"/>
+    <text x="160" y="290" text-anchor="end" font-size="11" fill="#7c2d12">轉到 127.0.0.1:8787</text>
+    <line x1="310" y1="362" x2="310" y2="404" stroke="#b45309" stroke-width="1.6" marker-end="url(#ar)"/>
+    <text x="160" y="390" text-anchor="end" font-size="11" fill="#7c2d12">照 CURRENT_BATCH 分資料夾</text>
+    <!-- 手機看圖(tailnet) -->
+    <g>
+      <rect x="490" y="310" width="258" height="52" rx="6" fill="#eef5f9" stroke="#2f6f8f" stroke-width="1.5"/>
+      <text x="619" y="332" text-anchor="middle" font-size="13" font-weight="700" fill="#1f5572">手機 / 電腦看曲線圖</text>
+      <text x="619" y="350" text-anchor="middle" font-size="11" fill="#2f6f8f">/chart · 只走 Tailscale,不經公網</text>
+    </g>
+    <line x1="452" y1="336" x2="484" y2="336" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#arb)"/>
+    <text x="619" y="378" text-anchor="middle" font-size="10.5" fill="#b91c1c">Funnel 開著也看不到這頁:曲線圖不在 loopback 上服務</text>
+  </g>
+</svg>
+<div class="cap">圖 1:橘色鏈是資料進來的路(公網),藍色是你看圖的路(只在自己的 Tailscale 網內)。兩條分開,所以公網拿不到發酵資料。</div>
+</div>
+
+<h2>圖 2 · 一批酒的操作順序</h2>
+<div class="fig">
+<svg viewBox="0 0 920 210" role="img" aria-label="開釀日操作順序" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b45309"/>
+    </marker>
+  </defs>
+  <g font-family="'Noto Sans CJK TC','Noto Sans TC',sans-serif">
+    <g>
+      <rect x="6" y="20" width="206" height="150" rx="8" fill="#fdf6ee" stroke="#b45309" stroke-width="1.5"/>
+      <rect x="6" y="20" width="206" height="26" rx="8" fill="#b45309"/>
+      <text x="109" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="#fff">① 釀前一週</text>
+      <text x="18" y="66" font-size="11.5" fill="#1a1a1a">· 消毒液裡做水校正</text>
+      <text x="18" y="86" font-size="11.5" fill="#1a1a1a">· 已知比重校正(≥1.020)</text>
+      <text x="18" y="106" font-size="11.5" fill="#1a1a1a">· Pill 連上 Wi-Fi</text>
+      <text x="18" y="126" font-size="11.5" fill="#1a1a1a">· 確認電量 &gt; 80%</text>
+      <text x="18" y="150" font-size="10.5" fill="#b91c1c">校正過才信得過讀數</text>
+    </g>
+    <line x1="216" y1="95" x2="236" y2="95" stroke="#b45309" stroke-width="2" marker-end="url(#ar2)"/>
+    <g>
+      <rect x="240" y="20" width="206" height="150" rx="8" fill="#fdf6ee" stroke="#b45309" stroke-width="1.5"/>
+      <rect x="240" y="20" width="206" height="26" rx="8" fill="#b45309"/>
+      <text x="343" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="#fff">② 開釀日</text>
+      <text x="252" y="66" font-size="11.5" fill="#1a1a1a">· 寫批次號到 CURRENT_BATCH</text>
+      <text x="252" y="86" font-size="11.5" fill="#1a1a1a">· 啟動接收器 service</text>
+      <text x="252" y="106" font-size="11.5" fill="#1a1a1a">· 開 Funnel,抄網址</text>
+      <text x="252" y="126" font-size="11.5" fill="#1a1a1a">· RAPT 後台貼上網址</text>
+      <text x="252" y="150" font-size="10.5" fill="#b91c1c">確認第一筆真的進來</text>
+    </g>
+    <line x1="450" y1="95" x2="470" y2="95" stroke="#b45309" stroke-width="2" marker-end="url(#ar2)"/>
+    <g>
+      <rect x="474" y="20" width="206" height="150" rx="8" fill="#ffedd5" stroke="#b45309" stroke-width="2"/>
+      <rect x="474" y="20" width="206" height="26" rx="8" fill="#b45309"/>
+      <text x="577" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="#fff">③ 發酵中</text>
+      <text x="486" y="66" font-size="11.5" fill="#1a1a1a">· 手機開曲線圖</text>
+      <text x="486" y="86" font-size="11.5" fill="#1a1a1a">· DH1 方塊亮 ★ → 投酒花</text>
+      <text x="486" y="106" font-size="11.5" fill="#1a1a1a">· 兩次讀數差 ≤0.001 → 綠燈</text>
+      <text x="486" y="126" font-size="11.5" fill="#1a1a1a">· 綠燈後才投 DH2</text>
+      <text x="486" y="150" font-size="10.5" fill="#b91c1c">看比重不看日子</text>
+    </g>
+    <line x1="684" y1="95" x2="704" y2="95" stroke="#b45309" stroke-width="2" marker-end="url(#ar2)"/>
+    <g>
+      <rect x="708" y="20" width="206" height="150" rx="8" fill="#fdf6ee" stroke="#b45309" stroke-width="1.5"/>
+      <rect x="708" y="20" width="206" height="26" rx="8" fill="#b45309"/>
+      <text x="811" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="#fff">④ 轉桶之後</text>
+      <text x="720" y="66" font-size="11.5" fill="#1a1a1a">· 關 Funnel(公網歸零)</text>
+      <text x="720" y="86" font-size="11.5" fill="#1a1a1a">· 停掉 service</text>
+      <text x="720" y="106" font-size="11.5" fill="#1a1a1a">· Pill 取出、洗淨、充電</text>
+      <text x="720" y="126" font-size="11.5" fill="#1a1a1a">· 數據寫回 .ods 結案</text>
+      <text x="720" y="150" font-size="10.5" fill="#b91c1c">不釀酒就不要開著公網</text>
+    </g>
+  </g>
+</svg>
+<div class="cap">圖 2:四個階段。只有②和④要碰 white-piz,③全程在手機上看。</div>
+</div>
+
+<h2>表 1 · 照做就好(指令與動作)</h2>
+<table>
+  <tr><th width="12%">時機</th><th width="16%">在哪做</th><th>指令 / 動作</th><th width="26%">確認什麼</th></tr>
+  <tr><td><b>釀前一週</b></td><td>手機 RAPT Brew App</td><td>藍牙 Smart Mode → <b>Water Calibration</b>(泡在酸性消毒液裡,順便消毒)→ <b>Enter Known Gravity</b>(用 ≥1.020 的糖水)</td><td>校正值會一直留著,除非拆殼或重寫</td></tr>
+  <tr><td rowspan="5"><b>開釀日</b></td><td>white-piz</td><td><code>echo 0012 &gt; ~/rapt/CURRENT_BATCH</code></td><td>批次號,改完立刻生效,<b>不用重啟</b></td></tr>
+  <tr><td>white-piz</td><td><code>systemctl --user enable --now rapt-receiver</code></td><td><code>systemctl --user is-active rapt-receiver</code> 要回 <code>active</code></td></tr>
+  <tr><td>white-piz</td><td><code>sudo tailscale funnel --bg --https=8443 http://127.0.0.1:8787</code></td><td>這一步才把公網入口打開</td></tr>
+  <tr><td>white-piz</td><td><code>tailscale funnel status</code></td><td>抄下它印出來的網址,<b>後面補上 /&lt;密徑&gt;</b></td></tr>
+  <tr><td>brew.rapt.io</td><td>Data Streams → 新增 <b>Custom</b> → 貼上 <code>https://&lt;網域&gt;:8443/&lt;密徑&gt;</code></td><td>間隔最短 15 分鐘</td></tr>
+  <tr><td><b>下桶</b></td><td>桶邊</td><td>Pill 消毒後放進發酵桶,投酵母</td><td>Pill 要能<b>自由漂浮</b>,不可卡在桶底或貼壁</td></tr>
+  <tr><td><b>第一筆</b></td><td>white-piz</td><td><code>tail -1 ~/rapt/rapt-data/0012/raw.jsonl</code></td><td>有東西就成了;<b>欄位名跟猜的不同要跟我說</b>,我改 FIELDS</td></tr>
+  <tr><td><b>發酵中</b></td><td>手機(Tailscale 要開)</td><td><code>http://white-piz:8787/&lt;密徑&gt;/chart</code></td><td>圖 5 分鐘自動更新;<code>/chart/0009</code> 可看舊批</td></tr>
+  <tr><td rowspan="2"><b>轉桶後</b></td><td>white-piz</td><td><code>sudo tailscale funnel reset</code></td><td><code>tailscale funnel status</code> 應回 <code>No serve config</code></td></tr>
+  <tr><td>white-piz</td><td><code>systemctl --user disable --now rapt-receiver</code></td><td>Pill 不在桶裡就沒必要開著</td></tr>
+</table>
+
+<h2>表 2 · 出事的時候</h2>
+<table>
+  <tr><th width="30%">症狀</th><th width="34%">多半是這個原因</th><th>怎麼處理</th></tr>
+  <tr><td>手機打不開曲線圖</td><td>手機的 Tailscale 沒連上,或 service 沒跑</td><td>先開 Tailscale;再 <code>systemctl --user is-active rapt-receiver</code></td></tr>
+  <tr><td>開曲線圖回 <b>403</b></td><td>網址少了密徑,<b>或你用 Funnel 的公網網址開</b></td><td>曲線圖只走 <code>http://white-piz:8787/…</code>;公網網址只給 RAPT 送資料用</td></tr>
+  <tr><td>圖上說「資料還不足以畫圖」</td><td>不到兩筆讀數(15 分鐘才一筆)</td><td>等 30 分鐘再看</td></tr>
+  <tr><td>比重欄位是空的</td><td>RAPT 的 JSON 欄位名跟腳本猜的不一樣</td><td>raw.jsonl 原始封包都在,<b>把那一行給我,我改欄位對應再重算</b></td></tr>
+  <tr><td>資料跑進 <code>unassigned/</code></td><td>CURRENT_BATCH 是空的或不存在</td><td>寫進批次號即可;已經落錯的資料夾改名搬過去就好</td></tr>
+  <tr><td>完全沒有資料進來</td><td>Funnel 沒開 / RAPT 那邊 stream 沒存檔</td><td>先 <code>tailscale funnel status</code>,再從 RAPT 後台按一次測試送出</td></tr>
+  <tr><td>曲線突然斷一段</td><td>white-piz 重開機,或 Wi-Fi 斷線</td><td><b>資料不會不見</b> —— RAPT 雲端有完整歷史,補抓即可</td></tr>
+</table>
+
+<h2>為什麼這樣設計</h2>
+<div class="rem">
+<ul>
+  <li><b>公網只通 POST,曲線圖不通。</b>Funnel 是從 <code>127.0.0.1</code> 轉進來的,接收器刻意不在 loopback 上服務曲線圖 —— 萬一密徑外流,對方最多能往你的紀錄塞垃圾(事後看 raw.jsonl 就認得出來),<b>看不到你的發酵資料</b>。</li>
+  <li><b>密徑是唯一的鎖。</b>路徑裡沒有它一律 403。它只存在 white-piz 的 systemd unit(<code>RAPT_PATH</code>),沒有進版控。要換就改那一行、重啟 service、RAPT 後台網址跟著改。</li>
+  <li><b>DH1 窗口是算出來的,不是寫死的。</b>取這批<b>第一筆讀數當 OG</b>,窗口 = 「OG 降一半 ± 0.005」,規則出自酒譜(orange-glow 寫的是 OG 1.066 → 1.038-1.028)。所以換酒譜、換 OG,圖上的色帶會自己跟著移動。</li>
+  <li><b>一批一個資料夾。</b>批次號讀 <code>CURRENT_BATCH</code> 這個小文字檔,每筆資料都重讀一次 —— 開釀當天改那個檔就換批,不必重啟、不必改程式。</li>
+  <li><b>這份只是副本。</b>RAPT 雲端與手機 App 永遠留有完整歷史。white-piz 這份是給自動化看的,壞了、斷了、刪了都不影響你的紀錄。</li>
+  <li><b>遙測不取代量測。</b>Pill 給的是連續趨勢(什麼時候到窗口、有沒有停);<b>結案寫進 .ods 的 OG / FG 仍以你自己的讀數為準</b>。</li>
+</ul>
+</div>
+
+<div class="foot">tools/rapt-pill-guide.html · 接收器原始碼 tools/rapt_receiver.py · 本頁與 tools/ 一起排除在公開網站之外</div>
+</div>
+</body>
+</html>

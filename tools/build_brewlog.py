@@ -489,7 +489,7 @@ def index_page(batches):
                         f'<td class="num">{esc(b["ABV%"]) or "—"}</td><td class="num">{delta_cell(b,"DH1")}</td><td class="num">{delta_cell(b,"轉桶")}</td><td>{esc(b["評分"]).split("(")[0] or "—"}</td></tr>')
         sections.append(f'<details open class="grp"><summary>{title} <span class="muted">· {len(bs)} 批</span></summary>'
                         f'<table class="idx"><tr><th>批次</th><th>釀造日</th><th>版本 / 風格</th><th>OG → FG</th><th>ABV%</th><th>DH1 Δ天</th><th>轉桶 Δ天</th><th>評分</th></tr>{"".join(rows)}</table></details>')
-    body = f'''<h1>🍺 Brew Log</h1><div class="sub">依酒譜分類(不分版本)→ 批次。每批一頁:數據卡 · 比重曲線(實測 / 事件 / 預期)· 預期 vs 實際誤差 · 分組欄位 · 心得。資料來源 <code>tommy_home_brewing.ods</code>,改完重跑 <code>tools/build_brewlog.py</code></div>
+    body = f'''<h1>🍺 Brew Log</h1><div class="sub">依酒譜分類(不分版本)→ 批次。每批一頁:數據卡 · 比重曲線(實測 / 事件 / 預期)· 預期 vs 實際誤差 · 分組欄位 · 心得。資料來源 <code>tommy_home_brewing.ods</code>,改完重跑 <code>tools/build_brewlog.py</code><br>📡 <a href="../tools/rapt-pill-guide.html">RAPT Pill 遙測 — 開釀日操作指南</a>(資料流程圖、指令表、疑難排解)</div>
 {''.join(sections)}
 <div class="muted" style="margin-top:14px">Δ天 = 實際事件 − 【預期】區間(✓ = 落在區間內;負 = 提早)。產生時間 {datetime.now().strftime("%Y-%m-%d %H:%M")}</div>'''
     return page("Brew Log — 批次索引", body, back=False)

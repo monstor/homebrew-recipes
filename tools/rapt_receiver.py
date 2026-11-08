@@ -9,9 +9,14 @@ endpoint 掛在公網,所以 RAPT_PATH 設一段亂碼當密徑,只有 URL 結�
 請求才收,其他一律 403。實際值在 white-piz 的 systemd unit 裡,不入版控。
 
 RAPT 的 Custom webhook payload 格式官方沒有文件,所以本腳本:
-  1. 先把**原始 JSON 整筆**存進 rapt-data/raw.jsonl —— 任何欄位都不會遺失
-  2. 再盡力從常見欄位名猜出比重/溫度/電量,寫成 rapt-data/readings.csv 方便看
+  1. 先把**原始 JSON 整筆**存進 <批次>/raw.jsonl —— 任何欄位都不會遺失
+  2. 再盡力從常見欄位名猜出比重/溫度/電量,寫成 <批次>/readings.csv 方便看
 第一筆真實資料進來後,照 raw.jsonl 的實際欄位名把 FIELDS 改精準即可。
+
+檔案照批次分資料夾,批次號讀 rapt-data 旁邊的 CURRENT_BATCH 文字檔:
+    rapt-data/0012/readings.csv + raw.jsonl
+    rapt-data/unassigned/...      ← CURRENT_BATCH 不存在或空的時候
+開釀時只要改 CURRENT_BATCH 的內容就換批,不必重啟服務。
 
 資料不會因為這台機器睡著而遺失:RAPT 雲端與手機 App 永遠留有完整歷史,
 這份只是給自動化看的副本。
@@ -26,8 +31,23 @@ OUT = pathlib.Path(os.environ.get('RAPT_OUT') or
 # 這個 endpoint 掛在公網(Tailscale Funnel),所以只收帶密徑的請求,
 # 其他路徑一律 403 —— 否則任何人都能往釀造記錄塞垃圾資料。
 PATH_TOKEN = os.environ.get('RAPT_PATH', '')
-RAW, CSVF = OUT / 'raw.jsonl', OUT / 'readings.csv'
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8787
+
+# 批次號放在 CURRENT_BATCH 這個小文字檔裡(例如內容就是 0012),每筆資料都重讀
+# 一次 → 開釀時改那個檔就換批,不必重啟服務。沒有檔或是空的就落在 unassigned/。
+# 照批次分而不照天分:釀造紀錄本來就是一批一列,照天分之後還要自己拼回去。
+BATCH_FILE = pathlib.Path(os.environ.get('RAPT_BATCH_FILE') or OUT.parent / 'CURRENT_BATCH')
+
+
+def batch_dir():
+    try:
+        name = BATCH_FILE.read_text(encoding='utf-8').strip().splitlines()[0].strip()
+    except Exception:
+        name = ''
+    safe = ''.join(c for c in name if c.isalnum() or c in '-_#') or 'unassigned'
+    d = OUT / safe.lstrip('#')
+    d.mkdir(parents=True, exist_ok=True)
+    return d
 
 # 候選欄位名(RAPT 未公開格式 → 多猜幾個,取第一個有值的)
 FIELDS = {
@@ -63,29 +83,33 @@ class Handler(BaseHTTPRequestHandler):
         n = int(self.headers.get('Content-Length') or 0)
         body = self.rfile.read(n)
         now = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='seconds')
-        OUT.mkdir(exist_ok=True)
+        d = batch_dir()
+        raw, csvf = d / 'raw.jsonl', d / 'readings.csv'
         try:
             data = json.loads(body)
         except Exception:
             data = {'_unparsed': body.decode('utf-8', 'replace')}
-        with RAW.open('a', encoding='utf-8') as f:
+        with raw.open('a', encoding='utf-8') as f:
             f.write(json.dumps({'received_utc': now, 'payload': data}, ensure_ascii=False) + '\n')
         row = {'received_utc': now}
         row.update({k: pick(data, v) for k, v in FIELDS.items()})
-        new = not CSVF.exists()
-        with CSVF.open('a', newline='', encoding='utf-8') as f:
+        new = not csvf.exists()
+        with csvf.open('a', newline='', encoding='utf-8') as f:
             w = csv.DictWriter(f, fieldnames=COLS, extrasaction='ignore')
             if new:
                 w.writeheader()
             w.writerow(row)
-        print(f'{now}  sg={row["sg"]}  temp={row["temp_c"]}  batt={row["battery"]}', flush=True)
+        print(f'{now}  [{d.name}]  sg={row["sg"]}  temp={row["temp_c"]}  batt={row["battery"]}', flush=True)
         self.send_response(200); self.send_header('Content-Length', '2'); self.end_headers()
         self.wfile.write(b'ok')
 
     def do_GET(self):  # 給 tailscale funnel / 自己測活著沒
         if not self.ok_path():
             return
-        body = f'rapt receiver up; {sum(1 for _ in RAW.open()) if RAW.exists() else 0} readings\n'.encode()
+        d = batch_dir()
+        raw = d / 'raw.jsonl'
+        n = sum(1 for _ in raw.open(encoding='utf-8')) if raw.exists() else 0
+        body = f'rapt receiver up; batch={d.name}; {n} readings\n'.encode()
         self.send_response(200); self.send_header('Content-Length', str(len(body))); self.end_headers()
         self.wfile.write(body)
 
@@ -94,6 +118,6 @@ class Handler(BaseHTTPRequestHandler):
 
 
 if __name__ == '__main__':
-    OUT.mkdir(exist_ok=True)
-    print(f'listening on 127.0.0.1:{PORT} → {OUT}', flush=True)
+    OUT.mkdir(parents=True, exist_ok=True)
+    print(f'listening on 127.0.0.1:{PORT} → {OUT}  (batch file: {BATCH_FILE})', flush=True)
     ThreadingHTTPServer(('127.0.0.1', PORT), Handler).serve_forever()

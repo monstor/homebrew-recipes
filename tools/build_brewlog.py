@@ -507,6 +507,10 @@ def main():
         print(f'{b["批次"]:9s} points={len(pts):2d}  ' + ", ".join(f"{l}:{s:.3f}@{d:.1f}" for d, s, l in pts) + (f"\n{'':10s}events: " + ", ".join(f"{l}@{d:.1f}" for d, l in ev) if ev else ""))
     with open(os.path.join(OUT, "index.html"), "w", encoding="utf-8") as f:
         f.write(index_page(batches))
+    # 同一份 CSS 也輸出成檔案,給手寫的頁(tools/rapt-pill-guide.html)連 ——
+    # 樣式只有這裡一個來源,不會兩邊各改一份而走樣
+    with open(os.path.join(OUT, "style.css"), "w", encoding="utf-8") as f:
+        f.write(CSS)
     print(f"→ {OUT}/index.html + {len(batches)} pages")
 
 if __name__ == "__main__":

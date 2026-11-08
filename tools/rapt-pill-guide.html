@@ -4,32 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RAPT Pill 遙測 — 開釀日操作指南</title>
+<link rel="stylesheet" href="../brew-log/style.css">
 <style>
-  @page{size:A4;margin:10mm;}
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:'Noto Sans CJK TC','Noto Sans TC','Microsoft JhengHei',sans-serif;font-size:11px;color:#1a1a1a;line-height:1.45;background:#fff;}
-  .wrap{max-width:190mm;margin:0 auto;padding:8px 10px 24px;}
-  h1{font-size:16px;color:#7c2d12;font-weight:800;display:inline;}
-  h2{font-size:12.5px;color:#7c2d12;font-weight:800;margin:14px 0 4px;border-bottom:2px solid #b45309;padding-bottom:2px;}
-  .meta{font-size:10.5px;color:#555;margin:2px 0 8px;}
-  .fig{margin:6px 0 10px;}
-  .fig svg{width:100%;height:auto;display:block;}
-  .cap{font-size:9.5px;color:#777;margin-top:2px;font-style:italic;}
-  .why{background:#ffedd5;border-left:3px solid #b45309;padding:5px 9px;margin:6px 0;font-size:10.5px;}
-  .why b{color:#7c2d12;}
-  table{width:100%;border-collapse:collapse;margin:5px 0;font-size:10px;}
-  th,td{border:1px solid #bbb;padding:3px 6px;text-align:left;vertical-align:top;}
-  th{background:#b45309;color:#fff;font-size:10px;}
-  tr:nth-child(even) td{background:#fdf6ee;}
-  code{background:#f4f4f0;border:1px solid #ddd;border-radius:3px;padding:0 3px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:9.5px;word-break:break-all;}
-  .st{color:#b45309;font-weight:800;}
-  .rem{margin:6px 0 0;padding:6px 9px;background:#f4f4f0;border-left:3px solid #444;font-size:10.5px;}
-  .rem b{color:#b91c1c;}
-  .rem ul{margin:2px 0 0 18px;}.rem li{margin-bottom:2px;}
-  .foot{margin-top:10px;font-size:9px;color:#999;text-align:center;font-style:italic;}
-  .nav{font-size:10px;margin-bottom:6px;}
-  .nav a{color:#b45309;text-decoration:none;margin-right:12px;}
-  @media print{body{font-size:10.5px;}.wrap{padding:0;}.nav{display:none;}}
+  /* 只有這頁自己要的東西;顏色一律用 brew-log/style.css 的 token,深色模式才跟著走 */
+  .fig{margin:14px 0 6px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px}
+  .fig svg{width:100%;height:auto;display:block}
+  .cap{font-size:12px;color:var(--muted);margin-top:8px}
+  .why{background:var(--tile);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;margin:14px 0;font-size:13.5px}
+  .why b{color:var(--accent)}
+  h2{font-size:15px;margin:26px 0 6px;color:var(--ink);font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}
+  th,td{padding:6px 8px;border-bottom:1px solid var(--grid);text-align:left;vertical-align:top}
+  th{color:var(--muted);font-weight:500;font-size:12px}
+  tr:hover td{background:var(--tile)}
+  code{background:var(--tile);border:1px solid var(--border);border-radius:4px;padding:0 4px;
+       font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;overflow-wrap:anywhere}
+  .rem{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:12px 14px;margin:8px 0;font-size:13.5px}
+  .rem ul{margin:0 0 0 18px}.rem li{margin-bottom:6px}
+  .rem b{color:var(--ink)}
+  .warn{color:var(--bad)}
 </style>
 </head>
 <body>
@@ -37,7 +30,7 @@
 <div class="nav"><a href="../brew-log/index.html">← 批次索引</a><a href="../">酒譜首頁</a></div>
 
 <h1>📡 RAPT Pill 遙測 — 開釀日操作指南</h1>
-<div class="meta">接收器 <code>tools/rapt_receiver.py</code> · 跑在 white-piz(常開 Linux)· 本頁不含密徑與 Tailscale 網域,實際值只在 white-piz 的 systemd unit 裡</div>
+<div class="sub">接收器 <code>tools/rapt_receiver.py</code> · 跑在 white-piz(常開 Linux)· 本頁不含密徑與 Tailscale 網域,實際值只在 white-piz 的 systemd unit 裡</div>
 
 <div class="why">
 <b>這套東西在做什麼:</b>Pill 浮在發酵桶裡,每 15 分鐘把<b>比重與酒溫</b>丟到 RAPT 雲端;雲端再 POST 到 white-piz,存成這批的 CSV;手機打開曲線圖,就能看到比重掉到哪、<b>DH1 窗口到了沒</b> —— 不用開蓋、不用抽樣,少一次氧氣接觸。
@@ -48,56 +41,56 @@
 <svg viewBox="0 0 760 480" role="img" aria-label="RAPT Pill 資料流程圖" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#b45309"/>
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
     </marker>
     <marker id="arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#2f6f8f"/>
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--s1)"/>
     </marker>
   </defs>
-  <g font-family="'Noto Sans CJK TC','Noto Sans TC',sans-serif">
+  <g>
     <!-- 主鏈 5 個方塊 -->
     <g>
-      <rect x="170" y="10" width="280" height="52" rx="6" fill="#fdf6ee" stroke="#b45309" stroke-width="1.5"/>
-      <text x="310" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="#7c2d12">RAPT Pill</text>
-      <text x="310" y="50" text-anchor="middle" font-size="11" fill="#555">浮在發酵桶裡,量比重與酒溫</text>
+      <rect x="170" y="10" width="280" height="52" rx="6" fill="var(--tile)" stroke="var(--accent)" stroke-width="1.5"/>
+      <text x="310" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">RAPT Pill</text>
+      <text x="310" y="50" text-anchor="middle" font-size="11" fill="var(--ink2)">浮在發酵桶裡,量比重與酒溫</text>
     </g>
     <g>
-      <rect x="170" y="110" width="280" height="52" rx="6" fill="#fdf6ee" stroke="#b45309" stroke-width="1.5"/>
-      <text x="310" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#7c2d12">RAPT 雲端 brew.rapt.io</text>
-      <text x="310" y="150" text-anchor="middle" font-size="11" fill="#555">完整歷史永遠留在這裡</text>
+      <rect x="170" y="110" width="280" height="52" rx="6" fill="var(--tile)" stroke="var(--accent)" stroke-width="1.5"/>
+      <text x="310" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">RAPT 雲端 brew.rapt.io</text>
+      <text x="310" y="150" text-anchor="middle" font-size="11" fill="var(--ink2)">完整歷史永遠留在這裡</text>
     </g>
     <g>
-      <rect x="170" y="210" width="280" height="52" rx="6" fill="#fdf6ee" stroke="#b45309" stroke-width="1.5"/>
-      <text x="310" y="232" text-anchor="middle" font-size="14" font-weight="700" fill="#7c2d12">Tailscale Funnel :8443</text>
-      <text x="310" y="250" text-anchor="middle" font-size="11" fill="#b91c1c">公網入口 · 只通 POST</text>
+      <rect x="170" y="210" width="280" height="52" rx="6" fill="var(--tile)" stroke="var(--accent)" stroke-width="1.5"/>
+      <text x="310" y="232" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">Tailscale Funnel :8443</text>
+      <text x="310" y="250" text-anchor="middle" font-size="11" fill="var(--bad)">公網入口 · 只通 POST</text>
     </g>
     <g>
-      <rect x="170" y="310" width="280" height="52" rx="6" fill="#ffedd5" stroke="#b45309" stroke-width="2"/>
-      <text x="310" y="332" text-anchor="middle" font-size="14" font-weight="700" fill="#7c2d12">white-piz 接收器 :8787</text>
-      <text x="310" y="350" text-anchor="middle" font-size="11" fill="#555">密徑不符一律 403</text>
+      <rect x="170" y="310" width="280" height="52" rx="6" fill="var(--tile)" stroke="var(--accent)" stroke-width="3"/>
+      <text x="310" y="332" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">white-piz 接收器 :8787</text>
+      <text x="310" y="350" text-anchor="middle" font-size="11" fill="var(--ink2)">密徑不符一律 403</text>
     </g>
     <g>
-      <rect x="170" y="410" width="280" height="52" rx="6" fill="#fdf6ee" stroke="#b45309" stroke-width="1.5"/>
-      <text x="310" y="430" text-anchor="middle" font-size="12.5" font-weight="700" fill="#7c2d12">rapt-data/&lt;批次&gt;/readings.csv</text>
-      <text x="310" y="448" text-anchor="middle" font-size="11" fill="#555">+ raw.jsonl(原始封包,欄位不漏)</text>
+      <rect x="170" y="410" width="280" height="52" rx="6" fill="var(--tile)" stroke="var(--accent)" stroke-width="1.5"/>
+      <text x="310" y="430" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">rapt-data/&lt;批次&gt;/readings.csv</text>
+      <text x="310" y="448" text-anchor="middle" font-size="11" fill="var(--ink2)">+ raw.jsonl(原始封包,欄位不漏)</text>
     </g>
     <!-- 箭頭與說明 -->
-    <line x1="310" y1="62" x2="310" y2="104" stroke="#b45309" stroke-width="1.6" marker-end="url(#ar)"/>
-    <text x="160" y="90" text-anchor="end" font-size="11" fill="#7c2d12">Wi-Fi,每 15 分鐘一筆</text>
-    <line x1="310" y1="162" x2="310" y2="204" stroke="#b45309" stroke-width="1.6" marker-end="url(#ar)"/>
-    <text x="160" y="190" text-anchor="end" font-size="11" fill="#7c2d12">Custom Data Stream(POST)</text>
-    <line x1="310" y1="262" x2="310" y2="304" stroke="#b45309" stroke-width="1.6" marker-end="url(#ar)"/>
-    <text x="160" y="290" text-anchor="end" font-size="11" fill="#7c2d12">轉到 127.0.0.1:8787</text>
-    <line x1="310" y1="362" x2="310" y2="404" stroke="#b45309" stroke-width="1.6" marker-end="url(#ar)"/>
-    <text x="160" y="390" text-anchor="end" font-size="11" fill="#7c2d12">照 CURRENT_BATCH 分資料夾</text>
+    <line x1="310" y1="62" x2="310" y2="104" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#ar)"/>
+    <text x="160" y="90" text-anchor="end" font-size="11" fill="var(--ink)">Wi-Fi,每 15 分鐘一筆</text>
+    <line x1="310" y1="162" x2="310" y2="204" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#ar)"/>
+    <text x="160" y="190" text-anchor="end" font-size="11" fill="var(--ink)">Custom Data Stream(POST)</text>
+    <line x1="310" y1="262" x2="310" y2="304" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#ar)"/>
+    <text x="160" y="290" text-anchor="end" font-size="11" fill="var(--ink)">轉到 127.0.0.1:8787</text>
+    <line x1="310" y1="362" x2="310" y2="404" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#ar)"/>
+    <text x="160" y="390" text-anchor="end" font-size="11" fill="var(--ink)">照 CURRENT_BATCH 分資料夾</text>
     <!-- 手機看圖(tailnet) -->
     <g>
-      <rect x="490" y="310" width="258" height="52" rx="6" fill="#eef5f9" stroke="#2f6f8f" stroke-width="1.5"/>
-      <text x="619" y="332" text-anchor="middle" font-size="13" font-weight="700" fill="#1f5572">手機 / 電腦看曲線圖</text>
-      <text x="619" y="350" text-anchor="middle" font-size="11" fill="#2f6f8f">/chart · 只走 Tailscale,不經公網</text>
+      <rect x="490" y="310" width="258" height="52" rx="6" fill="var(--tile)" stroke="var(--s1)" stroke-width="1.5"/>
+      <text x="619" y="332" text-anchor="middle" font-size="13" font-weight="700" fill="var(--s1)">手機 / 電腦看曲線圖</text>
+      <text x="619" y="350" text-anchor="middle" font-size="11" fill="var(--s1)">/chart · 只走 Tailscale,不經公網</text>
     </g>
-    <line x1="452" y1="336" x2="484" y2="336" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#arb)"/>
-    <text x="619" y="378" text-anchor="middle" font-size="10.5" fill="#b91c1c">Funnel 開著也看不到這頁:曲線圖不在 loopback 上服務</text>
+    <line x1="452" y1="336" x2="484" y2="336" stroke="var(--s1)" stroke-width="1.6" marker-end="url(#arb)"/>
+    <text x="619" y="378" text-anchor="middle" font-size="10.5" fill="var(--bad)">Funnel 開著也看不到這頁:曲線圖不在 loopback 上服務</text>
   </g>
 </svg>
 <div class="cap">圖 1:橘色鏈是資料進來的路(公網),藍色是你看圖的路(只在自己的 Tailscale 網內)。兩條分開,所以公網拿不到發酵資料。</div>
@@ -108,52 +101,52 @@
 <svg viewBox="0 0 920 210" role="img" aria-label="開釀日操作順序" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#b45309"/>
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
     </marker>
   </defs>
-  <g font-family="'Noto Sans CJK TC','Noto Sans TC',sans-serif">
+  <g>
     <g>
-      <rect x="6" y="20" width="206" height="150" rx="8" fill="#fdf6ee" stroke="#b45309" stroke-width="1.5"/>
-      <rect x="6" y="20" width="206" height="26" rx="8" fill="#b45309"/>
-      <text x="109" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="#fff">① 釀前一週</text>
-      <text x="18" y="66" font-size="11.5" fill="#1a1a1a">· 消毒液裡做水校正</text>
-      <text x="18" y="86" font-size="11.5" fill="#1a1a1a">· 已知比重校正(≥1.020)</text>
-      <text x="18" y="106" font-size="11.5" fill="#1a1a1a">· Pill 連上 Wi-Fi</text>
-      <text x="18" y="126" font-size="11.5" fill="#1a1a1a">· 確認電量 &gt; 80%</text>
-      <text x="18" y="150" font-size="10.5" fill="#b91c1c">校正過才信得過讀數</text>
+      <rect x="6" y="20" width="206" height="150" rx="8" fill="var(--tile)" stroke="var(--accent)" stroke-width="1.5"/>
+      <rect x="6" y="20" width="206" height="26" rx="8" fill="var(--accent)"/>
+      <text x="109" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--page)">① 釀前一週</text>
+      <text x="18" y="66" font-size="11.5" fill="var(--ink2)">· 消毒液裡做水校正</text>
+      <text x="18" y="86" font-size="11.5" fill="var(--ink2)">· 已知比重校正(≥1.020)</text>
+      <text x="18" y="106" font-size="11.5" fill="var(--ink2)">· Pill 連上 Wi-Fi</text>
+      <text x="18" y="126" font-size="11.5" fill="var(--ink2)">· 確認電量 &gt; 80%</text>
+      <text x="18" y="150" font-size="10.5" fill="var(--bad)">校正過才信得過讀數</text>
     </g>
-    <line x1="216" y1="95" x2="236" y2="95" stroke="#b45309" stroke-width="2" marker-end="url(#ar2)"/>
+    <line x1="216" y1="95" x2="236" y2="95" stroke="var(--accent)" stroke-width="2" marker-end="url(#ar2)"/>
     <g>
-      <rect x="240" y="20" width="206" height="150" rx="8" fill="#fdf6ee" stroke="#b45309" stroke-width="1.5"/>
-      <rect x="240" y="20" width="206" height="26" rx="8" fill="#b45309"/>
-      <text x="343" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="#fff">② 開釀日</text>
-      <text x="252" y="66" font-size="11.5" fill="#1a1a1a">· 寫批次號到 CURRENT_BATCH</text>
-      <text x="252" y="86" font-size="11.5" fill="#1a1a1a">· 啟動接收器 service</text>
-      <text x="252" y="106" font-size="11.5" fill="#1a1a1a">· 開 Funnel,抄網址</text>
-      <text x="252" y="126" font-size="11.5" fill="#1a1a1a">· RAPT 後台貼上網址</text>
-      <text x="252" y="150" font-size="10.5" fill="#b91c1c">確認第一筆真的進來</text>
+      <rect x="240" y="20" width="206" height="150" rx="8" fill="var(--tile)" stroke="var(--accent)" stroke-width="1.5"/>
+      <rect x="240" y="20" width="206" height="26" rx="8" fill="var(--accent)"/>
+      <text x="343" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--page)">② 開釀日</text>
+      <text x="252" y="66" font-size="11.5" fill="var(--ink2)">· 寫批次號到 CURRENT_BATCH</text>
+      <text x="252" y="86" font-size="11.5" fill="var(--ink2)">· 啟動接收器 service</text>
+      <text x="252" y="106" font-size="11.5" fill="var(--ink2)">· 開 Funnel,抄網址</text>
+      <text x="252" y="126" font-size="11.5" fill="var(--ink2)">· RAPT 後台貼上網址</text>
+      <text x="252" y="150" font-size="10.5" fill="var(--bad)">確認第一筆真的進來</text>
     </g>
-    <line x1="450" y1="95" x2="470" y2="95" stroke="#b45309" stroke-width="2" marker-end="url(#ar2)"/>
+    <line x1="450" y1="95" x2="470" y2="95" stroke="var(--accent)" stroke-width="2" marker-end="url(#ar2)"/>
     <g>
-      <rect x="474" y="20" width="206" height="150" rx="8" fill="#ffedd5" stroke="#b45309" stroke-width="2"/>
-      <rect x="474" y="20" width="206" height="26" rx="8" fill="#b45309"/>
-      <text x="577" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="#fff">③ 發酵中</text>
-      <text x="486" y="66" font-size="11.5" fill="#1a1a1a">· 手機開曲線圖</text>
-      <text x="486" y="86" font-size="11.5" fill="#1a1a1a">· DH1 方塊亮 ★ → 投酒花</text>
-      <text x="486" y="106" font-size="11.5" fill="#1a1a1a">· 兩次讀數差 ≤0.001 → 綠燈</text>
-      <text x="486" y="126" font-size="11.5" fill="#1a1a1a">· 綠燈後才投 DH2</text>
-      <text x="486" y="150" font-size="10.5" fill="#b91c1c">看比重不看日子</text>
+      <rect x="474" y="20" width="206" height="150" rx="8" fill="var(--tile)" stroke="var(--accent)" stroke-width="3"/>
+      <rect x="474" y="20" width="206" height="26" rx="8" fill="var(--accent)"/>
+      <text x="577" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--page)">③ 發酵中</text>
+      <text x="486" y="66" font-size="11.5" fill="var(--ink2)">· 手機開曲線圖</text>
+      <text x="486" y="86" font-size="11.5" fill="var(--ink2)">· DH1 方塊亮 ★ → 投酒花</text>
+      <text x="486" y="106" font-size="11.5" fill="var(--ink2)">· 兩次讀數差 ≤0.001 → 綠燈</text>
+      <text x="486" y="126" font-size="11.5" fill="var(--ink2)">· 綠燈後才投 DH2</text>
+      <text x="486" y="150" font-size="10.5" fill="var(--bad)">看比重不看日子</text>
     </g>
-    <line x1="684" y1="95" x2="704" y2="95" stroke="#b45309" stroke-width="2" marker-end="url(#ar2)"/>
+    <line x1="684" y1="95" x2="704" y2="95" stroke="var(--accent)" stroke-width="2" marker-end="url(#ar2)"/>
     <g>
-      <rect x="708" y="20" width="206" height="150" rx="8" fill="#fdf6ee" stroke="#b45309" stroke-width="1.5"/>
-      <rect x="708" y="20" width="206" height="26" rx="8" fill="#b45309"/>
-      <text x="811" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="#fff">④ 轉桶之後</text>
-      <text x="720" y="66" font-size="11.5" fill="#1a1a1a">· 關 Funnel(公網歸零)</text>
-      <text x="720" y="86" font-size="11.5" fill="#1a1a1a">· 停掉 service</text>
-      <text x="720" y="106" font-size="11.5" fill="#1a1a1a">· Pill 取出、洗淨、充電</text>
-      <text x="720" y="126" font-size="11.5" fill="#1a1a1a">· 數據寫回 .ods 結案</text>
-      <text x="720" y="150" font-size="10.5" fill="#b91c1c">不釀酒就不要開著公網</text>
+      <rect x="708" y="20" width="206" height="150" rx="8" fill="var(--tile)" stroke="var(--accent)" stroke-width="1.5"/>
+      <rect x="708" y="20" width="206" height="26" rx="8" fill="var(--accent)"/>
+      <text x="811" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--page)">④ 轉桶之後</text>
+      <text x="720" y="66" font-size="11.5" fill="var(--ink2)">· 關 Funnel(公網歸零)</text>
+      <text x="720" y="86" font-size="11.5" fill="var(--ink2)">· 停掉 service</text>
+      <text x="720" y="106" font-size="11.5" fill="var(--ink2)">· Pill 取出、洗淨、充電</text>
+      <text x="720" y="126" font-size="11.5" fill="var(--ink2)">· 數據寫回 .ods 結案</text>
+      <text x="720" y="150" font-size="10.5" fill="var(--bad)">不釀酒就不要開著公網</text>
     </g>
   </g>
 </svg>
@@ -200,7 +193,7 @@
 </ul>
 </div>
 
-<div class="foot">tools/rapt-pill-guide.html · 接收器原始碼 tools/rapt_receiver.py · 本頁與 tools/ 一起排除在公開網站之外</div>
+<div class="muted" style="margin-top:28px">tools/rapt-pill-guide.html · 接收器原始碼 tools/rapt_receiver.py · 本頁與 tools/ 一起排除在公開網站之外</div>
 </div>
 </body>
 </html>

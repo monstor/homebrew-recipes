@@ -61,13 +61,14 @@ def batch_dir():
 
 # 候選欄位名(RAPT 未公開格式 → 多猜幾個,取第一個有值的)
 FIELDS = {
-    'sg':      ('gravity', 'sg', 'specificGravity', 'gravityVelocity'),
-    'temp_c':  ('temperature', 'temp', 'temperatureCelsius'),
-    'battery': ('battery', 'batteryLevel', 'batteryPercent'),
-    'rssi':    ('rssi', 'signalStrength'),
-    'device':  ('name', 'deviceName', 'macAddress', 'id'),
+    'sg':        ('gravity',),
+    'temp_c':    ('temperature',),
+    'battery':   ('battery',),
+    'rssi':      ('rssi',),
+    'device':    ('name', 'deviceId'),
+    'device_utc': ('timestamp',),
 }
-COLS = ['received_utc', 'sg', 'temp_c', 'battery', 'rssi', 'device']
+COLS = ['received_utc', 'device_utc', 'sg', 'temp_c', 'battery', 'rssi', 'device']
 
 # DH1 的投放窗口(比重降到 OG 一半附近)。圖上畫成一條帶子,一眼看出到了沒。
 DH1_LO, DH1_HI = 1.028, 1.038   # 只在還沒有 OG 可算的時候當預設(= #0012 的窗口)
@@ -96,7 +97,8 @@ def read_rows(d):
     with f.open(encoding='utf-8', newline='') as fh:
         for r in csv.DictReader(fh):
             try:
-                t = datetime.datetime.fromisoformat(r['received_utc'])
+                t = datetime.datetime.fromisoformat(
+                    (r.get('device_utc') or r['received_utc']).replace('Z', '+00:00'))
             except Exception:
                 continue
             def num(k):
@@ -110,7 +112,14 @@ def read_rows(d):
     return out
 
 
-def svg_chart(rows, w=880, h=380, pad=52):
+def abv(og, sg):
+    """ABV 不在封包裡(RAPT 網頁也是算的):(OG − SG) × 131.25,OG 取第一筆讀數。"""
+    if not og or not sg or og <= 1.0 or sg > og:
+        return None
+    return (og - sg) * 131.25
+
+
+def svg_chart(rows, w=880, h=380, pad=58):
     """手繪 inline SVG:比重(左軸)+ 溫度(右軸)。不外連任何 CDN,離線可看。"""
     d_lo, d_hi, _og = dh1_window(rows)
     pts = [r for r in rows if r['sg'] is not None]
@@ -122,11 +131,12 @@ def svg_chart(rows, w=880, h=380, pad=52):
     lo, hi = min(sgs + [d_lo]), max(sgs + [d_hi])
     m = max((hi - lo) * 0.12, 0.004)
     lo, hi = lo - m, hi + m
-    temps = [r['temp'] for r in rows if r['temp'] is not None]
-    tlo, thi = (min(temps) - 1, max(temps) + 1) if temps else (0, 1)
-    if thi - tlo < 2:
-        tlo, thi = tlo - 1, thi + 1
-    iw, ih = w - 2 * pad, h - 2 * pad
+    # 右軸固定 0-100:酒溫(°C)、ABV(%)、電量(%)三者量級相同,共用一條真實刻度,
+    # 不做任何正規化 —— 縮放過的線看起來好看,但讀出來的數字是假的。
+    tlo, thi = 0.0, 100.0
+    og = pts[0]['sg']
+    padr = 104   # 右側留白:線尾數值標籤 + 右軸刻度各佔一半
+    iw, ih = w - pad - padr, h - 2 * pad
 
     def x(t):
         return pad + iw * (t - t0).total_seconds() / span
@@ -151,7 +161,7 @@ def svg_chart(rows, w=880, h=380, pad=52):
         p.append(f'<line x1="{pad}" y1="{y:.1f}" x2="{pad + iw}" y2="{y:.1f}" class="grid"/>')
         p.append(f'<text x="{pad - 8}" y="{y + 4:.1f}" class="ax" text-anchor="end">{v:.3f}</text>')
         tv = tlo + (thi - tlo) * i / 4   # 右軸與左軸同向:都是下面小、上面大
-        p.append(f'<text x="{pad + iw + 8}" y="{y + 4:.1f}" class="ax t">{tv:.1f}°</text>')
+        p.append(f'<text x="{pad + iw + 56}" y="{y + 4:.1f}" class="ax t">{tv:.0f}</text>')
     hours = span / 3600
     step = max(round(hours / 6), 1)
     k = 0
@@ -161,23 +171,31 @@ def svg_chart(rows, w=880, h=380, pad=52):
                  f'{k * step}h</text>')
         k += 1
     # 溫度線(先畫,壓在比重下面)
-    tp = [r for r in rows if r['temp'] is not None]
-    if len(tp) > 1:
-        d = ' '.join(f'{x(r["t"]):.1f},{ytemp(r["temp"]):.1f}' for r in tp)
-        p.append(f'<polyline points="{d}" class="ltemp"/>')
+    for key, cls, val in (('batt', 'lbatt', lambda r: r['batt']),
+                          ('temp', 'ltemp', lambda r: r['temp']),
+                          ('sg',   'labv',  lambda r: abv(og, r['sg']))):
+        sp = [(r['t'], val(r)) for r in rows if r.get(key) is not None]
+        sp = [(t, v) for t, v in sp if v is not None]
+        if len(sp) > 1:
+            d = ' '.join(f'{x(t):.1f},{ytemp(v):.1f}' for t, v in sp)
+            p.append(f'<polyline points="{d}" class="{cls}"/>')
+            p.append(f'<text x="{pad + iw + 6}" y="{ytemp(sp[-1][1]) + 3:.1f}" '
+                     f'class="vl v-{cls[1:]}">{sp[-1][1]:.1f}</text>')
     d = ' '.join(f'{x(r["t"]):.1f},{ysg(r["sg"]):.1f}' for r in pts)
     p.append(f'<polyline points="{d}" class="lsg"/>')
     last = pts[-1]
     p.append(f'<circle cx="{x(last["t"]):.1f}" cy="{ysg(last["sg"]):.1f}" r="4" class="dot"/>')
+    p.append(f'<text x="{pad + iw + 56}" y="{pad - 14}" class="ax t">°C / %</text>')
+    p.append(f'<text x="{pad - 8}" y="{pad - 14}" class="ax" text-anchor="end">比重</text>')
     p.append('</svg>')
     return ''.join(p)
 
 
 CSS = """:root{--bg:#fbfaf7;--fg:#23201c;--mut:#7c756b;--line:#e3ded4;--sg:#b4530a;
---temp:#2f6f8f;--band:rgba(180,83,10,.10);--card:#fff}
+--temp:#2f6f8f;--abv:#2f7d4f;--batt:#8a8378;--band:rgba(180,83,10,.10);--card:#fff}
 @media(prefers-color-scheme:dark){:root{--bg:#191714;--fg:#ece7df;--mut:#9c948a;
---line:#332f29;--card:#211e1a;--sg:#f0923c;--temp:#6fb4d4;
---band:rgba(240,146,60,.14)}}
+--line:#332f29;--card:#211e1a;--sg:#f0923c;--temp:#6fb4d4;--abv:#6cbd8c;
+--batt:#9c948a;--band:rgba(240,146,60,.14)}}
 *{box-sizing:border-box}
 body{margin:0;padding:20px 16px 40px;background:var(--bg);color:var(--fg);
 font:15px/1.55 -apple-system,"Helvetica Neue","PingFang TC","Noto Sans TC",sans-serif}
@@ -198,6 +216,10 @@ border-radius:10px}
 .lbl{fill:var(--sg);font-size:10px}
 .lsg{fill:none;stroke:var(--sg);stroke-width:2.5;stroke-linejoin:round}
 .ltemp{fill:none;stroke:var(--temp);stroke-width:1.5;stroke-dasharray:4 3}
+.labv{fill:none;stroke:var(--abv);stroke-width:1.5}
+.lbatt{fill:none;stroke:var(--batt);stroke-width:1.2;stroke-dasharray:1 3}
+.vl{font-size:10px;font-weight:600;stroke:none}
+.vl.v-temp{fill:var(--temp)}.vl.v-abv{fill:var(--abv)}.vl.v-batt{fill:var(--batt)}
 .dot{fill:var(--sg)}
 .key{font-size:12px;color:var(--mut);margin:8px 0 20px}
 .key i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:5px}
@@ -222,14 +244,18 @@ def chart_page(d, rows, batches=(), base=''):
     age = '—'
     if rows:
         mins = (datetime.datetime.now(datetime.timezone.utc) - last['t']).total_seconds() / 60
-        age = f'{mins:.0f} 分鐘前' if mins < 180 else f'{mins / 60:.1f} 小時前'
+        # 裝置時鐘可能比本機快幾秒,算出負數就寫「剛剛」
+        age = ('剛剛' if mins < 1 else
+               f'{mins:.0f} 分鐘前' if mins < 180 else f'{mins / 60:.1f} 小時前')
     elapsed = f'{(rows[-1]["t"] - rows[0]["t"]).total_seconds() / 3600:.1f} h' if len(rows) > 1 else '—'
     d_lo, d_hi, og = dh1_window(rows)
     dh1 = '—'
     if isinstance(cur, float):
         dh1 = ('已過站(低於窗口)' if cur < d_lo else
                '★ 到了,投 DH1' if cur <= d_hi else '還沒到')
+    a = abv(first_sg, cur) if (first_sg and cur) else None
     tiles = [('批次', d.name), ('比重', fmt(cur)), ('酒溫', fmt(last.get('temp'), 1, '°C')),
+             ('ABV', f'{a:.1f}%' if a is not None else '—'),
              ('發酵度', att or '—'), ('DH1', dh1), ('電量', fmt(last.get('batt'), 0, '%')),
              ('筆數', str(len(rows))), ('最新讀數', age), ('經過', elapsed)]
     rowsrev = rows[::-1][:24]
@@ -251,7 +277,10 @@ def chart_page(d, rows, batches=(), base=''):
 <h1>RAPT Pill — 批次 {d.name}</h1>
 {svg_chart(rows)}
 <p class="key"><i style="background:var(--sg)"></i>比重(左軸)
-&nbsp;&nbsp;<i style="background:var(--temp)"></i>酒溫(右軸)
+&nbsp;&nbsp;<i style="background:var(--temp)"></i>酒溫 °C
+&nbsp;&nbsp;<i style="background:var(--abv)"></i>ABV %
+&nbsp;&nbsp;<i style="background:var(--batt)"></i>電量 %
+<span class="muted">(後三者共用右軸 0–100,未經縮放)</span>
 &nbsp;&nbsp;<span style="color:var(--sg)">▇</span> DH1 窗口 {d_hi:.3f}–{d_lo:.3f}{ogtxt}</p>
 <div class="tiles">{''.join(f'<div class="tile"><b>{k}</b><span>{v}</span></div>' for k, v in tiles)}</div>
 <table><thead><tr><th>時間</th><th>比重</th><th>溫度</th><th>電量</th></tr></thead>
@@ -263,9 +292,14 @@ DH1 窗口照這批自己的 OG 算:OG 降一半 ±0.005,規則出自酒譜。</
 
 
 def pick(d, keys):
-    for k in keys:
-        if isinstance(d, dict) and d.get(k) is not None:
-            return d[k]
+    """RAPT 的量測值包在 data 底下,裝置資訊在最外層,所以兩層都找。"""
+    if not isinstance(d, dict):
+        return ''
+    for src in (d, d.get('data')):
+        if isinstance(src, dict):
+            for k in keys:
+                if src.get(k) is not None:
+                    return src[k]
     return ''
 
 
@@ -292,8 +326,11 @@ class Handler(BaseHTTPRequestHandler):
             data = json.loads(body)
         except Exception:
             data = {'_unparsed': body.decode('utf-8', 'replace')}
+        # headers 一起存:RAPT 的簽章 header 與 content-type 只能從真實封包看到
         with raw.open('a', encoding='utf-8') as f:
-            f.write(json.dumps({'received_utc': now, 'payload': data}, ensure_ascii=False) + '\n')
+            f.write(json.dumps({'received_utc': now, 'path': self.path,
+                                'headers': dict(self.headers.items()), 'payload': data},
+                               ensure_ascii=False) + '\n')
         row = {'received_utc': now}
         row.update({k: pick(data, v) for k, v in FIELDS.items()})
         new = not csvf.exists()

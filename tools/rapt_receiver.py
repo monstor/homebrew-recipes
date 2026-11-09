@@ -179,6 +179,8 @@ def svg_chart(rows, w=880, h=380, pad=58):
         if len(sp) > 1:
             d = ' '.join(f'{x(t):.1f},{ytemp(v):.1f}' for t, v in sp)
             p.append(f'<polyline points="{d}" class="{cls}"/>')
+            p.append(f'<circle cx="{x(sp[-1][0]):.1f}" cy="{ytemp(sp[-1][1]):.1f}" r="3.5" '
+                     f'class="dot d-{cls[1:]}"/>')
             p.append(f'<text x="{pad + iw + 6}" y="{ytemp(sp[-1][1]) + 3:.1f}" '
                      f'class="vl v-{cls[1:]}">{sp[-1][1]:.1f}</text>')
     d = ' '.join(f'{x(r["t"]):.1f},{ysg(r["sg"]):.1f}' for r in pts)
@@ -191,11 +193,11 @@ def svg_chart(rows, w=880, h=380, pad=58):
     return ''.join(p)
 
 
-CSS = """:root{--bg:#fbfaf7;--fg:#23201c;--mut:#7c756b;--line:#e3ded4;--sg:#b4530a;
---temp:#2f6f8f;--abv:#2f7d4f;--batt:#8a8378;--band:rgba(180,83,10,.10);--card:#fff}
+CSS = """:root{--bg:#fbfaf7;--fg:#23201c;--mut:#7c756b;--line:#e3ded4;--sg:#d94452;
+--temp:#e08a2e;--abv:#c9a227;--batt:#2f9e68;--band:rgba(217,68,82,.10);--card:#fff}
 @media(prefers-color-scheme:dark){:root{--bg:#191714;--fg:#ece7df;--mut:#9c948a;
---line:#332f29;--card:#211e1a;--sg:#f0923c;--temp:#6fb4d4;--abv:#6cbd8c;
---batt:#9c948a;--band:rgba(240,146,60,.14)}}
+--line:#332f29;--card:#211e1a;--sg:#e8505b;--temp:#f0923c;--abv:#f2c744;
+--batt:#4caf7d;--band:rgba(232,80,91,.14)}}
 *{box-sizing:border-box}
 body{margin:0;padding:20px 16px 40px;background:var(--bg);color:var(--fg);
 font:15px/1.55 -apple-system,"Helvetica Neue","PingFang TC","Noto Sans TC",sans-serif}
@@ -215,14 +217,16 @@ border-radius:10px}
 .ax.t{fill:var(--temp)}
 .lbl{fill:var(--sg);font-size:10px}
 .lsg{fill:none;stroke:var(--sg);stroke-width:2.5;stroke-linejoin:round}
-.ltemp{fill:none;stroke:var(--temp);stroke-width:1.5;stroke-dasharray:4 3}
-.labv{fill:none;stroke:var(--abv);stroke-width:1.5}
-.lbatt{fill:none;stroke:var(--batt);stroke-width:1.2;stroke-dasharray:1 3}
+.ltemp{fill:none;stroke:var(--temp);stroke-width:1.8;stroke-linejoin:round}
+.labv{fill:none;stroke:var(--abv);stroke-width:1.8;stroke-linejoin:round}
+.lbatt{fill:none;stroke:var(--batt);stroke-width:1.8;stroke-linejoin:round}
 .vl{font-size:10px;font-weight:600;stroke:none}
 .vl.v-temp{fill:var(--temp)}.vl.v-abv{fill:var(--abv)}.vl.v-batt{fill:var(--batt)}
 .dot{fill:var(--sg)}
+.dot.d-temp{fill:var(--temp)}.dot.d-abv{fill:var(--abv)}.dot.d-batt{fill:var(--batt)}
 .key{font-size:12px;color:var(--mut);margin:8px 0 20px}
-.key i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:5px}
+.key i{display:inline-block;width:9px;height:9px;border-radius:50%;
+vertical-align:middle;margin-right:5px}
 table{width:100%;border-collapse:collapse;font-size:13px;
 font-variant-numeric:tabular-nums}
 th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right}

@@ -156,9 +156,12 @@
 <h2>表 1 · 照做就好</h2>
 <table>
   <tr><th width="12%">時機</th><th width="17%">在哪做</th><th>指令 / 動作</th><th width="27%">確認什麼</th></tr>
-  <tr><td><b>釀前一週</b></td><td>手機 RAPT Brew App</td><td>藍牙 Smart Mode → <b>Water Calibration</b>(泡在酸性消毒液裡,順便消毒)→ <b>Enter Known Gravity</b>(用 ≥1.020 的糖水)</td><td>校正值會一直留著,除非拆殼或重寫</td></tr>
+  <tr><td rowspan="3"><b>開箱<br>(只做一次)</b></td><td>Pill 本體</td><td>插 <b>USB-C</b> → 它會發出 Wi-Fi 熱點 <code>RAPT Pill XXXX</code>(末 4 碼是 MAC),密碼 <code>kegland1</code> → 手機連上去,captive portal 會自動跳出 → 選家裡 Wi-Fi</td><td><b class="warn">插 USB-C 後 10 分鐘自動關閉</b>。SSID 與密碼<b>只能英數字</b>,有特殊字元會連不上。順手抄下 MAC</td></tr>
+  <tr><td>Pill 本體</td><td>連上網後會<b>自動下載韌體</b>,別拔線,讓它跑完</td><td>要 <b>2.0.0 以上</b>。版號在 App 的 Diagnostics</td></tr>
+  <tr><td>手機 RAPT Brew App</td><td>充滿 24 小時(充到紅燈熄)→ 鎖好殼 → 連上 Pill(Smart Mode)→ <b>Water Calibration</b>(水或消毒液,SG 1.000)→ <b>Enter Known Gravity</b>(糖水,SG ≥1.020)</td><td><b>App 要 1.1.4 以上</b>。水溫要接近 <b>20°C</b>:Water Calibration 不能輸入數值,一律當 1.000,25°C 的水其實是 0.9987。<b class="warn">開過殼就要重校</b></td></tr>
   <tr><td><b>開釀日</b></td><td>white-piz</td><td><code>~/rapt/rapt-brewday.sh start 0012</code></td><td>一行做完<b>設批次 → 啟動接收器 → 開 Funnel</b>,最後印出兩個網址。<b>會問一次 sudo 密碼</b>(只有開關公網需要)</td></tr>
-  <tr><td><b>接著</b></td><td>brew.rapt.io</td><td>Data Streams → 新增 <b>Custom</b> → 貼上它印的那個 <code>https://…:8443/&lt;密徑&gt;</code></td><td>間隔最短 15 分鐘</td></tr>
+  <tr><td><b>接著</b></td><td>brew.rapt.io</td><td>點<b>頭像</b> → <b>Manage Account</b> → <b>My Integrations</b> → RAPT Brew Data Stream 欄位選 <b>+Create Stream</b> → 類型 <b>Custom</b> → 貼上 start 印的 <code>https://…:8443/&lt;密徑&gt;</code>,method <b>POST</b></td><td>間隔最短 15 分鐘。<b>不需要設任何 header</b>;它給的 signing secret 我們不驗,擋門的是密徑</td></tr>
+  <tr><td><b class="warn">⚠️ 韌體更新後</b></td><td>brew.rapt.io</td><td><b>把 Data Stream 刪掉重建</b></td><td><b class="warn">2026-11-09 實際踩到:</b>官方 troubleshooting 寫「Pill 更新到韌體 2.0.0 以上後 Web Hooks 需要重建」。舊的 stream 雲端照常有資料,但<b>一筆都不會送出</b>,而且沒有任何錯誤訊息</td></tr>
   <tr><td><b>下桶</b></td><td>桶邊</td><td>Pill 消毒後放進發酵桶,投酵母</td><td>Pill 要能<b>自由漂浮</b>,不可卡在桶底或貼壁</td></tr>
   <tr><td><b>第一筆</b></td><td>white-piz</td><td><code>~/rapt/rapt-brewday.sh status</code></td><td>筆數要 &gt; 0。<b>比重欄位是空的就跟我說</b>,原始封包在 raw.jsonl,我改欄位對應</td></tr>
   <tr><td><b>發酵中</b></td><td>手機(Tailscale 要開)</td><td>打開 start 印出來的曲線圖網址<br><code>http://&lt;機器&gt;:8787/&lt;密徑&gt;/chart</code></td><td>5 分鐘自動更新;網址後面加批次號(<code>/chart/0009</code>)可看舊批</td></tr>
@@ -171,6 +174,7 @@
 <h2>表 2 · 出事的時候</h2>
 <table>
   <tr><th width="30%">症狀</th><th width="34%">多半是這個原因</th><th>怎麼處理</th></tr>
+  <tr><td><b>雲端看得到資料,<br>white-piz 一筆都沒有</b></td><td><b>韌體更新後 Data Stream 沒重建</b>(最常見),或 stream 建錯地方</td><td>到 Manage Account → My Integrations <b>刪掉重建一條 Custom</b>。重建後 15 分鐘內就會進來</td></tr>
   <tr><td>手機打不開曲線圖</td><td>手機的 Tailscale 沒連上,或 service 沒跑</td><td>先開 Tailscale;再跑 <code>rapt-brewday.sh status</code> 看接收器在不在</td></tr>
   <tr><td>開曲線圖回 <b>403</b></td><td>網址少了密徑,<b>或你用 Funnel 的公網網址開</b></td><td>曲線圖只走 <code>http://white-piz:8787/…</code>;公網網址只給 RAPT 送資料用</td></tr>
   <tr><td>圖上說「資料還不足以畫圖」</td><td>不到兩筆讀數(15 分鐘才一筆)</td><td>等 30 分鐘再看</td></tr>
@@ -179,6 +183,24 @@
   <tr><td>完全沒有資料進來</td><td>Funnel 沒開 / RAPT 那邊 stream 沒存檔</td><td>先跑 <code>rapt-brewday.sh status</code> 看「公網」那行,再從 RAPT 後台按一次測試送出</td></tr>
   <tr><td>曲線突然斷一段</td><td>white-piz 重開機,或 Wi-Fi 斷線</td><td><b>資料不會不見</b> —— RAPT 雲端有完整歷史,補抓即可</td></tr>
 </table>
+
+<h2>表 3 · 實測紀錄(真實封包與校正值)</h2>
+<table>
+  <tr><th width="22%">項目</th><th>實測值</th></tr>
+  <tr><td>封包格式<br>(2026-11-09 第一筆)</td><td><code>{"event":"telemetry","deviceId":"…","deviceType":"PillHydrometer","name":"RAPT Pill","timestamp":"…","data":{"temperature":32.94,"gravity":1.0146,"battery":40.61,"rssi":-29}}</code><br><b>量測值包在 <code>data</code> 底下</b>,不是平的 —— 接收器的欄位對應照這個寫</td></tr>
+  <tr><td>簽章 header</td><td><code>X-Rapt-Signature</code>(64 字 hex)· <code>X-Rapt-Timestamp</code>(毫秒)· <code>X-Rapt-Hook-Id</code> · <code>User-Agent: RAPT-Integrations/1.0</code>。目前<b>不驗簽</b>,密徑就是鎖</td></tr>
+  <tr><td>校正紀錄</td><td><b>2026-11-10</b>:Water Calibration(水)+ Enter Known Gravity <b>1.042</b>。下次校正或開殼後要更新這一列</td></tr>
+  <tr><td><b class="warn">Pill vs 折射儀</b></td><td>#0012 入桶當下:折射儀 <b>1.068</b>、Pill <b>1.0814</b>,<b>差 +14 點</b>。兩個可能成因:純氧灌 60-90 秒後微氣泡附著讓它浮高,以及<b>第二校正點 1.042 離 OG 1.068 太遠,外插放大斜率誤差</b>。<b>下次校正第二點改用接近 OG 的值(~1.065)</b>。紀錄用的 OG 一律以折射儀為準,Pill 看趨勢</td></tr>
+  <tr><td>溫度偏差</td><td>2026-11-10 校正時 Pill 比溫度計<b>高約 1.7°C</b>,但那是<b>剛充完電、剛校正完</b>的讀數,電池餘熱還沒散,<b>不能當成真正的偏差</b>。App 裡<b>沒有溫度校正</b>這個選項。要知道真偏差,得泡在液體裡、不插電、靜置一小時以上再跟溫度計對讀 —— <b>還沒做</b></td></tr>
+  <tr><td>省電姿勢</td><td><b>平放 = Deep Sleep</b>(不醒、不回報),立起來或晃動自動喚醒。平常收納就平放</td></tr>
+  <tr><td>Wi-Fi 回報間隔</td><td>官方預設與建議 <b>60 分鐘</b>,明寫「不要短於 60 分鐘」。本專案用 <b>15 分鐘</b>(Data Stream 的下限),代價是耗電 —— 為的是抓 DH1 那半天窗口</td></tr>
+</table>
+
+<h2>RAPT 自己的推播(DH1 提醒)</h2>
+<div class="why" style="font-size:12.5px">
+比重到站的提醒<b>不必自己寫</b>:brew.rapt.io 的 <b>Automations</b> 可以設 <b>Gravity Reached</b>,推播到 RAPT Brew App,iPhone 收到後 Apple Watch 會自動同步。建議設兩個門檻 —— <b>比重低於窗口上緣</b>(DH1 開窗)與<b>低於窗口下緣</b>(已過站的保險)。前提是 My Account 要開 <b>Enable Mobile App (Push) Notifications</b>,手機端也要允許通知。<br>
+RAPT <b>做不到</b>的是<b>電量過低</b>與<b>Pill 停止回報</b>(觸發條件只有比重、比重速率、溫度三種)—— 後者才是會害你錯過窗口的失效模式,那要靠 white-piz 這邊補。
+</div>
 
 <h2>為什麼這樣設計</h2>
 <div class="rem">

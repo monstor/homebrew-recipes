@@ -196,10 +196,16 @@
   <tr><td>Wi-Fi 回報間隔</td><td>官方預設與建議 <b>60 分鐘</b>,明寫「不要短於 60 分鐘」。本專案用 <b>15 分鐘</b>(Data Stream 的下限),代價是耗電 —— 為的是抓 DH1 那半天窗口</td></tr>
 </table>
 
-<h2>RAPT 自己的推播(DH1 提醒)</h2>
+<h2>RAPT 自己的警報(DH1 提醒)</h2>
 <div class="why" style="font-size:12.5px">
-比重到站的提醒<b>不必自己寫</b>:brew.rapt.io 的 <b>Automations</b> 可以設 <b>Gravity Reached</b>,推播到 RAPT Brew App,iPhone 收到後 Apple Watch 會自動同步。建議設兩個門檻 —— <b>比重低於窗口上緣</b>(DH1 開窗)與<b>低於窗口下緣</b>(已過站的保險)。前提是 My Account 要開 <b>Enable Mobile App (Push) Notifications</b>,手機端也要允許通知。<br>
-RAPT <b>做不到</b>的是<b>電量過低</b>與<b>Pill 停止回報</b>(觸發條件只有比重、比重速率、溫度三種)—— 後者才是會害你錯過窗口的失效模式,那要靠 white-piz 這邊補。
+比重到站的提醒<b>不必自己寫</b>,但官方文件把這段寫得很薄,以下是 <b>2026-11-10 實測</b>出來的:<br>
+<b>① 在手機 RAPT Brew App 裡建,不在 brew.rapt.io 網頁</b> —— 文件原文「you can create a custom Pill Hydrometer Automation in the <b>RAPT Brew App</b>」。網頁上找不到這個表單,先前照網頁找是白費工。<br>
+<b>② 建立 ≠ 執行。</b>文件原文「Once the Automation has been created, it can be <b>sent</b> directly to any Pills registered to your RAPT Brew App」、「Automations can also be <b>started</b> from the device page」。只建不送,它只是躺在清單裡的模板,不會響。<br>
+<b>③ 警報是用 Email 來的,不是推播。</b>實測觸發後收到的是 Email;推播始終沒出現,原因未查明(文件只寫「enable notifications for the RAPT Brew App on your mobile device」,新版入口在哪沒寫,舊版 app.rapt.io 的 <code>Enable Mobile App (Push) Notifications</code> 開關不適用)。<b>把 RAPT 的寄件地址設成 iPhone VIP</b>,凌晨那封才會跳通知。<br>
+<b>④ 驗證方法:把門檻暫時設成現在一定成立的值</b>(例如比重 1.081 時設 Less Than 1.090),等一次遙測看會不會響,響了再改回真正的門檻。別用推理驗證。<br>
+設定內容:類型 <b>Gravity Reached</b>、運算子 <b>Less Than</b>、值 = <b>Pill 基準的取樣門檻</b>(#0012 用 1.047),外加一句 Alert Message。溫度護欄另設 <b>Less Than</b>(冰浴過頭)與 <b>Greater Than</b>(冷卻失效)兩條。<br>
+<b class="warn">RAPT 做不到的兩件事</b>:<b>電量過低</b>與<b>Pill 停止回報</b>(觸發條件只有比重、比重速率、溫度三種)。後者才是真正會害你錯過窗口的失效模式 —— Pill 一斷線,RAPT 不會通知你它斷了,那要靠 white-piz 這邊補。<br>
+<b>警報值怎麼換算</b>:Pill 讀數偏高時<b>不要用固定偏差去減</b>。#0012 的兩種誤差模型(固定 +14 點 / 外插比例)對同一個真實窗口給出不同的 Pill 讀數,取<b>兩者重疊區的上緣</b>當警報值,早響無所謂,晚響才是災難;響了只是<b>去取樣</b>,投不投酒花由折射儀決定。
 </div>
 
 <h2>為什麼這樣設計</h2>

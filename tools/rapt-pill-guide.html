@@ -190,7 +190,7 @@
   <tr><td>封包格式<br>(2026-11-09 第一筆)</td><td><code>{"event":"telemetry","deviceId":"…","deviceType":"PillHydrometer","name":"RAPT Pill","timestamp":"…","data":{"temperature":32.94,"gravity":1.0146,"battery":40.61,"rssi":-29}}</code><br><b>量測值包在 <code>data</code> 底下</b>,不是平的 —— 接收器的欄位對應照這個寫</td></tr>
   <tr><td>簽章 header</td><td><code>X-Rapt-Signature</code>(64 字 hex)· <code>X-Rapt-Timestamp</code>(毫秒)· <code>X-Rapt-Hook-Id</code> · <code>User-Agent: RAPT-Integrations/1.0</code>。目前<b>不驗簽</b>,密徑就是鎖</td></tr>
   <tr><td>校正紀錄</td><td><b>2026-11-10</b>:Water Calibration(水)+ Enter Known Gravity <b>1.042</b>。下次校正或開殼後要更新這一列</td></tr>
-  <tr><td><b class="warn">Pill vs 折射儀</b></td><td>#0012 入桶當下:折射儀 <b>1.068</b>、Pill <b>1.0814</b>,<b>差 +14 點</b>。兩個可能成因:純氧灌 60-90 秒後微氣泡附著讓它浮高,以及<b>第二校正點 1.042 離 OG 1.068 太遠,外插放大斜率誤差</b>。<b>下次校正第二點改用接近 OG 的值(~1.065)</b>。紀錄用的 OG 一律以折射儀為準,Pill 看趨勢</td></tr>
+  <tr><td><b class="warn">Pill vs 比重計</b></td><td>#0012 入桶當下:比重計 <b>1.068</b>、Pill <b>1.0814</b>,<b>差 +14 點</b>。兩個可能成因:純氧灌 60-90 秒後微氣泡附著讓它浮高,以及<b>第二校正點 1.042 離 OG 1.068 太遠,外插放大斜率誤差</b>。<b>下次校正第二點改用接近 OG 的值(~1.065)</b>。紀錄用的 OG 一律以比重計為準,Pill 看趨勢</td></tr>
   <tr><td>溫度偏差</td><td>2026-11-10 校正時 Pill 比溫度計<b>高約 1.7°C</b>,但那是<b>剛充完電、剛校正完</b>的讀數,電池餘熱還沒散,<b>不能當成真正的偏差</b>。App 裡<b>沒有溫度校正</b>這個選項。要知道真偏差,得泡在液體裡、不插電、靜置一小時以上再跟溫度計對讀 —— <b>還沒做</b></td></tr>
   <tr><td>省電姿勢</td><td><b>平放 = Deep Sleep</b>(不醒、不回報),立起來或晃動自動喚醒。平常收納就平放</td></tr>
   <tr><td>Wi-Fi 回報間隔</td><td>官方預設與建議 <b>60 分鐘</b>,明寫「不要短於 60 分鐘」。本專案用 <b>15 分鐘</b>(Data Stream 的下限),代價是耗電 —— 為的是抓 DH1 那半天窗口</td></tr>
@@ -205,7 +205,7 @@
 <b>④ 驗證方法:把門檻暫時設成現在一定成立的值</b>(例如比重 1.081 時設 Less Than 1.090),等一次遙測看會不會響,響了再改回真正的門檻。別用推理驗證。<br>
 設定內容:類型 <b>Gravity Reached</b>、運算子 <b>Less Than</b>、值 = <b>Pill 基準的取樣門檻</b>(#0012 用 1.047),外加一句 Alert Message。溫度護欄另設 <b>Less Than</b>(冰浴過頭)與 <b>Greater Than</b>(冷卻失效)兩條。<br>
 <b class="warn">RAPT 做不到的兩件事</b>:<b>電量過低</b>與<b>Pill 停止回報</b>(觸發條件只有比重、比重速率、溫度三種)。後者才是真正會害你錯過窗口的失效模式 —— Pill 一斷線,RAPT 不會通知你它斷了,那要靠 white-piz 這邊補。<br>
-<b>警報值怎麼換算</b>:Pill 讀數偏高時<b>不要用固定偏差去減</b>。#0012 的兩種誤差模型(固定 +14 點 / 外插比例)對同一個真實窗口給出不同的 Pill 讀數,取<b>兩者重疊區的上緣</b>當警報值,早響無所謂,晚響才是災難;響了只是<b>去取樣</b>,投不投酒花由折射儀決定。
+<b>警報值怎麼換算</b>:Pill 讀數偏高時<b>不要用固定偏差去減</b>。#0012 的兩種誤差模型(固定 +14 點 / 外插比例)對同一個真實窗口給出不同的 Pill 讀數,取<b>兩者重疊區的上緣</b>當警報值,早響無所謂,晚響才是災難;響了只是<b>去取樣</b>,投不投酒花由比重計決定。
 </div>
 
 <h2>為什麼這樣設計</h2>

@@ -34,6 +34,12 @@ table.idx tr:hover td{background:var(--tile)}.num{font-variant-numeric:tabular-n
 <h1>#0012 · Orange Glow v2.6</h1>
 <div class="sub">Clean NEIPA(首試 Nectaron) <span class="badge">2026-11-10</span> <span class="badge">—</span></div>
 <div class="tiles"><div class="tile"><div class="k">OG</div><div class="v">1.068</div></div><div class="tile"><div class="k">FG</div><div class="v">—</div></div><div class="tile"><div class="k">ABV</div><div class="v">—</div></div><div class="tile"><div class="k">發酵度</div><div class="v">—</div></div><div class="tile"><div class="k">批量</div><div class="v">8.45 L</div></div></div>
+<figure class="chart">
+<figcaption>比重曲線 <span class="muted">(SG vs 投酵母後天數)</span><div class="legend"><span class="lg"><i class="lg-pt"></i>實測比重</span><span class="lg"><i class="lg-band"></i>DH1 窗口(預期)</span><span class="lg"><i class="lg-ev"></i>實際事件</span></div></figcaption>
+<div class="chart-wrap"><svg viewBox="0 0 640 330" role="img" aria-label="比重曲線"><rect x="52" y="220.7" width="572" height="39.6" class="band"/><text x="58" y="231.7" class="bandlab">DH1 窗口 1.039–1.029</text><line x1="52" y1="296.0" x2="624" y2="296.0" class="grid"/><text x="46" y="300.0" class="tick" text-anchor="end">1.020</text><line x1="52" y1="256.4" x2="624" y2="256.4" class="grid"/><text x="46" y="260.4" class="tick" text-anchor="end">1.030</text><line x1="52" y1="216.7" x2="624" y2="216.7" class="grid"/><text x="46" y="220.7" class="tick" text-anchor="end">1.040</text><line x1="52" y1="177.1" x2="624" y2="177.1" class="grid"/><text x="46" y="181.1" class="tick" text-anchor="end">1.050</text><line x1="52" y1="137.5" x2="624" y2="137.5" class="grid"/><text x="46" y="141.5" class="tick" text-anchor="end">1.060</text><line x1="52" y1="97.8" x2="624" y2="97.8" class="grid"/><text x="46" y="101.8" class="tick" text-anchor="end">1.070</text><text x="52.0" y="312" class="tick" text-anchor="middle">0</text><text x="338.0" y="312" class="tick" text-anchor="middle">1</text><text x="624.0" y="312" class="tick" text-anchor="middle">2</text><text x="338" y="326" class="axis-label" text-anchor="middle">投酵母後天數</text><line x1="52" y1="296.0" x2="624" y2="296.0" class="base"/><line x1="52.0" y1="17" x2="52.0" y2="296.0" class="evline none"/><text x="55.0" y="14" class="evlab none">投酵母</text><line x1="204.9" y1="29" x2="204.9" y2="296.0" class="evline none"/><text x="207.9" y="26" class="evlab none">起泡</text><path d="M52.0,105.7 L338.0,149.3" class="series"/><circle cx="52.0" cy="105.7" r="4" class="pt" data-d="0.00" data-sg="1.068" data-lab="Day 0"/><text x="60.0" y="119.7" class="dl" text-anchor="start">1.068</text><circle cx="338.0" cy="149.3" r="4" class="pt" data-d="1.00" data-sg="1.057" data-lab="11/11"/><text x="330.0" y="163.3" class="dl" text-anchor="end">1.057</text></svg><div class="tip" hidden></div></div>
+<details class="tbl"><summary>資料表</summary><table><tr><th>時點</th><th>天數</th><th>SG</th></tr><tr><td>Day 0</td><td>0.0</td><td>1.068</td></tr><tr><td>11/11</td><td>1.0</td><td>1.057</td></tr></table>
+<table><tr><th>天數</th><th>事件</th></tr><tr><td>0.0</td><td>投酵母</td></tr><tr><td>0.5</td><td>起泡</td></tr></table></details>
+</figure>
 
 <details><summary>水與糖化</summary><dl><dt>水源</dt><dd>過濾自來水(淡水區+櫻花 P0780;KH 40 / GH 25、無氯)</dd><dt>鹽類 CaCl₂/石膏</dt><dd>__ 待補實際用量(計畫 CaCl₂·2H₂O 3g、石膏 0;#0011 只下 0.5g 導致「喝起來好水」)</dd><dt>糖化溫°C</dt><dd>__ 待補糖化實際溫度(計畫 68°C 60min)
 糖化末升溫:目標 78°C,實際衝到 82°C —— 麥殼單寧風險靠當時已壓到的 pH 5.41 擋住</dd><dt>糖化醪 pH</dt><dd>5.56 → 磷酸85% 0.2ml → 5.55(30min 後) → +0.5ml → 5.41(冷卻/校正後量)
@@ -44,7 +50,7 @@ table.idx tr:hover td{background:var(--tile)}.num{font-variant-numeric:tabular-n
 ⚠️ 製程偏差:濾袋綁帶沒綁緊,部分酒花散進麥汁(散出量未估),撈袋沒撈乾淨 → 散料跟著進發酵桶。
 影響:78°C 異構化很低,IBU 幾乎不變;代價是 trub 變多、虹吸損失變大,長期浸泡有草味/多酚風險。
 對策:不為清渣多開一次蓋。照既有兩段式虹吸處理 —— 虹吸離桶底 2-3cm,吸口套細網袋(本來就為 DH2 散投準備的)。
-下批源頭修:綁帶改雙結+留長,下鍋前拉一次確認;撈袋時沿鍋邊壓乾再提。</dd></dl></details><details><summary>酵母投放</summary><dl><dt>酵母</dt><dd>Pomona (LalBrew)</dd><dt>投法</dt><dd>1 包:投 10g、留 1g 冷藏(瓶內二發補充酵母用)</dd><dt>充氧 O₂</dt><dd>純氧 60-90s(高壓直吹)</dd><dt>營養劑 Fermaid</dt><dd>Fermaid-O 2g + 24h 2g(依 8.45L 自 2.5+2.5 下修;第二劑 2026-11-11 20:50)</dd><dt>ALDC</dt><dd>__ 待補實際 ml(計畫 0.2-0.3ml)</dd></dl></details><details open><summary>發酵</summary><dl><dt>OG</dt><dd>1.068(比重計・冷卻後)
+下批源頭修:綁帶改雙結+留長,下鍋前拉一次確認;撈袋時沿鍋邊壓乾再提。</dd></dl></details><details><summary>酵母投放</summary><dl><dt>酵母</dt><dd>Pomona (LalBrew)</dd><dt>投法</dt><dd>1 包:投 10g、留 1g 冷藏(瓶內二發補充酵母用)</dd><dt>充氧 O₂</dt><dd>純氧 60-90s(高壓直吹)</dd><dt>營養劑 Fermaid</dt><dd>Fermaid-O 2g + 24h 2g(依 8.45L 自 2.5+2.5 下修)。第二劑 2026-11-11 20:50 已投,與 Day 1 取樣併成同一次作業。</dd><dt>ALDC</dt><dd>__ 待補實際 ml(計畫 0.2-0.3ml)</dd></dl></details><details open><summary>發酵</summary><dl><dt>OG</dt><dd>1.068(比重計・冷卻後)
 路徑:煮前 9.95L @1.072(=716 點·L)→ 關火 1.074 → 補冷自來水 1.1L → 1.068(水溫降到 65.6°C,仍遠高於殺菌需求)</dd><dt>乾投@比重/日</dt><dd>計畫 DH1 @1.039-1.029(OG 1.068 降一半 ±0.005)
 RAPT Pill 基準約 1.046-1.036(Pill 讀數高 14 點,未校正前以比重計為準)</dd><dt>乾投酒花</dt><dd>計畫 DH1 56g = Nectaron 28 + Citra 28(濾袋・生物轉化)/ DH2 84g = Mosaic 28 + Amarillo 28 + Citra 28(散投)
 ⚠️ 140g ÷ 8.45L = 16.6 g/L,高於 15-16 g/L 的 hop burn 門檻 —— DH1 前要決定是否減到 ~120g</dd><dt>二次添加</dt><dd>無</dd><dt>重力時間軸</dt><dd>投酵母 11/10 20:50 = Day 0(2026 年)。
@@ -60,7 +66,15 @@ Pill 遙測每 15min 自動記錄 → white-piz:~/rapt/rapt-data/0012/readings.c
 【Pill 讀數・不入曲線】約二十一小時後 讀 1.0712,近三小時速率約每天三十六點,仍在加速。
 速率對照 #0009(同期):#0009 在 Day 0.5 約每天八點、Day 1.0 約每天十六點,要到 Day 1.8 才達每天三十五點;本批在 Day 0.9 就已達每天三十六點。
 結論:慢的只有延滯期(低溫造成),起來之後比 #0009 快 —— 「酵母工作慢」在數據上不成立。
-注意:照這個斜率,DH1 窗口可能提早到 11/12 上午。</dd></dl></details><details><summary>QA / 封裝</summary><dl><dt>綠燈/雙乙醯</dt><dd>—</dd><dt>Cold crash/熟成</dt><dd>—</dd><dt>碳酸 PSI/°C</dt><dd>—</dd><dt>封裝/2發日</dt><dd>—</dd><dt>賞味期</dt><dd>—</dd></dl></details><details open><summary>評價</summary><div class="muted" style="margin-top:8px">評分</div><div class="notes">—</div><div class="muted" style="margin-top:8px">心得/教訓</div><div class="notes">開釀日重點:
+注意:照這個斜率,DH1 窗口可能提早到 11/12 上午。
+— Day 1 取樣(11/11 20:50,滿 24h)—
+11/11 20:50 SG 1.057(浮筒,已做溫度修正)
+玻璃浮筒讀 1.056 @ 23.6°C → 浮筒校正溫度 20°C,樣本偏熱會讀低,修正後真實 SG = 1.057(+0.8 點)。
+同一時刻 Pill 讀 1.0651 → Pill 高 8.3 點。投酵母當下是高 13.4 點(1.0814 對 1.068)。
+★ 偏差隨比重下降而縮小 → 證實是比例性的外插誤差,不是固定偏差。「Pill 減 14 點」這種換算不可用;警報值要取兩種模型的早側,響了只代表去取樣。
+取樣法(不開蓋):拆水封、水管灌微量 CO₂ 外推,從桶底龍頭放酒。放掉第一段(龍頭死區+桶底 trub+旋渦散出的酒花渣會讀偏高),不過濾,搖動除氣後靜置讓渣沉底再讀。發酵旺盛時頂空是 CO₂ 正壓,進氧風險最低。
+不要把樣本溫度當酒溫:樣本 23.6°C 是在室溫回溫的結果,浴水 18-19 時酒溫不可能穩在 23.6;酒溫以 Pill 的 18.35 為準。
+Day 1 狀態:發酵度 16%、ABV 約 1.4%。真實 1.057 距 DH1 窗口上緣 1.039 還差 18 點,照 50 點/天約 8-9 小時 → 預計 11/12 清晨 5-6 點。</dd></dl></details><details><summary>QA / 封裝</summary><dl><dt>綠燈/雙乙醯</dt><dd>—</dd><dt>Cold crash/熟成</dt><dd>—</dd><dt>碳酸 PSI/°C</dt><dd>—</dd><dt>封裝/2發日</dt><dd>—</dd><dt>賞味期</dt><dd>—</dd></dl></details><details open><summary>評價</summary><div class="muted" style="margin-top:8px">評分</div><div class="notes">—</div><div class="muted" style="margin-top:8px">心得/教訓</div><div class="notes">開釀日重點:
 ① pH 兩個檢查點都做了(糖化 5.41、煮後 5.36),並量到本系統的磷酸斜率:糖化 1ml≈−0.21、麥汁 1ml≈−0.40 —— 下批可直接算劑量不必試。
 ② 糖化末升溫衝到 82°C(目標 78)。
 ③ 煮前 9.95L@1.072 偏濃,關火後補冷自來水 1.1L 把 OG 從 1.074 拉回 1.068。

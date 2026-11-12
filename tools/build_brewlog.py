@@ -9,7 +9,7 @@ Source of truth stays the .ods; re-run after every log update.
 Stdlib only + LibreOffice (soffice) for the CSV export.
 """
 import csv, glob, html, os, re, shutil, subprocess, sys, tempfile
-from datetime import datetime
+from datetime import datetime, timedelta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ODS = os.path.join(ROOT, "tommy_home_brewing.ods")
@@ -275,6 +275,98 @@ def fmt_rng(r, nd=0):
     f = (lambda v: f"{v:.{nd}f}")
     return f(a) if abs(a - b) < 1e-9 else f"{f(a)}–{f(b)}"
 
+# ── 2d. RAPT Pill 遙測曲線(可選)──────────────────────────────────────────────
+# brew-log/telemetry/<批次>.csv 存在就畫,沒有就跳過。CSV 由 white-piz 的接收器
+# 產生:received_utc,device_utc,sg,temp_c,battery,rssi,device。
+# .ods 的時刻是本地時間、遙測是 UTC,要補時差才能跟比重曲線對齊。
+TELEMETRY_DIR = os.path.join(OUT, "telemetry")
+LOCAL_UTC_OFFSET_H = 8          # 台北
+PILL_OFFSET = 0.0135            # #0012 實測:Pill 比浮筒高 13.5 點(固定偏差)
+
+def pitch_datetime(b):
+    """投酵母時刻(本地時間);抓不到時刻就退回釀造日 00:00。"""
+    pitch = parse_pitch_date(b.get("釀造日", ""))
+    if not pitch:
+        return None
+    m = re.search(r"投酵母\s*(\d{1,2})/(\d{1,2})\s*(\d{1,2}):(\d{2})", b.get("重力時間軸", "") or "")
+    if m:
+        mo, d, hh, mm = map(int, m.groups())
+        try:
+            return datetime(pitch.year, mo, d) + timedelta(hours=hh, minutes=mm)
+        except ValueError:
+            pass
+    return pitch
+
+def read_telemetry(bid, pitch):
+    """→ [(投酵母後天數, sg, temp_c)],時間已從 UTC 換成本地。"""
+    path = os.path.join(TELEMETRY_DIR, f"{bid}.csv")
+    if not (pitch and os.path.exists(path)):
+        return []
+    rows = []
+    with open(path, encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            try:
+                t = datetime.strptime((r["device_utc"] or "")[:19], "%Y-%m-%dT%H:%M:%S")
+                sg, tc = float(r["sg"]), float(r["temp_c"])
+            except Exception:
+                continue                      # 欄位空的或壞的那幾筆直接跳過
+            day = ((t + timedelta(hours=LOCAL_UTC_OFFSET_H)) - pitch).total_seconds() / 86400
+            if day >= -0.05:
+                rows.append((day, sg, tc))
+    rows.sort()
+    return rows
+
+def telemetry_chart(rows, pts):
+    if len(rows) < 3:
+        return ""
+    W, H, L, R, T, B = 820, 300, 58, 54, 18, 34
+    dmax = max(d for d, _, _ in rows) or 1
+    slo = min(s for _, s, _ in rows) - 0.002
+    shi = max(s for _, s, _ in rows) + 0.002
+    tlo = min(t for _, _, t in rows) - 1
+    thi = max(t for _, _, t in rows) + 1
+    X = lambda d: L + (W - L - R) * d / dmax
+    YS = lambda v: T + (H - T - B) * (shi - v) / (shi - slo)
+    YT = lambda v: T + (H - T - B) * (thi - v) / (thi - tlo)
+    g = [f'<rect x="{L}" y="{T}" width="{W-L-R}" height="{H-T-B}" fill="var(--tile)"/>']
+    for i in range(5):                                            # 左軸 SG、右軸 °C
+        sv = slo + (shi - slo) * i / 4
+        tv = tlo + (thi - tlo) * i / 4
+        y = YS(sv)
+        g.append(f'<line x1="{L}" y1="{y:.1f}" x2="{W-R}" y2="{y:.1f}" stroke="var(--grid)"/>'
+                 f'<text x="{L-6}" y="{y+4:.1f}" text-anchor="end" font-size="11" fill="var(--muted)">{sv:.3f}</text>'
+                 f'<text x="{W-R+6}" y="{YT(tv)+4:.1f}" font-size="11" fill="var(--accent)">{tv:.1f}°</text>')
+    for k in range(int(dmax) + 1):                                # x 軸:天
+        g.append(f'<line x1="{X(k):.1f}" y1="{T}" x2="{X(k):.1f}" y2="{H-B}" stroke="var(--grid)"/>'
+                 f'<text x="{X(k):.1f}" y="{H-B+16}" text-anchor="middle" font-size="11" fill="var(--muted)">D{k}</text>')
+    def poly(sel, Y, color, dash=None):
+        pth = " ".join(f"{X(d):.1f},{Y(v):.1f}" for d, v in sel)
+        da = f' stroke-dasharray="{dash}"' if dash else ""
+        return f'<polyline points="{pth}" fill="none" stroke="{color}" stroke-width="2" stroke-linejoin="round"{da}/>'
+    g.append(poly([(d, t) for d, _, t in rows], YT, "var(--accent)"))
+    g.append(poly([(d, s) for d, s, _ in rows], YS, "var(--s1)"))
+    g.append(poly([(d, s - PILL_OFFSET) for d, s, _ in rows], YS, "var(--s1)", "5 4"))
+    for d, sg, _ in (rows[0], rows[-1]):                          # 頭尾標值
+        anchor = "start" if d == rows[0][0] else "end"
+        g.append(f'<text x="{X(d):.1f}" y="{YS(sg)-8:.1f}" font-size="11" fill="var(--s1)" text-anchor="{anchor}">{sg:.4f}</text>')
+    for i, (d, sg, _lab) in enumerate(pts):                       # 浮筒實測點疊上去
+        if d <= dmax:
+            dy = 4 if i % 2 == 0 else -9                          # 交錯,末段幾點會擠在一起
+            g.append(f'<circle cx="{X(d):.1f}" cy="{YS(sg):.1f}" r="4" fill="var(--good)" stroke="var(--surface)" stroke-width="1.5"/>'
+                     f'<text x="{X(d)+7:.1f}" y="{YS(sg)+dy:.1f}" font-size="11" fill="var(--good)">{sg:.3f}</text>')
+    legend = ('<span class="lg"><i class="lg-pt" style="background:var(--s1)"></i>Pill 原始讀數</span>'
+              '<span class="lg"><i class="lg-pt" style="background:var(--s1);opacity:.45"></i>Pill − 13.5 點(推估真實)</span>'
+              '<span class="lg"><i class="lg-pt" style="background:var(--accent)"></i>酒溫 °C(右軸)</span>'
+              '<span class="lg"><i class="lg-pt" style="background:var(--good)"></i>浮筒實測</span>')
+    note = ("Pill 讀數未校正,比浮筒高約 13.5 點(兩個時點實測,固定偏差);虛線是減掉偏差後的推估真實比重。"
+            "校正刻意留到轉桶才做 —— 中途校正會在曲線上留一個階梯,看圖的人分不清那是發酵還是換了尺。")
+    return (f'<figure class="chart">\n'
+            f'<figcaption>RAPT Pill 遙測 <span class="muted">({len(rows)} 筆・每 15 分鐘・比重左軸 / 酒溫右軸)</span>'
+            f'<div class="legend">{legend}</div></figcaption>\n'
+            f'<div class="chart-wrap"><svg viewBox="0 0 {W} {H}" role="img" aria-label="Pill 遙測曲線">{"".join(g)}</svg></div>\n'
+            f'<div class="muted" style="font-size:12px;margin-top:6px">{note}</div>\n'
+            f'</figure>')
+
 # ── 3. SVG chart ──────────────────────────────────────────────────────────────
 def gravity_chart(pts, fg_actual=None, events=(), dh_band=None, exp_fg=None, plan=()):
     if len(pts) < 2: return ""
@@ -447,6 +539,7 @@ def batch_page(b, prev_b, next_b):
 <div class="sub">{esc(b["風格"])} <span class="badge">{esc(b["釀造日"])}</span> {f'<span class="badge">{esc(b["評分"])}</span>' if b["評分"].strip() else ""}</div>
 <div class="tiles">{''.join(tiles)}</div>
 {gravity_chart(pts, fg, extract_events(b), *expected_bands(b), plan=parse_plan(b))}
+{telemetry_chart(read_telemetry(bid, pitch_datetime(b)), pts)}
 {''.join(secs)}
 {nav}'''
     return page(f'{b["批次"]} {b["配方·版本"]} — Brew Log', body)

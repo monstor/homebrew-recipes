@@ -316,6 +316,24 @@ def read_telemetry(bid, pitch):
     rows.sort()
     return rows
 
+def gravity_velocity(rows, win_h=3.0):
+    """→ [(天數, 每天掉幾點)]。用 ±1.5h 的中央窗口算斜率 —— 相鄰兩筆的差
+    幾乎全是噪音(讀數解析度 0.0001、間隔 15 分鐘),不平滑就看不出東西。"""
+    half = win_h / 48.0                      # 窗口的一半,換成「天」
+    out = []
+    for i, (d, _s, _t) in enumerate(rows):
+        lo = next((j for j in range(i, -1, -1) if rows[j][0] <= d - half), None)
+        hi = next((j for j in range(i, len(rows)) if rows[j][0] >= d + half), None)
+        if lo is None or hi is None:
+            continue                         # 頭尾不足一個窗口就不算,不要外插
+        dt = rows[hi][0] - rows[lo][0]
+        if dt <= 0:
+            continue
+        out.append((d, (rows[lo][1] - rows[hi][1]) / dt * 1000))   # 點/天,下降為正
+    return out
+
+GREEN_LIGHT_VELOCITY = 2.0      # 點/天。RAPT 的 Gravity Velocity 警報也用這個單位
+
 def telemetry_chart(rows, pts):
     if len(rows) < 3:
         return ""
@@ -360,11 +378,40 @@ def telemetry_chart(rows, pts):
               '<span class="lg"><i class="lg-pt" style="background:var(--good)"></i>浮筒實測</span>')
     note = ("Pill 讀數未校正,比浮筒高約 13.5 點(兩個時點實測,固定偏差);虛線是減掉偏差後的推估真實比重。"
             "校正刻意留到轉桶才做 —— 中途校正會在曲線上留一個階梯,看圖的人分不清那是發酵還是換了尺。")
+    # ── 速率帶:比重的斜率,綠燈看它趨近零 ──────────────────────────────────
+    vel = gravity_velocity(rows)
+    vsvg = ""
+    if len(vel) >= 3:
+        VH = 128
+        vmax = max(max(v for _, v in vel), GREEN_LIGHT_VELOCITY * 2) * 1.1
+        YV = lambda v: 16 + (VH - 16 - 28) * (1 - max(0.0, min(v, vmax)) / vmax)
+        q = [f'<rect x="{L}" y="16" width="{W-L-R}" height="{VH-16-28}" fill="var(--tile)"/>']
+        for frac in (0, 0.5, 1.0):
+            v = vmax * frac
+            q.append(f'<line x1="{L}" y1="{YV(v):.1f}" x2="{W-R}" y2="{YV(v):.1f}" stroke="var(--grid)"/>'
+                     f'<text x="{L-6}" y="{YV(v)+4:.1f}" text-anchor="end" font-size="11" fill="var(--muted)">{v:.0f}</text>')
+        gl = YV(GREEN_LIGHT_VELOCITY)
+        q.append(f'<line x1="{L}" y1="{gl:.1f}" x2="{W-R}" y2="{gl:.1f}" stroke="var(--good)" stroke-dasharray="4 3"/>'
+                 f'<text x="{L+34}" y="{gl+13:.1f}" font-size="11" fill="var(--good)">綠燈門檻 {GREEN_LIGHT_VELOCITY:.0f} 點/天</text>')
+        for k in range(int(dmax) + 1):
+            q.append(f'<line x1="{X(k):.1f}" y1="16" x2="{X(k):.1f}" y2="{VH-28}" stroke="var(--grid)"/>'
+                     f'<text x="{X(k):.1f}" y="{VH-12}" text-anchor="middle" font-size="11" fill="var(--muted)">D{k}</text>')
+        pv = " ".join(f"{X(d):.1f},{YV(v):.1f}" for d, v in vel)
+        q.append(f'<polyline points="{pv}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>')
+        last_d, last_v = vel[-1]
+        q.append(f'<circle cx="{X(last_d):.1f}" cy="{YV(last_v):.1f}" r="4" fill="var(--accent)"/>'
+                 f'<text x="{X(last_d)-6:.1f}" y="{YV(last_v)-8:.1f}" text-anchor="end" font-size="11" fill="var(--accent)">{last_v:.0f} 點/天</text>')
+        vsvg = (f'<div class="chart-wrap" style="margin-top:4px"><svg viewBox="0 0 {W} {VH}" role="img" '
+                f'aria-label="比重速率">{"".join(q)}</svg></div>\n'
+                f'<div class="muted" style="font-size:12px">比重速率(點/天,±1.5 小時中央窗口平滑)。'
+                f'相鄰兩筆的差幾乎都是噪音,不平滑看不出東西。速率掉到綠燈門檻以下 = 發酵不再變化;'
+                f'RAPT 的 Gravity Velocity 警報用的也是這個單位。</div>')
     return (f'<figure class="chart">\n'
             f'<figcaption>RAPT Pill 遙測 <span class="muted">({len(rows)} 筆・每 15 分鐘・比重左軸 / 酒溫右軸)</span>'
             f'<div class="legend">{legend}</div></figcaption>\n'
             f'<div class="chart-wrap"><svg viewBox="0 0 {W} {H}" role="img" aria-label="Pill 遙測曲線">{"".join(g)}</svg></div>\n'
             f'<div class="muted" style="font-size:12px;margin-top:6px">{note}</div>\n'
+            f'{vsvg}\n'
             f'</figure>')
 
 # ── 3. SVG chart ──────────────────────────────────────────────────────────────

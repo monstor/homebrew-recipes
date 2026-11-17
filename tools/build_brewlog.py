@@ -283,6 +283,16 @@ TELEMETRY_DIR = os.path.join(OUT, "telemetry")
 LOCAL_UTC_OFFSET_H = 8          # 台北
 PILL_OFFSET = 0.0135            # #0012 實測:Pill 比浮筒高 13.5 點(固定偏差)
 
+class FigNum:
+    """圖號:每頁從 01 重編。只有真的畫出圖才給號,所以不會跳號。"""
+    def __init__(self): self.n = 0
+    def take(self): self.n += 1; return f"{self.n:02d}"
+
+def figcap(fign, text):
+    """CLAUDE.md 規則:每張圖下方加 [Fig xx - 讀法或結論],不重複標題。"""
+    if fign is None: return ""
+    return f'<div class="figcap">[Fig {fign.take()} - {text}]</div>'
+
 def pitch_datetime(b):
     """投酵母時刻(本地時間);抓不到時刻就退回釀造日 00:00。"""
     pitch = parse_pitch_date(b.get("釀造日", ""))
@@ -334,7 +344,7 @@ def gravity_velocity(rows, win_h=3.0):
 
 GREEN_LIGHT_VELOCITY = 2.0      # 點/天。RAPT 的 Gravity Velocity 警報也用這個單位
 
-def telemetry_chart(rows, pts):
+def telemetry_chart(rows, pts, fign=None):
     if len(rows) < 3:
         return ""
     W, H, L, R, T, B = 820, 300, 58, 54, 18, 34
@@ -406,16 +416,21 @@ def telemetry_chart(rows, pts):
                 f'<div class="muted" style="font-size:12px">比重速率(點/天,±1.5 小時中央窗口平滑)。'
                 f'相鄰兩筆的差幾乎都是噪音,不平滑看不出東西。速率掉到綠燈門檻以下 = 發酵不再變化;'
                 f'RAPT 的 Gravity Velocity 警報用的也是這個單位。</div>')
+    _t = [t for _, _, t in rows]
+    tcap = (f'Pill 遙測 {len(rows)} 筆,每 15 分鐘一筆:上圖是比重(左軸)與酒溫(右軸),下帶是比重速率。'
+            f'酒溫最高 {max(_t):.1f}°C、最後 {_t[-1]:.1f}°C。'
+            f'Pill 的比重讀數偏高 {PILL_OFFSET*1000:.1f} 點,虛線那條才是真實比重。')
     return (f'<figure class="chart">\n'
             f'<figcaption>RAPT Pill 遙測 <span class="muted">({len(rows)} 筆・每 15 分鐘・比重左軸 / 酒溫右軸)</span>'
             f'<div class="legend">{legend}</div></figcaption>\n'
             f'<div class="chart-wrap"><svg viewBox="0 0 {W} {H}" role="img" aria-label="Pill 遙測曲線">{"".join(g)}</svg></div>\n'
             f'<div class="muted" style="font-size:12px;margin-top:6px">{note}</div>\n'
             f'{vsvg}\n'
+            f'{figcap(fign, tcap)}\n'
             f'</figure>')
 
 # ── 3. SVG chart ──────────────────────────────────────────────────────────────
-def gravity_chart(pts, fg_actual=None, events=(), dh_band=None, exp_fg=None, plan=()):
+def gravity_chart(pts, fg_actual=None, events=(), dh_band=None, exp_fg=None, plan=(), fign=None):
     if len(pts) < 2: return ""
     W, H, L, R, T, B = 640, 330, 52, 16, 78, 34
     days = [p[0] for p in pts] + [e[0] for e in events] + [max(it["day"]) for it in plan if it.get("day")]
@@ -488,11 +503,15 @@ def gravity_chart(pts, fg_actual=None, events=(), dh_band=None, exp_fg=None, pla
     if events: legend += ('<span class="lg"><i class="lg-ev ok"></i>事件·落在預期</span><span class="lg"><i class="lg-ev off"></i>事件·偏離預期(標 Δ天)</span>' if plan else '<span class="lg"><i class="lg-ev"></i>實際事件</span>')
     if plan: legend += '<span class="lg"><i class="lg-plan"></i>預期時程</span>'
     ev_rows = "".join(f"<tr><td>{d:.1f}</td><td>{html.escape(l)}</td></tr>" for d, l in events)
+    gcap = (f'比重 {pts[0][1]:.3f} 降到 {pts[-1][1]:.3f},歷時 {pts[-1][0]:.1f} 天。'
+            f'點是實測讀數,標記處是乾投與升溫等事件'
+            + ('。帶與虛線是配方預期,看實測有沒有落在裡面' if (dh_band or exp_fg or plan) else '。'))
     return f'''<figure class="chart">
 <figcaption>比重曲線 <span class="muted">(SG vs 投酵母後天數)</span><div class="legend">{legend}</div></figcaption>
 <div class="chart-wrap"><svg viewBox="0 0 {W} {H}" role="img" aria-label="比重曲線">{''.join(g)}</svg><div class="tip" hidden></div></div>
 <details class="tbl"><summary>資料表</summary><table><tr><th>時點</th><th>天數</th><th>SG</th></tr>{''.join(f"<tr><td>{html.escape(l)}</td><td>{d:.1f}</td><td>{s:.3f}</td></tr>" for d,s,l in pts)}</table>
 {f'<table><tr><th>天數</th><th>事件</th></tr>{ev_rows}</table>' if events else ''}</details>
+{figcap(fign, gcap)}
 </figure>
 {plan_table(plan, events, pts, fg_actual)}'''
 
@@ -527,6 +546,7 @@ h1{font-size:24px;margin:0 0 4px}h2{font-size:15px;margin:22px 0 8px;color:var(-
 .tile .k{font-size:11px;color:var(--muted)}.tile .v{font-size:22px;font-weight:600;margin-top:2px}.tile .v small{font-size:12px;color:var(--ink2);font-weight:400}
 .chart{margin:16px 0;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 12px 6px}
 .chart figcaption{font-size:13px;color:var(--ink2);margin-bottom:6px}
+.chart .figcap{font-size:12px;color:var(--ink2);margin-top:8px;padding-top:6px;border-top:1px solid var(--border);line-height:1.5}
 .chart-wrap{position:relative}.chart svg{width:100%;height:auto;display:block}
 .grid{stroke:var(--grid);stroke-width:1}.base{stroke:var(--base);stroke-width:1}.tick{fill:var(--muted);font-size:10px;font-variant-numeric:tabular-nums}.axis-label{fill:var(--muted);font-size:11px}
 .series{fill:none;stroke:var(--s1);stroke-width:2;stroke-linejoin:round}.pt{fill:var(--s1);stroke:var(--surface);stroke-width:2;cursor:pointer}.pt:hover{r:6}
@@ -582,11 +602,12 @@ def batch_page(b, prev_b, next_b):
     prev_link = '<a href="%s.html">← %s</a>' % (batch_id(prev_b), esc(prev_b["批次"])) if prev_b else ""
     next_link = '<a href="%s.html">%s →</a>' % (batch_id(next_b), esc(next_b["批次"])) if next_b else ""
     nav = f'<div class="nav"><span>{prev_link}</span><span>{next_link}</span></div>'
+    fign = FigNum()
     body = f'''<h1>{esc(b["批次"])} · {esc(b["配方·版本"])}</h1>
 <div class="sub">{esc(b["風格"])} <span class="badge">{esc(b["釀造日"])}</span> {f'<span class="badge">{esc(b["評分"])}</span>' if b["評分"].strip() else ""}</div>
 <div class="tiles">{''.join(tiles)}</div>
-{gravity_chart(pts, fg, extract_events(b), *expected_bands(b), plan=parse_plan(b))}
-{telemetry_chart(read_telemetry(bid, pitch_datetime(b)), pts)}
+{gravity_chart(pts, fg, extract_events(b), *expected_bands(b), plan=parse_plan(b), fign=fign)}
+{telemetry_chart(read_telemetry(bid, pitch_datetime(b)), pts, fign=fign)}
 {''.join(secs)}
 {nav}'''
     return page(f'{b["批次"]} {b["配方·版本"]} — Brew Log', body)

@@ -9,7 +9,7 @@
   /* 只有這頁自己要的東西;顏色一律用 brew-log/style.css 的 token,深色模式才跟著走 */
   .fig{margin:14px 0 6px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px}
   .fig svg{width:100%;height:auto;display:block}
-  .cap{font-size:12px;color:var(--muted);margin-top:8px}
+  .cap{font-size:12px;color:var(--muted);margin-top:8px;padding-top:6px;border-top:1px solid var(--border);line-height:1.5}
   .why{background:var(--tile);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;margin:14px 0;font-size:13.5px}
   .why b{color:var(--accent)}
   h2{font-size:15px;margin:26px 0 6px;color:var(--ink);font-weight:600}
@@ -93,7 +93,7 @@
     <text x="619" y="378" text-anchor="middle" font-size="10.5" fill="var(--bad)">Funnel 開著也看不到這頁:曲線圖不在 loopback 上服務</text>
   </g>
 </svg>
-<div class="cap">圖 1:橘色鏈是資料進來的路(公網),藍色是你看圖的路(只在自己的 Tailscale 網內)。兩條分開,所以公網拿不到發酵資料。</div>
+<div class="cap">[Fig 01 - 橘色鏈是資料進來的路(公網),藍色是你看圖的路(只在自己的 Tailscale 網內)。兩條分開,所以公網拿不到發酵資料]</div>
 </div>
 
 <h2>圖 2 · 一批酒的操作順序</h2>
@@ -150,7 +150,7 @@
     </g>
   </g>
 </svg>
-<div class="cap">圖 2:四個階段。只有②和④要碰 white-piz,③全程在手機上看。</div>
+<div class="cap">[Fig 02 - 四個階段。只有②和④要碰 white-piz,③全程在手機上看]</div>
 </div>
 
 <h2>表 1 · 照做就好</h2>

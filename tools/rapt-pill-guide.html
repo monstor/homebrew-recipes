@@ -175,8 +175,10 @@
 <table>
   <tr><th width="30%">症狀</th><th width="34%">多半是這個原因</th><th>怎麼處理</th></tr>
   <tr><td><b>雲端看得到資料,<br>white-piz 一筆都沒有</b></td><td><b>韌體更新後 Data Stream 沒重建</b>(最常見),或 stream 建錯地方</td><td>到 Manage Account → My Integrations <b>刪掉重建一條 Custom</b>。重建後 15 分鐘內就會進來</td></tr>
+  <tr><td><b>資料突然斷掉,<br>剛好在搬桶之後</b></td><td><b>桶子進了冰箱 → 金屬箱體擋掉 Wi-Fi</b>(#0012 實測:訊號 −32 → −61 dBm,漏掉整整兩個 15 分鐘週期)</td><td>冷崩改用<b>水冷浴</b>(本來就比冰箱快五倍,見共用器材資料);非要用冰箱就改拿 <b>Inkbird 探頭貼桶壁</b>看溫度。斷線期間的資料會不會補傳回來<b>未驗證,不要指望</b></td></tr>
   <tr><td>手機打不開曲線圖</td><td>手機的 Tailscale 沒連上,或 service 沒跑</td><td>先開 Tailscale;再跑 <code>rapt-brewday.sh status</code> 看接收器在不在</td></tr>
   <tr><td>開曲線圖回 <b>403</b></td><td>網址少了密徑,<b>或你用 Funnel 的公網網址開</b></td><td>曲線圖只走 <code>http://white-piz:8787/…</code>;公網網址只給 RAPT 送資料用</td></tr>
+  <tr><td><b>冷崩一降溫,<br>比重讀數就往下跳</b></td><td><b>不是比重真的掉</b>:低溫讓傾斜式讀數偏移(#0012 由 1.0218 跳到 1.0208);桶子若歪了,Pill 還可能靠到桶壁被卡住角度</td><td><b>冷崩期間只看溫度,不看比重</b>。FG 一律等轉桶用浮筒定案,並在同一次做原位 <code>Enter Known Gravity</code> 校正</td></tr>
   <tr><td>圖上說「資料還不足以畫圖」</td><td>不到兩筆讀數(15 分鐘才一筆)</td><td>等 30 分鐘再看</td></tr>
   <tr><td>比重欄位是空的</td><td>RAPT 的 JSON 欄位名跟腳本猜的不一樣</td><td>raw.jsonl 原始封包都在,<b>把那一行給我,我改欄位對應再重算</b></td></tr>
   <tr><td>資料跑進 <code>unassigned/</code></td><td>CURRENT_BATCH 是空的或不存在</td><td>用 <code>rapt-brewday.sh start &lt;批次號&gt;</code> 重設;已經落錯的資料夾改名搬過去就好</td></tr>

@@ -282,6 +282,7 @@ def fmt_rng(r, nd=0):
 TELEMETRY_DIR = os.path.join(OUT, "telemetry")
 LOCAL_UTC_OFFSET_H = 8          # 台北
 PILL_OFFSET = 0.0135            # #0012 實測:Pill 比浮筒高 13.5 點(固定偏差)
+PILL_OUT_JUMP = 0.02            # 相鄰兩筆跳超過 20 點 = Pill 已離開酒,之後的讀數不畫
 
 class FigNum:
     """圖號:每頁從 01 重編。只有真的畫出圖才給號,所以不會跳號。"""
@@ -324,6 +325,12 @@ def read_telemetry(bid, pitch):
             if day >= -0.05:
                 rows.append((day, sg, tc))
     rows.sort()
+    # Pill 一離開酒(封裝取出)就只是在量傾角,讀數會暴衝 —— #0012 是 1.0213 → 1.2063。
+    # 發酵開始後比重不會回升,所以相鄰兩筆暴跳就是出酒點,從那裡截斷。原始 CSV 不動
+    # (那是紀錄),只是不畫進圖裡。
+    for i in range(1, len(rows)):
+        if rows[i][1] - rows[i - 1][1] > PILL_OUT_JUMP:
+            return rows[:i]
     return rows
 
 def gravity_velocity(rows, win_h=3.0):

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orange Glow v2.8 — 放大到成品 10 L 的推導</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans CJK TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    font-size: 11px; color: #111; background: #eee; line-height: 1.3;
+  }
+  .sheet { max-width: 760px; margin: 0 auto; background: #fff; padding: 14px 18px; }
+  .top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 2px solid #D35400; padding-bottom: 5px; margin-bottom: 7px;
+  }
+  .top h1 { font-size: 16px; color: #D35400; }
+  .top .stats { font-size: 10.5px; color: #333; }
+  .top .stats b { color: #111; }
+
+  h2 {
+    font-size: 11.5px; font-weight: 800; color: #fff; background: #E67E22;
+    padding: 2px 7px; margin: 8px 0 4px; break-after: avoid;
+  }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 2px 0 4px; }
+  th, td { border: 1px solid #bbb; padding: 2px 5px; text-align: left; vertical-align: top; font-size: 10px; }
+  th { background: #E67E22; color: #fff; font-weight: bold; }
+  .k td:first-child { background: #FDF2E9; font-weight: bold; width: 32%; }
+
+  ol, ul { margin: 2px 0 4px 16px; }
+  li { margin-bottom: 1px; font-size: 10px; }
+
+  .flow { font-size: 10px; }
+  .flow > div { margin: 0 0 3px; padding-left: 16px; text-indent: -16px; }
+  .flow b { color: #D35400; }
+
+  .note { font-size: 9.5px; color: #555; }
+  .hl { background: #fff3c4; padding: 0 2px; font-weight: bold; }
+  .now td { background: #fff3c4 !important; }
+
+  .rec td { height: 17px; }
+  .rec td:first-child { background: #f7f7f7; font-weight: bold; width: 34%; }
+  .rec td:nth-child(2) { color: #888; width: 30%; }
+  .tl td { height: 18px; }
+  .tl td:first-child { font-weight: bold; }
+  .tl td:nth-child(3) { color: #888; }
+
+  @media print {
+    @page { margin: 8mm; }
+    body { background: #fff; font-size: 9.5px; }
+    .sheet { max-width: none; padding: 0; }
+    table, tr, ol, ul, .grid2 > div { break-inside: avoid; }
+    th, td { font-size: 8.8px; padding: 2px 4px; }
+    li { font-size: 8.8px; }
+    h2 { break-after: avoid; }
+    .rec td { height: 15px; }
+  }
+</style>
+<style>
+  caption { caption-side: top; text-align: center; font-weight: 700; padding: 4px 0 3px; font-size: 10.5px; }
+  table.k { width: 100%; }
+  h2 { margin-top: 12px; }
+  p { margin: 5px 0; }
+  .warn { background:#fff3c4; border-left:3px solid #b45309; padding:6px 10px; margin:7px 0; }
+  .err  { background:#fde8e8; border-left:3px solid #c0392b; padding:6px 10px; margin:7px 0; }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="top">
+    <h1>🍊 Orange Glow v2.8 · 放大到成品 10 L 的推導</h1>
+    <div class="stats">麥芽 <b>6.0 kg</b> · 入桶 <b>12.6 L</b> · 成品 <b>~10 L</b> · OG <b>1.064</b></div>
+  </div>
+
+  <p>v2.8 只做一件事:<b>把批量放大到成品 10 L</b>。製程、酒花陣容、酵母、溫度曲線全部沿用 v2.7
+  —— 設計邏輯與每個數字的來歷見 <b><a href="./v2.7-consolidated.html">v2.7-consolidated.html</a></b>,
+  本頁只記放大的算法與它碰到的器材邊界。</p>
+
+  <h2>一、體積鏈(由成品反推)</h2>
+  <table class="k">
+    <caption>Table 1 – 從成品 10 L 反推到總釀造水,每一段的損失都是 #0012 的實測值</caption>
+    <tr><th>階段</th><th>公升</th><th>這一段扣掉什麼</th><th>來源</th></tr>
+    <tr><td>總釀造水</td><td><b>22.8</b></td><td>糖化 13.2 + 洗槽 9.6</td><td>反推</td></tr>
+    <tr><td>煮前收集</td><td><b>15.2</b></td><td>麥芽吸水 6.0 + 麥床殘留 1.55</td><td>#0012:16 L 下去只收到 9.95 L</td></tr>
+    <tr><td>煮後(關火)</td><td><b>14.9</b></td><td>蒸發 ~0.3(小火)</td><td>#0012 比重反推,誤差大</td></tr>
+    <tr><td><b>入桶</b></td><td><b>12.6</b></td><td>鍋內死體積 1.73 + 旋渦袋吸 0.56</td><td>#0012 鍋損實測 2.15 L</td></tr>
+    <tr><td><b>成品</b></td><td><b>10.0</b></td><td>桶底 1.35 + 乾投袋 0.85 + 取樣 0.4</td><td>桶底 = 575 cm² × 2.35 cm</td></tr>
+  </table>
+  <p>酒花袋吸水用 <b>5 ml/g</b>(#0012 推得)。桶底 1.35 L 是幾何值、不隨批量變,
+  所以<b>批量越大,固定損失佔比越低</b>:#0012 是 24%,v2.8 降到 21%。</p>
+
+  <div class="err"><b>★ 我算錯過一次,記在這裡免得再犯。</b>
+  第一版推導把糖量除以<b>入桶</b>體積,得出「麥芽 5 kg 就有 OG 1.068」。錯了 ——
+  鍋損帶走的麥汁<b>也含糖</b>,鍋損不會把酒變濃。要除的是<b>煮後</b>體積。
+  5 kg 的真實值是 OG 1.058、成品 8.6 L。<b>正確做法:先用糖量 ÷ 目標點數定煮後體積,再往下扣損失。</b></div>
+
+  <h2>二、麥芽為什麼是 6.0 kg、為什麼這樣拆</h2>
+  <table class="k">
+    <caption>Table 2 – 6.0 kg 的拆法:小麥+燕麥維持 33%,偏移集中在 Munich</caption>
+    <tr><th>麥芽</th><th>v2.7(4.5 kg)</th><th>v2.8(6.0 kg)</th><th>佔比變化</th></tr>
+    <tr><td>Maris Otter</td><td>2 kg(44%)</td><td><b>3 kg</b>(50%)</td><td>+6</td></tr>
+    <tr><td>Munich Light</td><td>1 kg(22%)</td><td>1 kg(17%)</td><td><b>−5</b></td></tr>
+    <tr><td>Château Wheat Blanc</td><td>1 kg(22%)</td><td>1 kg(17%)</td><td>−5</td></tr>
+    <tr><td>燕麥麥芽</td><td>0.5 kg(11%)</td><td><b>1 kg</b>(17%)</td><td>+6</td></tr>
+    <tr><td><b>小麥 + 燕麥</b></td><td><b>33%</b></td><td><b>33%</b></td><td><b>0</b></td></tr>
+  </table>
+  <p><b>6.0 kg 而不是 5.5 或 6.5:</b>整公斤規則下,5.5 kg 只給成品 9.3 L(不到),
+  6.5 kg 給 11.5 L(超過,而且糖化液面會升到大鍋 79%)。6.0 kg 剛好落在成品 10 L。</p>
+  <p><b>霧感與酒體不變:</b>小麥+燕麥合計維持 33%,只是從小麥挪到燕麥 —— 燕麥給的是絲滑口感,
+  小麥給的是蛋白霧,比例內互換影響小。<b>燕麥剛好整包用完</b>,半包與 strange-haze 撞車的問題一併解決。</p>
+  <p><b>唯一的偏移是 Munich 從 22% 降到 17%</b> → 橘色略淺、麥香略薄。要補回來得用 Munich 2 kg,
+  但那會同時動到基麥佔比 —— <b>#0013 的目的是單獨看 Superdelic</b>,所以這一版選偏移最小的拆法。
+  喝完 #0013 如果覺得橘味不夠,下一版再動 Munich。</p>
+
+  <h2>三、器材邊界:瓶頸是小鍋,不是大鍋</h2>
+  <table class="k">
+    <caption>Table 3 – 放大後各容器的佔用率,全部不用買東西</caption>
+    <tr><th>容器</th><th>尺寸 / 容量</th><th>v2.8 用到</th><th>餘裕</th></tr>
+    <tr><td>大鍋(糖化)</td><td>內徑 34 × 高 26 cm / 23.5 L</td><td>液面 17.2 L</td><td><b>73%</b>,攪得動</td></tr>
+    <tr><td>大鍋(煮沸)</td><td>同上</td><td>煮前 15.2 L</td><td><b>65%</b>,頂空 9 cm</td></tr>
+    <tr><td><b>小鍋(暫存)</b></td><td>內徑 30 × 高 22 cm / 15.5 L</td><td>單趟最多 8.7 L</td><td><b>收兩趟才行</b></td></tr>
+    <tr><td>發酵桶</td><td>截面 575 cm² / 高 48 cm</td><td>入桶 12.6 L = 液面 22 cm</td><td>46%</td></tr>
+    <tr><td>保麗龍箱</td><td>內 39 × 42 × 41 cm</td><td>水位 27 cm、起步冰 8 kg</td><td>66%</td></tr>
+  </table>
+  <div class="warn"><b>★ 真正的瓶頸是小鍋 15.5 L。</b>糖化和煮沸都在大鍋,所以麥汁必須先離開大鍋、
+  等麥糟清掉再倒回去 —— 而唯一的暫存容器是小鍋。煮前 15.2 L 一趟裝不下,
+  所以改成<b>收兩趟</b>:第一道 ~6.5 L 進小鍋 → 倒回大鍋 → 麥糟留篩網、洗槽水淋下去收 ~8.7 L → 再倒進大鍋。
+  這不是新流程,v2.7 的洗槽步驟本來就寫「一次撥不下就分兩次」。</div>
+
+  <h2>四、其他劑量(全部按比例預算,現場不乘除)</h2>
+  <table class="k">
+    <caption>Table 4 – v2.7 → v2.8 的劑量對照,括號是換算依據</caption>
+    <tr><th>項目</th><th>v2.7</th><th>v2.8</th><th>依據</th></tr>
+    <tr><td>CaCl₂·2H₂O</td><td>3.6 g</td><td><b>4.6 g</b></td><td>0.2 g/L × 總釀造水 22.8 L</td></tr>
+    <tr><td>磷酸 85%(糖化 / 煮後)</td><td>1.1 / 0.7 ml</td><td><b>1.3 / 1.0 ml</b></td><td>#0012 實測斜率 × 新水量</td></tr>
+    <tr><td>Magnum 苦花</td><td>6 g</td><td><b>8 g</b></td><td>0.60 g/L × 入桶 12.6 L</td></tr>
+    <tr><td>旋渦</td><td>84 g(3 包)</td><td><b>112 g(4 包)</b></td><td>多一包 Citra;Superdelic 由 1/3 降為 1/4</td></tr>
+    <tr><td>DH1</td><td>56 g(2 包)</td><td>56 g(2 包)</td><td><b>不變</b>,Superdelic 仍佔一半</td></tr>
+    <tr><td>DH2</td><td>84 g(3 包)</td><td><b>112 g(4 包)</b></td><td>多一包 Mosaic</td></tr>
+    <tr><td>乾投總量</td><td>140 g / 14 g/L</td><td>168 g / <b>13.3 g/L</b></td><td>整包湊出來,仍低於 hop burn 門檻 15-16</td></tr>
+    <tr><td>Pomona 酵母</td><td>1 包</td><td><b>1 包</b></td><td>10 g ÷ 12.6 L = 79 g/hL,區間 50-100</td></tr>
+    <tr><td>高壓純氧</td><td>60-90 s</td><td><b>75-115 s</b></td><td>× 1.26</td></tr>
+    <tr><td>Fermaid-O ×2</td><td>2.5 g</td><td><b>3.2 g</b></td><td>× 1.26</td></tr>
+    <tr><td>ALDC</td><td>0.3 ml</td><td><b>0.4 ml</b></td><td>× 1.26</td></tr>
+    <tr><td>二發糖(裝瓶)</td><td>7 g/L</td><td>7 g/L</td><td>濃度,不隨批量變</td></tr>
+    <tr><td>抗氧化 VC+KMS</td><td>2 ml/L</td><td>2 ml/L</td><td>濃度;<b>只進 keg,裝瓶那份不下</b></td></tr>
+  </table>
+  <p><b>酵母仍是 1 包是這次放大能成立的關鍵。</b>12.6 L 的 79 g/hL 還在 Lallemand 區間內,
+  所以「一包酵母」的硬規則不必破。再往上放大到 15 L 就會掉到 67 g/hL —— 還在區間,但開始貼下緣。</p>
+
+  <h2>五、封裝</h2>
+  <p>成品 10 L 超過 keg 總容量(8 L + 128oz 3.8 L = 11.8 L 但不會兩桶都用),
+  所以沿用 #0012 的<b>分流</b>:keg 8 L + 瓶裝 2 L(約 6 支 330 ml)。
+  糖與補充酵母只能進裝瓶那一份,抗氧化只進 keg —— 順序與陷阱見 v2.7-consolidated。</p>
+
+  <div class="note" style="margin-top:12px;border-top:1px solid #ccc;padding-top:6px">
+    本頁只寫 v2.8 放大的推導。<b>動作、數字、止損點</b> → <a href="./brew-sheet.html">brew-sheet.html</a>;
+    <b>v2.7 以前的設計邏輯與教訓溯源</b> → <a href="./v2.7-consolidated.html">v2.7-consolidated.html</a>;
+    <b>實釀心得與教訓</b> → <code>tommy_home_brewing.ods</code>。
+  </div>
+</div>
+</body>
+</html>

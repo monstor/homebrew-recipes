@@ -53,3 +53,10 @@ __pycache__/
 
 # RAPT Pill 遙測原始資料(15 分鐘一筆,不入版控;結案時摘要寫進 .ods)
 rapt-data/
+
+# AI 代理工具的設定、skill 連結與執行紀錄(公開 repo,不入版控)
+# log.log 內容未經檢視,skills-lock.json 是本機 skill 版本鎖
+.agents/
+.claude/
+skills-lock.json
+log.log

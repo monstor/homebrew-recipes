@@ -154,6 +154,67 @@
   所以沿用 #0012 的<b>分流</b>:keg 8 L + 瓶裝 2 L(約 6 支 330 ml)。
   糖與補充酵母只能進裝瓶那一份,抗氧化只進 keg —— 順序與陷阱見 v2.7-consolidated。</p>
 
+  <h2>六、槓位酒花協定(#0013 後補,2026-11-26)</h2>
+
+  <p><b>問題:槓位的定義是「新酒花一支,旋渦 28 g + DH1 28 g」—— 用公克寫的,不是 g/L。</b>
+  批量一變,槓位酒花的濃度就跟著變,跨批比較直接失效。上面 Table 4 的
+  旋渦那一列已經記到一半(「Superdelic 由 1/3 降為 1/4」),但記的是<b>比例</b>,
+  漏掉了<b>絕對濃度</b>也在掉。#0013 入桶 15 L 把這件事放大成可量的差距:</p>
+
+  <table class="k">
+    <caption>Table 5 – 槓位酒花的實際濃度:包數一直是 1:1,變的是分母</caption>
+    <tr><th>批次</th><th>入桶</th><th>旋渦 28 g<br><small>÷ 煮後</small></th><th>DH1 28 g<br><small>÷ 入桶</small></th><th>合計</th><th>佔 #0012</th></tr>
+    <tr><td>#0012 Nectaron</td><td>8.45 L</td><td>2.64 g/L</td><td>3.31 g/L</td><td><b>5.96</b></td><td>100%</td></tr>
+    <tr><td>v2.8 設計</td><td>12.6 L</td><td>1.87 g/L</td><td>2.22 g/L</td><td>4.09</td><td>69%</td></tr>
+    <tr><td><b>#0013 Superdelic</b></td><td><b>15.0 L</b></td><td>1.76 g/L</td><td>1.87 g/L</td><td><b>3.63</b></td><td><b>61%</b></td></tr>
+  </table>
+
+  <p>兩個原因同向疊加:① 配方從入桶 10 → 12.6 L,槓位沒跟著放大(光是照計畫釀就掉 21%);
+  ② 兩批實際入桶都偏離計畫而且方向相反(#0012 少 16% → 偏高、#0013 多 19% → 偏低)。
+  <b class="red">合計 3.31 → 1.87 g/L,掉 44%。</b>
+  所以「#0013 香氣比較沒有」有一半是劑量,不是 Superdelic 比 Nectaron 差。</p>
+
+  <h3>基準為什麼取 #0012 的實測值</h3>
+  <p>不取 v2.8 的設計值,理由同 .ods #0012 教訓 (14) 對 pH 的處理:
+  <b>拿評價最高那批的實測值當基準,不要拿它去追一個沒驗證過的數字。</b>
+  #0012 是本專案唯一拿到「接近酒廠水準」的批次,而它的乾投總量 16.6 g/L
+  <b>超過教科書的 hop burn 門檻 15-16 卻沒喝出 burn 或澀</b> —— 門檻是別人的數字,
+  16.6 是他自己的實測。於是基準定為 <b>旋渦 2.64 g/L(以煮後為分母)+ DH1 3.31 g/L(以入桶為分母)</b>。
+  兩個分母不同不是筆誤:旋渦發生在煮後的鍋裡,乾投發生在桶裡,鍋損 2.29 L 的麥汁也帶走酒花。</p>
+
+  <table class="k">
+    <caption>Table 6 – 整包 28 g 制下,只有兩個批量能讓兩段濃度同時落在基準 ±12% 內</caption>
+    <tr><th>旋渦 / DH1 包數</th><th>最佳入桶</th><th>煮後</th><th>旋渦 g/L(佔基準)</th><th>DH1 g/L(佔基準)</th><th>可用</th></tr>
+    <tr><td><b>1 / 1</b>(28 + 28 g)</td><td><b>8.4 L</b></td><td>10.7 L</td><td>2.62(99%)</td><td>3.33(101%)</td><td><b>★ 可用</b><br><small>= #0012</small></td></tr>
+    <tr><td>1 / 2(28 + 56 g)</td><td>14.5 L</td><td>16.7 L</td><td class="red">1.67(63%)</td><td>3.88(117%)</td><td>✗</td></tr>
+    <tr><td>2 / 1(56 + 28 g)</td><td>15.0 L</td><td>17.2 L</td><td>3.25(123%)</td><td class="red">1.87(57%)</td><td>✗</td></tr>
+    <tr><td><b>2 / 2</b>(56 + 56 g)</td><td><b>17.9 L</b></td><td>20.1 L</td><td>2.78(105%)</td><td>3.14(95%)</td><td><b>★ 可用</b></td></tr>
+    <tr><td>3 / 2(84 + 56 g)</td><td>22.0 L</td><td>24.2 L</td><td class="red">3.47(131%)</td><td class="red">2.55(77%)</td><td>✗</td></tr>
+  </table>
+
+  <p><b class="red">★ 結論:要跨批比酒花,入桶量只有 8.4 L 或 17.9 L 兩個選擇。</b>
+  中間全部至少有一段偏 30-60%。原因是 28 g 的級距太粗,而鍋損 2.29 L 是幾何值不隨批量縮放
+  —— 兩段的分母不成比例,整包制湊不出同時命中。<b>#0013 的 15 L 正好落在死區。</b></p>
+
+  <h3>⚠️ 這跟「放大批量」是衝突的目標</h3>
+  <p>17.9 L 那條路有兩個代價,都要先認:</p>
+  <table class="k">
+    <caption>Table 7 – 三個批量下,其他受批量牽動的參數</caption>
+    <tr><th>入桶</th><th>投種率<br><small>10 g ÷ 入桶</small></th><th>Lallemand 50-100 g/hL</th><th>發酵桶液面<br><small>÷ 575 cm²,桶高 48 cm</small></th><th>槓位協定</th></tr>
+    <tr><td><b>8.4 L</b>(#0012)</td><td><b>119 g/hL</b></td><td class="red">超上緣</td><td>15 cm</td><td><b>★ 成立</b></td></tr>
+    <tr><td>15.0 L(#0013)</td><td>67 g/hL</td><td>區間內,貼下緣</td><td>26 cm</td><td class="red">✗ 死區</td></tr>
+    <tr><td><b>17.9 L</b></td><td><b>56 g/hL</b></td><td class="red">區間內,幾乎到底</td><td>31 cm</td><td><b>★ 成立</b></td></tr>
+  </table>
+
+  <p><b>★ #0012 的「好」有三個原因,全部來自它入桶偏小(8.45 而非計畫的 10 L):</b>
+  乾投 16.6 g/L(v2.8 設計的 124%)、投種 119 g/hL(超 Lallemand 上緣)、槓位 5.96 g/L。
+  <b class="red">三項全部意外地往好的方向偏。</b>而 v2.8 放大到 12.6 L、#0013 實際 15 L,
+  三項全部往反方向走。放大的代價不是「稀釋一點」,是這三件事一起退。</p>
+
+  <p>17.9 L 的投種率 56 g/hL 幾乎貼到 Lallemand 區間底部,而
+  <b>「一包酵母、不共投」是硬規則不能破</b> → 這條路等於把酵母推到邊界換酒花濃度。
+  8.4 L 則是三項都好但產量只剩一半。<b>這個取捨不該由推導決定,要 Tommy 自己定。</b></p>
+
   <div class="note" style="margin-top:12px;border-top:1px solid #ccc;padding-top:6px">
     本頁只寫 v2.8 放大的推導。<b>動作、數字、止損點</b> → <a href="./brew-sheet.html">brew-sheet.html</a>;
     <b>v2.7 以前的設計邏輯與教訓溯源</b> → <a href="./v2.7-consolidated.html">v2.7-consolidated.html</a>;

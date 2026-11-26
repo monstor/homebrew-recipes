@@ -281,7 +281,16 @@ def fmt_rng(r, nd=0):
 # .ods 的時刻是本地時間、遙測是 UTC,要補時差才能跟比重曲線對齊。
 TELEMETRY_DIR = os.path.join(OUT, "telemetry")
 LOCAL_UTC_OFFSET_H = 8          # 台北
-PILL_OFFSET = 0.0135            # #0012 實測:Pill 比浮筒高 13.5 點(固定偏差)
+# Pill 讀數偏差:只有「還沒做過原位校正」的批次要扣。#0012 實測 Pill 比浮筒
+# 高 13.5 點(固定偏差),但它整批都沒校正過。#0013 起改在投酵母當天做
+# Enter Known Gravity 原位校正(當天沒有 krausen / CO₂ / 酒花渣,條件最乾淨,
+# 且在 t=0 校則整條曲線同一把尺、不留階梯)—— 校完讀數就是真值,偏差歸零。
+PILL_OFFSET_BY_BATCH = {"0012": 0.0135}
+PILL_OFFSET_DEFAULT = 0.0       # 已原位校正的批次(#0013 起)
+
+def pill_offset(bid):
+    """該批次的 Pill 固定偏差;0 = 已做過原位校正。"""
+    return PILL_OFFSET_BY_BATCH.get(str(bid or "").lstrip("#"), PILL_OFFSET_DEFAULT)
 PILL_OUT_JUMP = 0.02            # 相鄰兩筆跳超過 20 點 = Pill 已離開酒,之後的讀數不畫
 
 class FigNum:
@@ -351,9 +360,10 @@ def gravity_velocity(rows, win_h=3.0):
 
 GREEN_LIGHT_VELOCITY = 2.0      # 點/天。RAPT 的 Gravity Velocity 警報也用這個單位
 
-def telemetry_chart(rows, pts, fign=None):
+def telemetry_chart(rows, pts, fign=None, bid=None):
     if len(rows) < 3:
         return ""
+    off = pill_offset(bid)
     W, H, L, R, T, B = 820, 300, 58, 54, 18, 34
     dmax = max(d for d, _, _ in rows) or 1
     slo = min(s for _, s, _ in rows) - 0.002
@@ -380,7 +390,8 @@ def telemetry_chart(rows, pts, fign=None):
         return f'<polyline points="{pth}" fill="none" stroke="{color}" stroke-width="2" stroke-linejoin="round"{da}/>'
     g.append(poly([(d, t) for d, _, t in rows], YT, "var(--accent)"))
     g.append(poly([(d, s) for d, s, _ in rows], YS, "var(--s1)"))
-    g.append(poly([(d, s - PILL_OFFSET) for d, s, _ in rows], YS, "var(--s1)", "5 4"))
+    if off:
+        g.append(poly([(d, s - off) for d, s, _ in rows], YS, "var(--s1)", "5 4"))
     for d, sg, _ in (rows[0], rows[-1]):                          # 頭尾標值
         anchor = "start" if d == rows[0][0] else "end"
         g.append(f'<text x="{X(d):.1f}" y="{YS(sg)-8:.1f}" font-size="11" fill="var(--s1)" text-anchor="{anchor}">{sg:.4f}</text>')
@@ -389,12 +400,17 @@ def telemetry_chart(rows, pts, fign=None):
             dy = 4 if i % 2 == 0 else -9                          # 交錯,末段幾點會擠在一起
             g.append(f'<circle cx="{X(d):.1f}" cy="{YS(sg):.1f}" r="4" fill="var(--good)" stroke="var(--surface)" stroke-width="1.5"/>'
                      f'<text x="{X(d)+7:.1f}" y="{YS(sg)+dy:.1f}" font-size="11" fill="var(--good)">{sg:.3f}</text>')
-    legend = ('<span class="lg"><i class="lg-pt" style="background:var(--s1)"></i>Pill 原始讀數</span>'
-              '<span class="lg"><i class="lg-pt" style="background:var(--s1);opacity:.45"></i>Pill − 13.5 點(推估真實)</span>'
-              '<span class="lg"><i class="lg-pt" style="background:var(--accent)"></i>酒溫 °C(右軸)</span>'
-              '<span class="lg"><i class="lg-pt" style="background:var(--good)"></i>浮筒實測</span>')
-    note = ("Pill 讀數未校正,比浮筒高約 13.5 點(兩個時點實測,固定偏差);虛線是減掉偏差後的推估真實比重。"
-            "校正刻意留到轉桶才做 —— 中途校正會在曲線上留一個階梯,看圖的人分不清那是發酵還是換了尺。")
+    legend = ('<span class="lg"><i class="lg-pt" style="background:var(--s1)"></i>'
+              + ('Pill 原始讀數' if off else 'Pill 讀數(已原位校正)') + '</span>'
+              + (f'<span class="lg"><i class="lg-pt" style="background:var(--s1);opacity:.45"></i>'
+                 f'Pill − {off*1000:.1f} 點(推估真實)</span>' if off else '')
+              + '<span class="lg"><i class="lg-pt" style="background:var(--accent)"></i>酒溫 °C(右軸)</span>'
+                '<span class="lg"><i class="lg-pt" style="background:var(--good)"></i>浮筒實測</span>')
+    note = (f"Pill 讀數未校正,比浮筒高約 {off*1000:.1f} 點(兩個時點實測,固定偏差);"
+            f"虛線是減掉偏差後的推估真實比重。這批的校正留到轉桶才做,所以全程都要扣。"
+            if off else
+            "投酵母當天已用浮筒 OG 做過原位 Enter Known Gravity 校正,所以這條就是真實比重,不必再扣偏差。"
+            "校正選在 t=0:當天沒有 krausen、CO₂ 與酒花渣會被烙進校正,整條曲線也是同一把尺、不留階梯。")
     # ── 速率帶:比重的斜率,綠燈看它趨近零 ──────────────────────────────────
     vel = gravity_velocity(rows)
     vsvg = ""
@@ -426,7 +442,8 @@ def telemetry_chart(rows, pts, fign=None):
     _t = [t for _, _, t in rows]
     tcap = (f'Pill 遙測 {len(rows)} 筆,每 15 分鐘一筆:上圖是比重(左軸)與酒溫(右軸),下帶是比重速率。'
             f'酒溫最高 {max(_t):.1f}°C、最後 {_t[-1]:.1f}°C。'
-            f'Pill 的比重讀數偏高 {PILL_OFFSET*1000:.1f} 點,虛線那條才是真實比重。')
+            + (f'Pill 的比重讀數偏高 {off*1000:.1f} 點,虛線那條才是真實比重。' if off
+               else 'Pill 已原位校正,比重讀數即真實值。'))
     return (f'<figure class="chart">\n'
             f'<figcaption>RAPT Pill 遙測 <span class="muted">({len(rows)} 筆・每 15 分鐘・比重左軸 / 酒溫右軸)</span>'
             f'<div class="legend">{legend}</div></figcaption>\n'
@@ -614,7 +631,7 @@ def batch_page(b, prev_b, next_b):
 <div class="sub">{esc(b["風格"])} <span class="badge">{esc(b["釀造日"])}</span> {f'<span class="badge">{esc(b["評分"])}</span>' if b["評分"].strip() else ""}</div>
 <div class="tiles">{''.join(tiles)}</div>
 {gravity_chart(pts, fg, extract_events(b), *expected_bands(b), plan=parse_plan(b), fign=fign)}
-{telemetry_chart(read_telemetry(bid, pitch_datetime(b)), pts, fign=fign)}
+{telemetry_chart(read_telemetry(bid, pitch_datetime(b)), pts, fign=fign, bid=bid)}
 {''.join(secs)}
 {nav}'''
     return page(f'{b["批次"]} {b["配方·版本"]} — Brew Log', body)
